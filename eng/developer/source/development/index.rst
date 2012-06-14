@@ -54,7 +54,7 @@ The following tools are required to be installed to setup a development environm
 
 - **Maven** - GeoNetwork uses `Maven <http://maven.apache.org/>`_ to manage the build process and the dependencies. Once is installed, you should have the mvn command in your path (on Windows systems, you have to open a shell to check).
 
-- **Subversion** - GeoNetwork source code is stored and versioned in a subversion repository. Depending on your operating system a variety of subversion clients are avalaible. Check in http://subversion.apache.org/ for some alternatives.
+- **Git** - GeoNetwork source code is stored and versioned in a Git repository on Github. Depending on your operating system a variety of git clients are avalaible. Check in http://git-scm.com/downloads/guis for some alternatives.  Good documentation can be found on the git website: http://git-scm.com/documentation and on the Github website https://help.github.com/.
 
 - **Ant** - GeoNetwork uses `Ant <http://ant.apache.org/>`_ to build the installer.  Version 1.6.5 works but any other recent version should be OK. Once installed, you should have the ant command in your path (on Windows systems, you have to open a shell to check).
 
@@ -63,18 +63,50 @@ The following tools are required to be installed to setup a development environm
 Check out source code
 ---------------------
 
-Check out the source code from trunk from the GeoNetwork subversion repository to develop using the latest development code::
+If you just want to quickly get the code the fastest way is to download the zip bundle: https://github.com/geonetwork/core-geonetwork/zipball/master
 
-     $ svn co https://geonetwork.svn.sourceforge.net/svnroot/geonetwork/trunk trunk
+However, it is recommended that if you want to contribute back to Geonetwork you create a Github account, fork the Geonetwork repository and work on your fork.  This is a huge benefit because you can push your changes to your repository as much as you want and when a feature is complete you can make a 'Pull Request'.  Pull requests are the recommended method of contributing back to Geonetwork because Github has code review tools and merges are much easier than trying to apply a patch attached to a ticket.
 
-or from a stable branch for versions less likely to change often::
+The Geonetwork Repository is at: https://github.com/geonetwork/core-geonetwork.
 
-     $ svn co https://geonetwork.svn.sourceforge.net/svnroot/geonetwork/branches/2.4.x branch24
+Follow the instructions on the Github website to get started (make accounts, how to fork etc...) http://help.github.com/
+
+Once you have the repository forked and cloned locally you can begin to work.
+
+A clone contains all branches so you can list the branches with:
+
+     $ git branch -a
+     
+Just look at last section (ignoring remotes/origin/).  To checkout a branch just:
+
+     $ git checkout 2.8.x
+     
+Typically work is done on branches and merged back so when developing normally you will go change to the branch you want to work on, create a branch from there, work and then merge the changes back (or make a Pull Request on Github).  There are many great guides (See the links above) but here is a quick sequence illustrating how to make a change and commit the change.
+
+     $ git checkout master 
+        # master is the 'trunk' and main development branch
+        # the checkout command "checks out" the requested branch
+     $ git checkout -b myfeature
+        # the -b requests that the branch be created
+        # ``git branch`` will list all the branches you have checked out locally at some point
+        # ``git branch -a`` will list all branches in repository (checked out or not)
+     # work work work
+     $ git status 
+        # See what files have been modified or added
+     $ git add <new or modified files>
+        # Add all files to be committed ``git add -u`` will add all modified (but not untracked)
+     $ git commit
+        # Commit often.  it is VERY fast to commit
+        # NOTE: doing a commit is a local operation.  It does not push the change to Github
+      # more work
+      # another commit
+      $ git push origin myfeature
+        # this pushed your new branch to Github now you are ready to make a Pull Request to get the new feature added to Geonetwork
 
 Build GeoNetwork
 ----------------
 
-Once you checked out the code from subversion repository, go inside the GeoNetwork’s root folder and execute the maven build command::
+Once you checked out the code from Github repository, go inside the GeoNetwork’s root folder and execute the maven build command::
 
      $ mvn clean install
     
@@ -233,7 +265,7 @@ To install m2eclipse, please refer to the following `documentation
 <http://m2eclipse.sonatype.org/installing-m2eclipse.html>`_.
 
 Then click on **File** > **Import** > **Maven** > **Check out Maven Projects From SCM**
-Choose svn and https://geonetwork.svn.sourceforge.net/svnroot/geonetwork/trunk as **SCM URL** options.
+Choose svn and enter your Github fork as **SCM URL** options. (If you have not made a fork you can use: git://github.com/geonetwork/core-geonetwork.git)
 
 .. figure:: eclipse-checkout-from-SCM.png
 
@@ -247,7 +279,7 @@ Debugging into eclipse
 
 TODO
 
-- Remote debbuging :
+- Remote debuging :
 
  - `How do I configure Tomcat to support remote debugging? <http://wiki.apache.org/tomcat/FAQ/Developing#Q1>`_
  - `How do I remotely debug Tomcat using Eclipse? <http://wiki.apache.org/tomcat/FAQ/Developing#Q2>`_

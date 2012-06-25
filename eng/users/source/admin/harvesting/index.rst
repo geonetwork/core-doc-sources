@@ -469,7 +469,7 @@ following:
 
 .. figure:: web-harvesting-gn.png
 
-- **Site** - Here you put information about the GeoNetwork�s node you want to harvest from. The url should have the format: ``http[s]://server[:port]/geonetwork``. If you want to search protected metadata you have to specify an account. The name parameter is just a short description that will be shown in the main page beside each node. 
+- **Site** - Here you put information about the GeoNetwork’s node you want to harvest from. The url should have the format: ``http[s]://server[:port]/geonetwork``. If you want to search protected metadata you have to specify an account. The name parameter is just a short description that will be shown in the main page beside each node. 
     *Adding a GeoNetwork node*
 
 - **Site** - Here you put information about the GeoNetwork’s node you want to harvest from (host, port and servlet). If you want to search protected metadata you have to specify an account. The name parameter is just a short description that will be shown in the main page beside each node. 

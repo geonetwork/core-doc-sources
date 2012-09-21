@@ -1,5 +1,72 @@
 ================================================================================
 ===
+=== GeoNetwork 2.8.0RC1: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+- #519 A valid record gets broken by editing
+- #662 Can't initiate search using the ENTER key
+- #905 Outdated / Invalid links
+- #932 New line issue with Oracle scripts
+- #950 Thumbnail overview not working on iso19139 schema
+- #957 gmd:PT_Locale@id changed without changing gmd:LocalisedCharacterString@locale
+- #960 Open for edit a ISO19139-mcp1.4 record resets start/end date to 1970-01-01
+- #964 Catalan translation for version subsequent to 2.6.4
+- #967 Security: GN vulnerable to XML bombs
+- #968 Start versioning does not version all files for the initial version.
+- #969 Metadata versioning creates version of files even if not changed
+- #972 New UI: Groups combobox preserves old values when login with a different user
+- #974 Harvesting missing after migration
+- #977 Server startup stalls when thesaurus tries to rebuild from register record(s) with xlinks
+- #981 Privileges and categories not set when using OAI-PMH harvester
+- #982 Local thesauri (ie. created in GN thesaurus manager) do not have a title field
+- #983 geopublisher leaks geoserver user/pass credentials to users with editor profile
+- #986 ext-lang-*.js not found due to 3 char ISO 639-2 - should use 2 char.
+- #1003 Widgets / Create metadata window improvements
+- #1005 Search suggestion / invalid JSON if field contains "
+- #1008 Widgets / download and dynamic record info not available
+- #1010 Privileges not set when using CSW harvester
+- #1033 Widgets / username field / browser does not remember previous values
+- #1038 CSV export / quoted field, escape " and newline in text
+- #1044 Harvester / CSW / OperationAbortedEx("No GET (using CQL) or POST (using FE) DCP available in this service.").
+- #1060 Statistics / images not display
+- #1063 schemaplugin has schemaLocation/noNamespaceSchemaLocation but not available to update-fixed-info.xsl
+- Added some missing ext js locales (CA, RU, PT, CN, FI and NO) that seems to be missing - This corrects the calendar so that the proper language is displayed.
+- Add full url for thumbnails, put 'eng' in full url for thumbnail
+- Full Url thumbnail : add baseUrl to thumbnail url instead of hardcoded /geonetwork
+- Fix issue with OAI-PMH harvester not updating icons correctly
+- Fix null pointer exception when harvesting from a WMS server with non-requestable category layers (i.e. layers without a name element)
+- Fix issue with privileges and categories not being set on harvested WxS resources and services
+- Fixes in spatial filters creation
+- Fix disk deletion of thumbnail and gui bug of thumbnail widget form
+- Fix to make superBrief more general for those profiles that deine their own CI_Citation
+- Fix capabilities xml docs to validate
+- Fix IE8 JS errors
+- Fix rating widget initialization.
+- For subtemplates, use the computed title instead of the title column by default (fix the subtemplate title name in search results).
+- Fix subtemplate search (search form panel toolbar field not take into account).
+- Fix generation of schema location URL (used when a schemalocation is not specified in schema-ident.xml)
+- Look across all ISO profiles to allow thesaurus type to be chosen from a profile as well as base standard
+- Remove dependencies not permitted under licensing rules
+- Remove schema location from dublin-core - forces schema location to be generated using GeoNetwork schema.xsd ie. <geonetwork_url>/xml/schemas/dublin-core/schema.xsd
+- Reset search form and results when clicking reset. Display info panel.
+
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+- #550 No Portuguese translation for ISO19110
+- #973 New Category - Physical samples
+- #1045 Turkish translation
+- Add '_groupPublished' in Lucene index corresponding on all group name the MD is refered to
+- Add siteUrl as parameter to xslts called by wfs getfeature harvester. Allows these xslts to query the local geonetwork catalog for things like
+register definitions etc.
+- Changed ../../ to {/root/gui/url} where appropriate for consistency as it is follows the same format as the others.
+- Update instructions for controlling spatial index transactions
+
+================================================================================
+===
 === GeoNetwork 2.8.0RC0: List of changes
 ===
 ================================================================================

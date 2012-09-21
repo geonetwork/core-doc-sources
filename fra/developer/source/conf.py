@@ -46,7 +46,7 @@ copyright = u'2010, Open Source Geospatial Foundation'
 # The short X.Y version.
 version = '2.8.0'
 # The full version, including alpha/beta/rc tags.
-release = '2.8.0-RC0'
+release = '2.8.0-RC1'
 
 # There are two options for replacing |today|: either, you set today to some
 # non-false value, then it is used:

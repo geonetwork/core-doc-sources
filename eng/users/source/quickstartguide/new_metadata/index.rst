@@ -3,11 +3,11 @@
 Adding new Data and Information
 ===============================
 
-This section guides you through the process of adding new metadata records with associated geographic data and/or services into the GeoNetwork catalog using either the online metadata editor or the advanced metadata services tool, based on XML documents. In both cases you will use the template system, add thumbnails, upload data, link to services and set access privileges to the metadata and data.
+This section guides you through the process of adding new records (new data with information) into the GeoNetwork catalogue using either the online metadata editor or the advanced metadata insert tool, based on XML documents. In both cases you will use the template system, add thumbnails, upload data, link to services and set access privileges to the metadata and data.
 
-To add or edit data and metadata, you must be **registered** as a user with an **Editor** profile or higher. That user should be a member of the User Group you want to add information for. Contact your administrator if you are not a registered Editor for your Group.
+To add or edit data and metadata, you must be **registered** as an **Editor** into the work group you want to add records to. Contact your administrator if you are not a registered editor for your work group.
 
-For the metadata creation using the online editor, GeoNetwork provides a set of simplified metadata templates based on the cited standards: ISO, FGDC and DC. The templates for vector and raster based on the ISO 19139 are the preferred ones since they are devised in a way that hides the complexity of the ISO19115 standard in the default view. At the same time those templates are extensible with new elements to fit specialized needs through the advanced view.
+For the metadata creation using the online editor, GNos provides a set of simplified metadata templates based on the cited standards: ISO, FGDC and DC. The templates for vector and raster based on the ISO 19139 are the preferred ones since they are devised in a way that hides the complexity of the ISO19115 standard in the default view. At the same time those templates are extensible with new elements to fit specialized needs through the advanced view.
 
 To produce a good metadata record, always try to gather as much details as possible on the resource that you want to describe taking into account the metadata elements that have been presented in the previous chapter. The next step is to fill out properly the fields provided by the metadata templates, while at the same time avoiding duplication of information throughout the form.
 
@@ -239,7 +239,7 @@ From the editing menu, click on the Thumbnails button on the top or bottom of th
 .. figure:: thumbManag2.png
 
 	*Completed thumbnail wizard*
-
+	
 Linking WMS online resources
 ----------------------------
 
@@ -254,7 +254,7 @@ Metadata records in ISO19139 could be related to resources defined in WMS servic
 .. figure:: onlineResourceWebMapService2.png
 
 	*WMS online resource*
-
+	
 The *Interactive Map* button opens a window to select the layer/s defined in WMS capabilities document to load in map viewer.
 
 .. figure:: onlineResourceWebMapService2SelectLayer.png
@@ -272,7 +272,7 @@ The *Interactive Map* button opens a window to select the layer/s defined in WMS
 
 The behaviour the *Interactive Map* button depends if user indicated the layer name in the field *Name of the resource* or not, to show the window to select the layer/s to load in map viewer or load the layer directly.
 
-	
+
 Linking data for download
 -------------------------
 
@@ -299,86 +299,6 @@ To Upload a Dataset, follow these steps:
 .. figure:: uploadData.png
 
 	*An online resource*
-
-
-Linking WMS for data visualization
-----------------------------------
-
-You can link a dataset published in an OGC WMS service using the online resource section.
-
-#. Edit the metadata record
-
-#. Move to the distribution tab
-
-#. The URL field contains the WMS service URL;
-
-#. Select the correct protocol to be used (ie. OGC Web Map Service ver 1.1.1);
-
-#. The name of the resource is the name of the layer in the service (as defined in the GetCapabilities document);
-
-#. The description is optional;
-
-#. Click save.
-
-.. figure:: linkwms.png
-
-
-
-
-
-
-Publish uploaded data as WMS, WFS in GeoServer
-----------------------------------------------
-
-Integration of a map server allows users to quickly configure their data for interactive access without the need to go through the complexities of setting up and configuring a web map server. Web map server supported are:
-
-- GeoServer embedded with GeoNetwork
-- Remote GeoServer node (tested with 2.x or sup.)
-
-
-.. figure:: geopub-tiff.png
-
-
-This mechanism allows users to upload a GeoTIFF file or a zipped Shapefile to a metadata record and deploy that dataset as a Web Map Service on one or more GeoServer node. After linking the data for download, the user will see a button that allows her/him to trigger this deployment. The metadata online source section is updated.
-
-Configuration
-~~~~~~~~~~~~~
-
-If after uploading data, you cannot see the geopublisher button, ask the catalogue administrator to check the configuration.
-This feature is disabled by default. It could be activated in the config-gui.xml configuration file.
-
-If you cannot see your GeoServer node, ask the catalogue administrator to add the new node in geoserver-nodes.xml configuration file.
-
-
-Publish your data
-~~~~~~~~~~~~~~~~~
-
-* Edit a metadata
-* Upload a file as explained in the linking data section.
-
-In edit mode, online source section with a file for download attached, will provide the geopublisher panel:
-
-* Select a node to publish the dataset in (See configuration for details on adding a node)
-* GeoNetwork checks if:
-
-    - the file provided is correct (eg. ZIP contains one Shapefile or a tiff)
-    - the layer has already been published to that node. If yes, the layer is added to the map preview.
-
-* Publish button: Publish current dataset to remote node. If dataset is already publish in that node, it will be updated.
-* Unpublish button: Remove current dataset from remote node.
-* Add online source button: Add an onlinesource section to the current metadata record pointing to the WMS and layername in order to display the layer in the map viewer of the search interface.
-* Style button: Only available if the GeoServer styler has been installed and declared in the configuration.
-
-
-No layer names are asked to the user. Layer name is compute from the file name.
-
-In case of ZIP compression, ZIP file base name must be equal to Shapefile or GeoTiff base name (ie. if the shapefile is rivers.shp, ZIP file name must be rivers.zip).
-
-One Datastore, FeatureType, Layer and Style are created for a vector dataset (one to one relation).
-One CoverageStore, Coverage, Layer are created for a raster dataset (one to one relation).
-
-
-
 
 Linking metadata
 ----------------
@@ -513,7 +433,7 @@ Assigning Privileges for a Map
 
 As an important step of entering metadata to your map, you need to assign privileges for each map. This means that you will identify which work groups have which privileges, i.e. view, download, etc. for your particular map.
 
-For instance, you can define if the information and related services is visible to all (Internet users) or just to internal users only (Intranet). Privileges are assigned on a per group basis. Depending on the user profile (Guest, Registered User, Editor, Admin etc.) access to these functions may differ on a per user basis.
+For instance, you can fdefine if the information and related services is visible to all (Internet users) or just to internal users only (Intranet). Privileges are assigned on a per group basis. Depending on the user profile (Guest, Registered User, Editor, Admin etc.) access to these functions may differ on a per user basis.
 
 To assign privileges for your map, follow these steps:
 

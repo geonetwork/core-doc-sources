@@ -75,7 +75,7 @@
       {%- endif %}
       {%- block sidebarsearch %}{%- endblock %}
       {%- if pagename in ['index', 'community', 'news', 'gallery'] %}
-      <div class="section">
+        <div class="section">
 <!--          <h3>Download</h3>
           <p>Current release: <a href="{{ pathto('downloads') }}">{{ release }}</a></p> -->
           <h3>Latest posts</h3>
@@ -98,7 +98,7 @@
       <!-- <div class="section">
         <a href="http://geonetwork-opensource.org/Documentation" title="We're still porting content over to our new documentation. If it's not here, try the legacy GeoNetwork documentation">Legacy Documentation</a>
       </div> -->
-  <div class="section">
+      <div class="section">
         <a href="http://osgeo.org" title="Open Source Geospatial Foundation project"><img src="{{ pathto('_static/osgeo.png', 1) }}" alt="OSGeo project" /></a>
       </div>
       <div class="section">
@@ -202,12 +202,12 @@
     <div class="wrap selfclear">
       <div id="logo"><a href="http://geonetwork-opensource.org">{{ shorttitle }}</a></div>
       <ul id="top-nav">
-        <li class="first"><a href="http://www.geonetwork-opensource.org/news.html">News</a></li>
-        <li><a href="{{ pathto('index') }}">Documentation</a></li>
-        <li><a href="http://www.geonetwork-opensource.org/downloads.html">Download</a></li>
-        <li><a href="http://www.geonetwork-opensource.org/community.html">Community</a></li>
-        <li><a href="http://geonetwork-opensource.org/gallery/gallery.html">Gallery</a></li>
-        <li><a href="http://trac.osgeo.org/geonetwork">Development</a></li>
+          <li class="first"><a href="http://www.geonetwork-opensource.org/news.html">News</a></li>
+          <li><a href="{{ pathto('index') }}">Documentation</a></li>
+          <li><a href="http://www.geonetwork-opensource.org/downloads.html">Download</a></li>
+          <li><a href="http://www.geonetwork-opensource.org/community.html">Community</a></li>
+          <li><a href="http://geonetwork-opensource.org/gallery/gallery.html">Gallery</a></li>
+          <li><a href="http://trac.osgeo.org/geonetwork">Development</a></li>
       </ul>
           <br/>  
       {%- block quicksearch %}

@@ -100,6 +100,12 @@ XLink resolver
 Enables/disables the XLink resolver. XLink resolver replaces content of the elements with attribute @xlink:href (except for srv:operatesOn element) with the referenced content. The 
 XLink resolver is used for example in Metadata fragments harvester to retrieve the metadata fragments referenced in the metadata and insert in it.
 
+Hide Withheld Elements
+``````````````````````
+If enabled elements marked as withheld (set the gco:nilReason attribute of an element to 'withheld') the withheld will be removed from the loaded metadata when accessed by a user other than an administrator or the metadata owner.  
+The 'Keep Marked Element' setting determines how the element is censored.  If 'Keep Marked Element' is enabled then the marked element will not be removed.  Instead all its attributes (aside from gco:nilReason) and all its child nodes will be removed. If 'Keep Marked Element' is disabled then the entire node with all its content will be removed.
+The advantage of enabling 'Keep Marked Element' is so that the UI can mark the node as hidden.  For example if a node is 'withheld', and 'Keep Marked Element' is enabled that node will still appear in the editor and view but will be uneditable and will provide an information icon with a tooltip explaining that the element has been hidden.  When disabled the element will not appear in the metadata at all.
+
 
 Clickable hyperlinks
 ````````````````````

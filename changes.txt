@@ -1,5 +1,55 @@
 ================================================================================
 ===
+=== GeoNetwork 2.8.0RC2: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+- #850 Errors in upgrade sql script in trunk
+- #988 Don't create GAST link if user did not install it
+- #1048 Widgets UI: Map missing choose style option for a WMS
+- #1049 Widgets UI: Map missing print panel
+- #1075 New UI - Quick search links in Administration panel doesn't work with tabbed search UI
+- #1078 New UI - tabsearch interface doesn't get default language
+- #1081 Disclaimer form fails to appear when downloading local file as public user
+- #1083 Upgrading from 2.6.4 to 2.8 fails with Oracle
+- #1084, #1087 Catalan translations updates. Thanks Monstse Marco for updates
+- #1085 Exception when retrieving keyword in raw format
+- #1094 Fix langdetect jar version in pom files
+- #1095 Exception occurs when upperCorner/lowerCorner tags are empty in a geographic thesaurus
+- #1105 CSW Spatial Query: postgis query too large
+- #1106 GeoNetwork servlet hangs due to using up database connections
+- #1114 Thesaurus Manager - Delete thesaurus doesn't remove the related record from datatabase
+- Avoid localization when handling gmx:MimeFileType
+- Widgets UI: Added missing languages to the list of locales
+- Widgets UI: Fix for IE7
+- Widgets UI: Transforming to UTF-8 the spanish translations
+- Widgets UI: Add MarLIN app (based on tabsearch)
+- Widgets UI: Changed jetty configuration so it can accept requests long enough to open the administration page and avoid http 413 error
+- Fix various bugs in Widgets UI tabsearch including:
+    - No search options in search form - causes problems when displaying search re
+    - Shouldn't use GeoNetwork SearchFormPanel as it adds unwanted extra buttons
+    - Local should be GeoNetwork.Util.defaultLocale
+    - Add uuid argument to kvpSearch to speed up retrieval of metadata when viewin
+    - Remove console.log calls as these cause errors in IE7 and 8
+    - Fix JSLint warning
+
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+- #525 Polish translation. Thanks Piotr Pachół and Bogusław Kaczałek
+- #1045 Turkish translation
+- #1069 Spanish translations for iso19139. Thanks to Richard Camejo for providing them.
+- Add metadata siblings proposal port to 2.8.x for ANZMEST/MarLIN usage
+- Change maven build so that web classes are contained in a jar instead
+- Make csw stateless and resilient in the face of many simultaneous requests
+- Restrict download summary form to protocols that are understood by GeoNetwork
+- Set gmx:FileName resources to use uuid rather than id
+- Use uuid param instead of id param in download links and sample data
+
+================================================================================
+===
 === GeoNetwork 2.8.0RC1: List of changes
 ===
 ================================================================================

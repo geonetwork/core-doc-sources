@@ -7,9 +7,10 @@ A schema in GeoNetwork is a directory with stylesheets, XML schema
 descriptions (XSDs) and other information necessary for GeoNetwork to index, 
 view and possibly edit content from XML metadata records. 
 
-To be used in GeoNetwork, a schema 
-directory can be placed in `INSTALL_DIR/web/geonetwork/xml/schemas`. Schemas 
-in this directory are built-in schemas. The contents of these schemas are 
+To be used in GeoNetwork, a schema directory can be manually placed in the 
+`config/schema_plugins` sub directory of 
+the geonetwork data directory. The default geonetwork data directory location is 
+`INSTALL_DIR/web/geonetwork/WEB-INF/data`. The contents of these schemas are 
 parsed during GeoNetwork initialization. If valid, they will be available for 
 use when GeoNetwork starts up.
 
@@ -19,9 +20,9 @@ ways using functions in the Administration menu:
 
 #. Server file path (specified using file chooser)
 #. HTTP URL (eg. http://somehost/somedirectory/iso19139.mcp.zip)
-#. As an online resource attached to an iso19139 metadata record
+#. As an online resource attached to an ISO19115/19139 metadata record
 
-When schemas are added to GeoNetwork dynamically, they are stored in the directory specified in `INSTALL_DIR/web/geonetwork/WEB-INF/config.xml`. By default, this is `INSTALL_DIR/web/geonetwork/schemaPlugins`.
+Uploaded schemas are also stored in the `config/schema_plugins` sub directory of the geonetwork data directory.
 
 Contents of a GeoNetwork schema
 ```````````````````````````````
@@ -57,6 +58,7 @@ The following configuration files can be present:
 
 - **oasis-catalog.xml**: (*Optional*) An oasis catalog describing any mappings that should be used for this schema eg. mapping URLs to local copies such as schemaLocations eg. http://www.isotc211.org/2005/gmd/gmd.xsd is mapped to ``schema/gmd/gmd.xsd``. Path names used in the oasis catalog are relative to the location of this file which is the schema directory.
 - **schema.xsd**: (*Optional*) XML schema directory file that includes the XSDs used by this metadata schema. If the schema uses a DTD then this file should not be present. Metadata records from schemas that use DTDs cannot be edited in GeoNetwork.
+- **schema-conversions.xml**: (*Mandatory*) XML file that describes the converters that can be applied to records belonging to this schema. This information is used to show these conversions as options for the user to choose when a metadata record belonging to this schema is shown in the search results.
 - **schema-ident.xml**: (*Mandatory*) XML file that contains the schema name, identifier, version number and details on how to recognise metadata records that belong to this schema. This file has an XML schema definition in `INSTALL_DIR/web/geonetwork/xml/validation/schemaPlugins/schema-ident.xsd` which is used to validate it when the schema is loaded.
 - **schema-substitutes.xml**: (*Optional*) XML file that redefines the set of elements that can be used as substitutes for a specific element.
 - **schema-suggestions.xml**: (*Optional*) XML file that tells the editor which child elements of a complex element to automatically expand in the editor. 
@@ -71,8 +73,7 @@ In order to create a schema plugin for GeoNetwork, you should check out the sche
 
 ::
 
-  svn co https://geonetwork.svn.sourceforge.net/svnroot/geonetwork/schemaPlugins/trunk schemaPlugins
-
+  svn co https://github.com/geonetwork/schema-plugins/branches/2.8.x schemaPlugins
 
 This will create a directory called schemaPlugins with some GeoNetwork schema plugins in it. To work with the example shown here, you should create your new schema plugin in a subdirectory of this directory.
 
@@ -169,11 +170,16 @@ Some other points about attributes autodetect:
       <elements>
         <gmd:metadataStandardName>
           <gco:CharacterString>
-            Australian Marine Community Profile of ISO 19115:2005/19139
+            Australian Marine Community Profile of ISO 19115:2005/19139|
+            Marine Community Profile of ISO 19115:2005/19139
           </gco:CharacterString>
         </gmd:metadataStandardName>
         <gmd:metadataStandardVersion>
-          <gco:CharacterString>MCP:BlueNet V1.5</gco:CharacterString>
+          <gco:CharacterString>
+            1.5-experimental|
+            MCP:BlueNet V1.5-experimental|
+            MCP:BlueNet V1.5
+          </gco:CharacterString>
         </gmd:metadataStandardVersion>
       </elements>
     </autodetect>
@@ -181,6 +187,7 @@ Some other points about attributes autodetect:
 Some other points about elements autodetect:
 
 - multiple elements can be specified - eg. as in the above, both metadataStandardName and metadataStandardVersion have been specified - all must be match for the record to be recognized as belonging to this schema.
+- multiple values for the elements can be specified. eg. as in the above, a match for gmd:metadataStandardVersion will be found for `1.5-experimental` OR `MCP:BlueNet V1.5-experimental` OR `MCP:BlueNet V1.5` - the vertical line or pipe character '|' is used to separate the options here.
 - if the elements have a namespace then the namespace(s) should be specified on the autodetect element or somewhere in the schema-ident.xml document before the element in which they are used - eg. in the above there are there namespace declarations on the autodetect element so as not to clutter the content.
 
 **3. Root element** - root element of the document must match. An example use case is the one used for the eml-gbif schema. Documents belonging to this schema always have root element of eml:eml so the autodetect section for this schema is:

@@ -58,7 +58,7 @@ The following configuration files can be present:
 
 - **oasis-catalog.xml**: (*Optional*) An oasis catalog describing any mappings that should be used for this schema eg. mapping URLs to local copies such as schemaLocations eg. http://www.isotc211.org/2005/gmd/gmd.xsd is mapped to ``schema/gmd/gmd.xsd``. Path names used in the oasis catalog are relative to the location of this file which is the schema directory.
 - **schema.xsd**: (*Optional*) XML schema directory file that includes the XSDs used by this metadata schema. If the schema uses a DTD then this file should not be present. Metadata records from schemas that use DTDs cannot be edited in GeoNetwork.
-- **schema-conversions.xml**: (*Mandatory*) XML file that describes the converters that can be applied to records belonging to this schema. This information is used to show these conversions as options for the user to choose when a metadata record belonging to this schema is shown in the search results.
+- **schema-conversions.xml**: (*Optional*) XML file that describes the converters that can be applied to records belonging to this schema. This information is used to show these conversions as options for the user to choose when a metadata record belonging to this schema is shown in the search results.
 - **schema-ident.xml**: (*Mandatory*) XML file that contains the schema name, identifier, version number and details on how to recognise metadata records that belong to this schema. This file has an XML schema definition in `INSTALL_DIR/web/geonetwork/xml/validation/schemaPlugins/schema-ident.xsd` which is used to validate it when the schema is loaded.
 - **schema-substitutes.xml**: (*Optional*) XML file that redefines the set of elements that can be used as substitutes for a specific element.
 - **schema-suggestions.xml**: (*Optional*) XML file that tells the editor which child elements of a complex element to automatically expand in the editor. 
@@ -117,11 +117,16 @@ Now we need to provide the information necessary to identify the schema and meta
       <elements>
         <gmd:metadataStandardName>
           <gco:CharacterString>
-            Australian Marine Community Profile of ISO 19115:2005/19139
+            Australian Marine Community Profile of ISO 19115:2005/19139|
+            Marine Community Profile of ISO 19115:2005/19139
           </gco:CharacterString>
         </gmd:metadataStandardName>
         <gmd:metadataStandardVersion>
-          <gco:CharacterString>MCP:BlueNet V1.5</gco:CharacterString>
+          <gco:CharacterString>
+            1.5-experimental|
+            MCP:BlueNet V1.5-experimental|
+            MCP:BlueNet V1.5
+          </gco:CharacterString>
         </gmd:metadataStandardVersion>
       </elements>
     </autodetect>
@@ -306,14 +311,50 @@ A record going through autodetect processing (eg. on import) would be checked ag
 
 The idea behind this processing algorithm is that base schemas will use a 'root element' rule (or the more difficult to control 'namespaces' rule) and profiles will use a finer or more specific rule such as 'attributes' or 'elements'.
 
-
-
-
 After setting up schema-ident.xml, our new GeoNetwork plugin schema for MCP contains:
 
 ::
 
    schema-ident.xml
+
+Creating the schema-conversions.xml file
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+This file describes the converters that can be applied to metadata records that belong to the schema. Each converter must be manually defined as a GeoNetwork (Jeeves) service that can be called to transform a particular metadata record to a different schema. The schema-conversions.xml file for the MCP is as follows:
+
+::
+ 
+  <conversions>
+     <converter name="xml_iso19139.mcp" 
+                nsUri="http://bluenet3.antcrc.utas.edu.au/mcp"
+                schemaLocation="http://bluenet3.antcrc.utas.edu.au/mcp-1.5-experimental/schema.xsd"
+                xslt="xml_iso19139.mcp.xsl"/>
+     <converter name="xml_iso19139.mcp-1.4"
+                nsUri="http://bluenet3.antcrc.utas.edu.au/mcp"
+                schemaLocation="http://bluenet3.antcrc.utas.edu.au/mcp/schema.xsd" 
+                xslt="xml_iso19139.mcp-1.4.xsl"/>
+     <converter name="xml_iso19139.mcpTooai_dc"
+                nsUri="http://www.openarchives.org/OAI/2.0/"
+                schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc.xsd"
+                xslt="oai_dc.xsl"/>
+     <converter name="xml_iso19139.mcpTorifcs"
+                nsUri="http://ands.org.au/standards/rif-cs/registryObjects"
+                schemaLocation="http://services.ands.org.au/home/orca/schemata/registryObjects.xsd"
+                xslt="rif.xsl"/>
+  </conversions>
+
+Each converter has the following attributes:
+
+- **name** - the name of the converter. This is the service name of the GeoNetwork (Jeeves) service and should be unique (prefixing the service name with xml_<schema_name> is a good way to make this name unique).
+- **nsUri** - the primary namespace of the schema produced by the converter. eg. xml_iso19139.mcpTorifcs transforms metadata records from iso19139.mcp to the RIFCS schema. Metadata records in the RIFCS metadata schema have primary namespace URI of http://ands.org.au/standards/rif-cs/registryObjects.
+- **schemaLocation** - the location (URL) of the XML schema definition (XSD) corresponding to the nsURI.
+- **xslt** - the name of the XSLT that actually carries out the transformation. This XSLT should be located in the convert subdirectory of the schema plugin.
+
+After setting up schema-conversions.xml, our new GeoNetwork plugin schema for MCP contains:
+
+::
+
+   schema-conversions.xml  schema-ident.xml
 
 
 Creating the schema directory and schema.xsd file
@@ -391,7 +432,7 @@ At this stage, our new GeoNetwork plugin schema for MCP contains:
 
 ::
 
-   schema-ident.xml  schema.xsd  schema
+   schema-conversions.xml  schema-ident.xml  schema.xsd  schema
 
 
 Creating the extract-... XSLTs
@@ -466,7 +507,7 @@ At this stage, our new GeoNetwork plugin schema for MCP contains:
 ::
 
    extract-date-modified.xsl  extract-gml.xsd   extract-uuid.xsl
-   schema-ident.xml  schema.xsd  schema
+   schema-conversions.xml  schema-ident.xml  schema.xsd  schema
 
 
 Creating the localized strings in the loc directory
@@ -597,7 +638,8 @@ After adding the localized strings, our new GeoNetwork plugin schema for MCP con
 ::
 
    extract-date-modified.xsl  extract-gml.xsd  extract-uuid.xsl 
-   loc  present  schema-ident.xml  schema.xsd  schema
+   loc  present  schema-conversions.xml  schema-ident.xml  schema.xsd  
+   schema
 
 
 Creating the presentations XSLTs in the present directory
@@ -962,7 +1004,8 @@ After creating the presentation XSLTs, our new GeoNetwork plugin schema for MCP 
 ::
 
    extract-date-modified.xsl  extract-gml.xsd  extract-uuid.xsl  
-   loc  present  schema-ident.xml  schema.xsd  schema
+   loc  present  schema-conversions.xml  schema-ident.xml  schema.xsd  
+   schema
 
 
 Creating the index-fields.xsl to index content from the metadata record
@@ -1018,7 +1061,8 @@ At this stage, our new GeoNetwork plugin schema for MCP contains:
 ::
 
    extract-date-modified.xsl  extract-gml.xsd  extract-uuid.xsl  
-   index-fields.xsl  loc  present  schema-ident.xml  schema.xsd  schema
+   index-fields.xsl  loc  present  schema-conversions.xml  schema-ident.xml  
+   schema.xsd  schema
 
 
 Creating the sample-data directory
@@ -1104,8 +1148,8 @@ At this stage, our new GeoNetwork plugin schema for MCP contains:
 ::
 
    extract-date-modified.xsl  extract-gml.xsd  extract-uuid.xsl  
-   index-fields.xsl  loc  present  sample-data schema-ident.xml  schema.xsd
-   schema  schematron-rules-iso-mcp.xsl
+   index-fields.xsl  loc  present  sample-data  schema-conversions.xml  
+   schema-ident.xml  schema.xsd  schema  schematron-rules-iso-mcp.xsl
 
 
 Adding the components necessary to create and edit MCP metadata

@@ -133,26 +133,67 @@ The remainder of the configuration is done in the container context. eg. for tom
 		defaultAutoCommit="false" 
 		validationQuery="SELECT 1 FROM DUAL"
 		accessToUnderlyingConnectionAllowed="true"
-	/> 	
+	/>
+
+eg. for jetty, this configuration is in `INSTALL_DIR/web/geonetwork/WEB-INF/jetty-env.xml`. Here is an example for the Postgis database:
+
+::
+
+  <Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <New id="gnresources" class="org.eclipse.jetty.plus.jndi.Resource">
+      <Arg></Arg> 
+      <Arg>jdbc/geonetwork</Arg>
+      <Arg>
+        <New class="org.apache.commons.dbcp.BasicDataSource">
+          <Set name="driverClassName">org.postgis.DriverWrapper</Set>
+          <Set name="url">jdbc:postgresql_postGIS://localhost:5432/gndb</Set>
+          <Set name="username">geonetwork</Set>
+          <Set name="password">geonetworkgn</Set>
+          <Set name="validationQuery">SELECT 1</Set>
+          <Set name="maxActive">10</Set>
+          <Set name="maxIdle">10</Set>
+          <Set name="removeAbandoned">true</Set>
+          <Set name="removeAbandonedTimeout">3600</Set>
+          <Set name="logAbandoned">true</Set>
+          <Set name="testOnBorrow">true</Set>
+          <Set name="defaultAutoCommit">false</Set>
+          <!-- 2=READ_COMMITTED, 8=SERIALIZABLE -->
+          <Set name="defaultTransactionIsolation">2</Set>
+          <Set name="accessToUnderlyingConnectionAllowed">true</Set>
+        </New>
+    	</Arg>
+      <Call name="bindToENC">
+        <Arg>jdbc/geonetwork</Arg>  
+      </Call>
+   	</New>
+  </Configure>
 
 The parameters that can be specified to control the Apache Database Connection Pool used by the container are described at http://commons.apache.org/dbcp/configuration.html.
 
 The following parameters *must* be set to ensure GeoNetwork operates correctly:
 
-- defaultAutoCommit="false"
-- accessToUnderlyingConnectionAllowed="true"
+============================================   ============================================================
+Tomcat Syntax                                  Jetty Syntax                                                  
+============================================   ============================================================
+defaultAutoCommit="false"                      <Set name="defaultAutoCommit">false</Set>             
+accessToUnderlyingConnectionAllowed="true"     <Set name="accessToUnderlyingConnectionAllowed">true</Set>     
+============================================   ============================================================
 
 For performance reasons you should set the following parameters *after* GeoNetwork has created and filled the database it has been configured to use:
 
-- poolPreparedStatements="true"
-- maxOpenPreparedStatements="300" (at least)
+============================================   ============================================================
+Tomcat Syntax                                  Jetty Syntax                                                  
+============================================   ============================================================
+poolPreparedStatements="true"                  <Set name="poolPreparedStatements">true</Set>
+maxOpenPreparedStatements="300" (at least)     <Set name="maxOpenPreparedStatements">300</Set>
+============================================   ============================================================
 
 Notes:
 
 - both PostGIS and Oracle will build and use a table in the database for the spatialindex if provideDataStore is set to true. Other databases could be made to do the same if a spatialindex table is created - see the definition for the spatialIndex table in `INSTALL_DIR/web/geonetwork/WEB-INF/classes/setup/sql/create/create-db-postgis.sql` for example.
-- you should install commons-dbcp-1.3.jar and commons-pool-1.5.5.jar in the container class path (eg. `common/lib` for tomcat5) as the only supported DataSourceFactory in geotools is apache commons dbcp. Naturally you should always use the `factory="org.apache.commons.dbcp.BasicDataSourceFactory"` in the JNDI context as well.
-- the default tomcat-dbcp.jar version of apache commons dbcp appears to work correctly for geotools and PostGIS but does not work for those databases that need to unwrap the connection in order to do spatial operations (eg. Oracle).
-- Oracle ojdbc-14.jar or ojdbc5.jar or ojdbc6.jar (depending on the version of Java being used) and sdoapi.jar should also be installed in the container `common/lib` or `lib` area. 
+- you should install commons-dbcp-1.3.jar and commons-pool-1.5.5.jar in the container class path (eg. `common/lib` for tomcat5 or `jetty/lib/ext` for Jetty) as the only supported DataSourceFactory in geotools is apache commons dbcp. 
+- the default tomcat-dbcp.jar version of apache commons dbcp for tomcat appears to work correctly for geotools and PostGIS but does not work for those databases that need to unwrap the connection in order to do spatial operations (eg. Oracle).
+- Oracle ojdbc-14.jar or ojdbc5.jar or ojdbc6.jar (depending on the version of Java being used) and sdoapi.jar should also be installed in the container class path (for tomcat: `common/lib` or `lib` and for jetty: `jetty/lib/ext`). 
 - advanced: you should check the default transaction isolation level for your database driver. READ_COMMITTED appears to be a safe level of isolation to use with GeoNetwork for commonly used databases. Also note that McKoi can only support SERIALIZABLE (does anyone still use McKoi?). For more on transaction isolation see http://en.wikipedia.org/wiki/Isolation_%28database_systems%29.
 
 Oracle specific issues

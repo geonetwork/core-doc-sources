@@ -45,6 +45,7 @@ INSTALL_DIR/web/geonetwork/xml/csw/test.
 
 .. COMMENT: TODO : Add documentation about config-csw.xml options
 
+.. _VirtualCSW:
 
 Virtual CSW server entry points
 -------------------------------

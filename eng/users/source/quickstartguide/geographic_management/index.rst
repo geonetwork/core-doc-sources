@@ -72,7 +72,7 @@ searching in multiple catalogues.
 In 2006, the GeoNetwork team dedicated efforts to develop a DVD containing the
 GeoNetwork version 2.0.3 and the best free and open source software in the field of
 Geoinformatics. The DVD was produced and distributed in hard copy to over three
-thousand people and is now also available for download from the `GeoNetwork Community website <http://geonetwork-opensource.org>`_.
+thousand people. More recently, the OSGeo Live project has been developed with GeoNetwork and all the best Open Source Geospatial software available on a self-contained bootable DVD, USB thumb drive or Virtual Machine based on Xubuntu. The GeoNetwork community has been a part of this project and will continue to make sure the latest stable version of GeoNetwork is included. You can download the OSGeo-Live images from `OSGeo Live website <http://live.osgeo.org>`_.
 
 GeoNetwork opensource is the result of the collaborative development of many contributors.
 These include among others the Food and Agriculture organisation (FAO), the UN Office for the
@@ -156,16 +156,14 @@ interaction takes place on the `user <https://lists.sourceforge.net/mailman/list
 During the 2006 workshop, the Project Advisory Board decided to propose the
 GeoNetwork opensource project as an incubator project to the newly founded
 `Open Source Geospatial Foundation (OSGeo) <http://www.osgeo.org>`_.
-This incubation process is currently ongoing
-but close to conclusions. The project Websites have been moved to servers accessible
-under the umbrella of the OSGeo foundation. Web pages have been updated to reflect
-the OSGeo principles and a source code review performed.
+This incubation process was successfully completed and the project websites were moved to servers accessible
+under the umbrella of the OSGeo foundation.
 
 Source code is maintained in a publicly accessible code repository, hosted at an
-independent service provider, `SourceForge.net <http://sourceforge.net/projects/geonetwork>`_ that hosts thousands of FOSS projects.
+independent service provider, `github.com <http://github.com/geonetwork>`_ that hosts thousands of FOSS projects.
 Developers and users have full access to all sections of the source code, while
 trusted developers can make changes in the repository itself. A special mailing list
-has been established to monitor changes in the code repository. This so-called
+has been established to monitor changes in the code repository. This 
 "commit mailing list" delivers change reports by email to its subscribers.
 
 The documentation is written in reStructuredText format using the `Sphinx <http://sphinx.pocoo.org>`_

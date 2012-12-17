@@ -1,17 +1,21 @@
 .. _new_metadata:
 
-Adding new Data and Information
-===============================
+Adding a metadata record
+========================
 
-This section guides you through the process of adding new metadata records with associated geographic data and/or services into the GeoNetwork catalog using either the online metadata editor or the advanced metadata services tool, based on XML documents. In both cases you will use the template system, add thumbnails, upload data, link to services and set access privileges to the metadata and data.
+This section guides you through the process of adding new metadata records with associated data and/or services into the GeoNetwork catalog. You will use metadata template records, add thumbnails, upload data, link to services and set access privileges to the metadata and the data it describes.
 
-To add or edit data and metadata, you must be **registered** as a user with an **Editor** profile or higher. That user should be a member of the User Group you want to add information for. Contact your administrator if you are not a registered Editor for your Group.
+To add or edit metadata, you must be **registered** as a user with an **Editor** profile or higher. That user should be a member of the User Group you want to add information for. Contact your administrator if you are not a registered Editor for your User Group.
 
-For the metadata creation using the online editor, GeoNetwork provides a set of simplified metadata templates based on the cited standards: ISO, FGDC and DC. The templates for vector and raster based on the ISO 19139 are the preferred ones since they are devised in a way that hides the complexity of the ISO19115 standard in the default view. At the same time those templates are extensible with new elements to fit specialized needs through the advanced view.
+For metadata creation using the online editor, GeoNetwork provides a set of simplified metadata templates based on the cited standards available in your GeoNetwork instance: typically ISO19139 (an implementation of ISO19115), FGDC and Dublin Core. The templates for describing vector or raster geographic data based on ISO19139 are preferred because they are devised in a way that hides much of the complexity of the ISO19115 standard in the default view. At the same time those templates are extensible with new elements to fit specialized needs through the advanced view.
 
-To produce a good metadata record, always try to gather as much details as possible on the resource that you want to describe taking into account the metadata elements that have been presented in the previous chapter. The next step is to fill out properly the fields provided by the metadata templates, while at the same time avoiding duplication of information throughout the form.
+To produce a good metadata record, always try to:
+ - gather as many details as possible on the resource that you want to describe taking into account the metadata elements that have been presented in the previous chapter
+ - develop and reuse the same terms or phrases to describe the concepts you want to capture. A record of these terms and phrases will be helpful for others in understanding your metadata.
+ 
+The next step is to fill out properly the fields provided by the metadata templates, while at the same time avoiding duplication of information throughout the form.
 
-The most important fields that may not be waived while compiling a standard based metadata record are the following: **Title, Date of Creation o Publication, Abstract, Language used for documenting data, Topic Category, Scale, Maintenance and Update Frequency, Metadata Author, Language Used for Documenting Metadata.**
+The most important fields that may not be waived while compiling a standard based metadata record are the following: **Title, Date of Creation or Publication, Abstract, Language used for documenting data, Topic Category, Scale, Maintenance and Update Frequency, Metadata Author, Language Used for Documenting Metadata.**
 
 In addition to the main mandatory fields, we recommend you to fill out these optional but critical fields (if information is available): **Purpose - Keywords - Presentation Form - Status - Spatial Representation Type - Geographic Location - Reference System Info - Temporal Extent - Data Quality Info - Access and Use Constraints - Point of Contact - Distribution Info: Online Resources.**
 
@@ -19,8 +23,8 @@ In addition to the main mandatory fields, we recommend you to fill out these opt
 
 *Next section will guide you through the process of metadata creation using the online editor.*
 
-Creating a New Record using the web based Metadata Editor
----------------------------------------------------------
+Creating a New Record using the Metadata Editor
+-----------------------------------------------
 
 #. In the home page, click on the **Administration Tab**.
 
@@ -115,13 +119,10 @@ Fields are either **free text fields** or **drop down lists**. Free text means y
     
     *Describing multilingual data*
 
-Entering Metadata for your Map
-==============================
+Example: Entering metadata for a Thematic Map
+---------------------------------------------
 
-As we mentioned in the introduction to this guide, GNos provides tools to describe any type of geographic data (verctor layers, raster, tables, map services, etc.) as well as general document like reports, projects, papers, etc. For the purpose of this Quick Start Guide, an example of required and useful metadata elements to properly describe a thematic map will be provided hereafter. You should gather as much information as possible to identify and understand the map’s resource and characteristics you want to describe. Use the default view to start. If necessary, you can always switch to advanced view or come back later and edit the record with the additonal information collected.
-
-Entering Metadata For Your Map
-------------------------------
+As we mentioned in the introduction to this guide, GeoNetwork provides tools to describe any type of geographic data (vector layers, raster, tables, map services, etc.) as well as general documents like reports, projects, papers, etc. For the purpose of this Quick Start Guide, an example of required and useful metadata elements to properly describe a thematic map will be provided hereafter. You should gather as much information as possible to identify and understand the map’s resource and characteristics you want to describe. Use the default view to start. If necessary, you can always switch to advanced view or come back later and edit the record with the additional information collected.
 
 Please follow these steps to enter your map's metadata. Note that we will only go through the fields that have been identified as compulsory (i.e. those fields marked with the asterix [*], mandatory or highly recommended).
 
@@ -178,10 +179,9 @@ After completion of this section, you may select the Type of document that you a
 When done, you may click ``Save`` or ``Save and Close`` to close the editing session.
 
 
-
 Metadata validation
 -------------------
-In editing mode, editors could validate the current metadata record against standard rules and recommendations.
+In editing mode, editors can validate the current metadata record against standard rules and recommendations.
 
 For all standards, a first level of validation is made for XML metadata validation based on XML Schema (XSD).
 For ISO19139 records, other rules are checked:
@@ -203,14 +203,14 @@ The validation report display the list of rules checked and their status (pass o
 
 
 
-
-
 Creating a Thumbnail
 --------------------
 
-Next, you need to create a graphic overview of your map which will be for a double purpose; as small thumbnail will be displayed in search results and as large thumbnail with much more details, to allow users to properly evaluate the data usefulness. As for the latest, the image that you will use as source should be a significant reproduction of the real dataset, possibly inclusive of the legend.
+To help the user identify a metadata record of interest, you can create a graphic overview (or thumbnail) in the form of an image and attach it to the metadata record. For example, if your metadata record describes some geographic dataset then the the graphic overview could be an image of the map with legend produced by an OGC Web Map Service.
 
-To create a thumbnail, go to the editing menu for your map. If you are no longer in editing mode, retrieve the map from one of the search options then click on Edit. Then follow these simple steps:
+You can associate two thumbnails with a record: a small thumbnail, which will be displayed in search results and a large thumbnail with more details in case the user is interested in more information. The large thumbnail will be displayed when the user clicks on the small thumbnail.
+
+To create a thumbnail, go to the editing menu. If you are no longer in editing mode, retrieve the metadata record using one of the search options then click on Edit. Then follow these simple steps:
 
 From the editing menu, click on the Thumbnails button on the top or bottom of the page.
 
@@ -276,13 +276,13 @@ The behaviour the *Interactive Map* button depends if user indicated the layer n
 Linking data for download
 -------------------------
 
-Finally, you can upload the dataset stored on your local computer and then create a link between data and related description. Files in whatever format can be uploaded: doc, PDF, images, vector layers, etc. For the latter the distribution in a compressed file is recommended. You can include the verctor data, the legend, any documentation that can help the interpretation of the data, related reports, detailed descriptions of the data processing, base data used to create the dataset specified and/or other relevant information. Follow these guidelines for uploading datasets:
+You can upload a dataset stored on your local computer and create a link between data and the metadata description. Files in whatever format can be uploaded: doc, PDF, images, vector layers, etc. For the latter the distribution in a compressed file is recommended. You can include the vector data, the legend, any documentation that can help the interpretation of the data, related reports, detailed descriptions of the data processing, base data used to create the dataset specified and/or other relevant information. Follow these guidelines for uploading datasets:
 
-- Make sure the total size of the compressed file is reasonable (less than 50 MB). Should your data be bigger than 50MB, consider a different mechanism to serve this data, e.g. through an FTP or HTTP server and than link the resource through an online resource ‘Web address (URL)’.
+- Make sure the total size of the compressed file is reasonable (eg. less than 100 MB). Should your data be bigger than 100MB, consider a different mechanism to serve this data, e.g. through an FTP or HTTP server and than link the resource through an online resource ‘Web address (URL)’.
 
-- You can create several smaller files when appropriate and upload them sequentially.
+- Create several smaller files when appropriate and upload them sequentially.
 
-- You add the size of the file at the end of the description field.
+- Add the size of the file at the end of the description field.
 
 To Upload a Dataset, follow these steps:
 
@@ -292,9 +292,9 @@ To Upload a Dataset, follow these steps:
 
 #. Provide a short description of the data;
 
-#. Click the Browse button and navigate to the folder where the file to be released is stored. Consider if you want to upload multiple files as one unique zip file or as multiple separate downloads. It is a good idea to add additional documentation with the datasets that provide the user with information related to the data described. Remind: the size of a single file to upload can't exceed 50 Mbytes;
+#. Click the Browse button and navigate to the folder where the file to be released is stored. Consider if you want to upload multiple files as one unique zip file or as multiple separate downloads. It is a good idea to add additional documentation with the datasets that provide the user with information related to the data described. Reminder: by default, the size of a single file upload cannot exceed 100 Mbytes unless your system administrator has configured a larger limit in the GeoNetwork config.xml file;
 
-#. Click Upload and then Save.
+#. Click Upload and then Save the metadata record.
 
 .. figure:: uploadData.png
 
@@ -508,22 +508,22 @@ If user manually add keywords just before computing bounding box, then it's reco
 
 
 
-Assigning Privileges for a Map
-------------------------------
+Assigning Privileges 
+--------------------
 
-As an important step of entering metadata to your map, you need to assign privileges for each map. This means that you will identify which work groups have which privileges, i.e. view, download, etc. for your particular map.
+To assign privileges to your metadata record and any attached data you will need to identify User Groups and the privileges you want to assign to users in these groups. eg. View the metadata, download the data attached to the record, etc.
 
-For instance, you can define if the information and related services is visible to all (Internet users) or just to internal users only (Intranet). Privileges are assigned on a per group basis. Depending on the user profile (Guest, Registered User, Editor, Admin etc.) access to these functions may differ on a per user basis.
+For instance, you can specify that the metadata and related services are visible to all (Internet users) or just to internal users only (Intranet). Privileges are assigned on a per group basis. Depending on the user profile (Guest, Registered User, Editor, Admin etc.) access to these functions may differ on a per user basis.
 
-To assign privileges for your map, follow these steps:
+To assign privileges, follow these steps:
 
-- Find your map by using the search option. Whether you have multiple or single results from the search, on top of the individual record or next to the record you will always see a row of buttons including a Privileges button.
+- Find your metadata record by using the search option. Whether you have multiple or single results from the search, on top of the individual record or next to the record you will always see a row of buttons including a Privileges button.
 
 .. figure:: privilegesButton.png
 
 	*The editing toolbar with Privileges button*
 
-- Click on the Privileges button. This will take you to a new page. You can assign certain privileges to specific groups by selecting or deselecting them from this page. Simply click on the small box next to the privilege to place or remove a checkmark. Set All and Clear All buttons allow you to place and remove the checkmarks all at once.
+- Click on the Privileges button. A drop down menu will appear from which you can assign certain privileges to specific groups using checkboxes. Simply click on the small box next to the privilege to place or remove a checkmark. Set All and Clear All buttons allow you to place and remove the checkmarks all at once.
 
 .. figure:: privilegesSetting1.png
 
@@ -531,24 +531,24 @@ To assign privileges for your map, follow these steps:
 
 Below is a brief description for each privilege to help you identify which ones you should assign to which group(s).
 
-**Publish**: Users in the specified group/s are able to see the map, i.e. if searching with matching criteria.
+**Publish**: Users in the specified group/s are able to view the metadata eg. if it matches search criteria entered by such a user.
 
-**Download**: Users in the specified group/s are able to download the map.
+**Download**: Users in the specified group/s are able to download the data.
 
-**Interactive Map**: Users in the specified group/s are able to get an interactive map. The interactive map has to be created separately using a Web Map Server, which is part of the GeoNetwork opensource application.
+**Interactive Map**: Users in the specified group/s are able to get an interactive map. The interactive map has to be created separately using a Web Map Server such as GeoServer, which is distributed with GeoNetwork.
 
-**Featured**: When selected, the map is placed in the Features Maps of the home page and it appears there randomly.
+**Featured**: When randomly selected by GeoNetwork, the metadata record can appear in the `Featured` section of the GeoNetwork home page.
 
-**Notify**: Users in that work group receive notification that the map has been uploaded.
+**Notify**: Users in the specified group receive notification if data attached to the metadata record is downloaded.
 
-Assigning Categories for a Map
-------------------------------
+Assigning Categories
+--------------------
 
-As a final step to entering metadata for a map, you should assign categories for it. The assigned categories will determine the categories the map will display under on the home page. To assign categories for a map, follow these steps:
+Each GeoNetwork site has a set of local categories that can be used to classify metadata records for easy searching. To assign categories to a metadata record, follow these steps:
 
-- Find your map by using the search option. Whether you have multiple or single results from your search, on top of the individual record or next to the record, you will always see a row of buttons including a **Categories** button.
+- Find your metadata record using the search option. Whether you have just one or many results from your search, you will always see a row of buttons including a **Categories** button.
 
-- Click on the **Categories** button. This will take you to a new page. You can assign one or multiple categories selecting or deselecting them from this page. Simply click on the small box next to the category to place or remove a checkmark.
+- Click on the **Categories** button. A drop down menu will appear from which you can assign one or more categories using checkboxes. Simply click on the small box next to the category to place or remove a checkmark.
 
 .. figure:: categoriesManag.png
 
@@ -558,7 +558,7 @@ As a final step to entering metadata for a map, you should assign categories for
 
 Multilingual metadata in ISO19139
 ---------------------------------
-Editors could create multilingual metadata using ISO 19139. A default template is provided but user could add translation to an existing record.
+Editors can create multilingual metadata for ISO19139. A default template is provided but user could add translation to an existing record.
 
 To declare a new language in a metadata record:
 
@@ -581,7 +581,7 @@ By default, the selected language is the GUI language if language is defined in 
 .. figure:: editor-multilingual.png
 
 
-Optionnaly, Google translation service could be used. Translation could be suggested to the editor using the small icon right to the language selector. The translation convert the default metadata character string in the current selected language. 
+Alternatively, Google translation service could be used. Translation could be suggested to the editor using the small icon right to the language selector. The translation convert the default metadata character string in the current selected language. 
 
 
 In view mode, according to GUI language : if GUI language is available in the metadata, the element is displayed in this language else the element is displayed in metadata default language.

@@ -325,7 +325,7 @@ You can link a dataset published in an OGC WMS service using the online resource
 
 
 
-
+.. _GeoPublisher:
 
 Publish uploaded data as WMS, WFS in GeoServer
 ----------------------------------------------

@@ -63,13 +63,12 @@ XML schema implementation* for the encoding of this XML.
 Metadata profiles
 -----------------
 
-GeoNetwork supports multiple metadata profiles. Profiles can take the form of
-*Templates* that you can create using the metadata editor.
-Using the Advanced view of the editor, virtually all of the metadata elements
-are accessible to the user.
+A metadata profile is an adaptation of a metadata standard to suit the needs of a community. For example, the ANZLIC profile is an adaptation of the ISO19115/19139 metadata standard for Australian and New Zealand communities. A metadata profile could be implemented as:
 
-Support for extensions to a metadata standard can also be achieved relatively
-quick by an experienced XML/XSL software engineer.
+- a specific metadata *template* that restricts the fields/elements a user can see with a set of validation rules to check compliance
+- all of the above plus new fields/elements to capture concepts that aren't in the basic metadata standard
+
+Building a metadata profile is described in the Schema Plugins section of the GeoNetwork Developers Manual. Using this guide and the GeoNetwork schema plugin capability, a profile can be built by an experienced XML/XSL software engineer.
 
 Transition between metadata standards
 -------------------------------------

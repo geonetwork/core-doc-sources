@@ -9,9 +9,8 @@ Basic configuration
 System configuration
 --------------------
 
-Most of the GeoNetwork system configuration parameters can be changed using the
-web interface. Those parameters that cannot be changed through the web interface can
-usually be changed using the GAST application.
+Many GeoNetwork System configuration parameters can be changed using the
+web interface. Database parameters can be changed using the GAST application.
 
 .. important:: Configuration of these parameters is critically important for a proper
    functioning of the GeoNetwork catalogue in an operational context. Failing to
@@ -19,7 +18,7 @@ usually be changed using the GAST application.
    expected. For example, downloads may fail to be correctly processed, or metadata
    harvesting from other servers may not work.
 
-To get to the System configuration, you must be logged on as administrator first. Open the Administration page and select System configuration (The link is surrounded with a red rectangle).
+To get to the System configuration parameters, you must be logged on as administrator first. Open the Administration page and select System configuration (The link is inside the red ellipse).
 
 .. important:: New installations of GeoNetwork use admin for both username
    and password. It is important to change this from the Administration page once
@@ -29,69 +28,94 @@ To get to the System configuration, you must be logged on as administrator first
 
     *The link to the System configuration page*
 
-Clicking the page’s link you will get the set of parameters that you can change. Here follows a detailed description of them:
+Clicking the page’s link you will get the set of parameters that you can change. A detailed description of these parameters follows:
 
-.. figure:: web-config-options.png
+.. figure:: web-config-options-1.png
 
-    *The configuration options*
+    *The configuration options - part 1*
 
-At the bottom of the page there are some buttons with the following purpose:
+.. figure:: web-config-options-2.png
 
-Back Simply returns to the main administration page. Save Saves the current
-options. If some options are invalid, the system will show a dialogue with the wrong
-parameter and will focus its text field on the page. Once the configuration is saved
-a success dialogue will be shown. Refresh This button simply refreshes the displayed
-options taking the new values from the server. This can be useful if some options
-get changed dynamically (for example by another user).
+    *The configuration options - part 2*
 
-Public host and port usage
+.. figure:: web-config-options-3.png
 
-Up to now, the server’s host and port are used in these cases:
+    *The configuration options - part 3*
 
-#. During an editing session, when adding data links to a metadata. The host and port will be used to build download links to store inside the metadata.
+Firstly, at the bottom of the page (you will need to scroll down) there are three buttons with the following purpose:
 
-#. During CSW requests. The GetCapabilities operation returns an XML document with HTTP links to the CSW services. These links are dynamically built using the host and port values.
+ - **Back** Simply returns to the main administration page, ignoring any changes you may have made. 
+ - **Save** Saves the current options. If some options are invalid, the system will show a dialogue with the wrong parameter and will focus its text field on the page. Once the configuration is saved a success dialogue will be shown. 
+ - **Refresh** This button refreshes the displa
+ yed options taking the new values from the server. This can be useful if some options get changed dynamically (for example by another user).
 
-General Site parameters
-```````````````````````
+Site parameters
+```````````````
 
-*Name* The name of the GeoNetwork installation. This name will be used to identify the node in operations like the harvesting.
+*Catalogue identifier* A universally unique identifier (uuid) that distinguishes your catalogue from any other catalogue. This a unique identifier for your catalogue and its best to leave it as a uuid. 
 
-*Organization* The organization the node belongs to. Just for informative reasons.
+*Name* The name of the GeoNetwork node. Information that helps identify the catalogue to a human user.
 
-*Server* Here you have to enter the address of your GeoNetwork’s node. This address is important because it will be used to access the node.
+*Organization* The organization the node belongs to. Again, this is information that helps identify the catalogue to a human user.
+
+Server parameters
+`````````````````
+
+Here you have to enter the details of the web address of your GeoNetwork node. This address is important because it will be used to build addresses that access services and data on the GeoNetwork node. In particular:
+
+#. building links to data file uploaded with a metadata record in the editor.
+#. the CSW server is asked to describe it's capabilities. The GetCapabilities operation returns an XML document with HTTP links to the CSW services provided by the server. These links are dynamically built using the host and port values.
+
+
+*Protocol* The HTTP protocol used to access the server. Choosing http means that all communication with GeoNetwork will be visible to anyone listening to the protocol. Since this includes usernames and passwords this is not secure. Choosing https means that all communication with GeoNetwork will be encrypted and thus much harder for a listener to decode. 
 
 *Host* The node’s address or IP number. If your node is publicly accessible from the Internet, you have to use the machine’s domain/address. If your node is hidden into your private network and you have a firewall or web server that redirects incoming calls to the node, you have to enter the public address of the firewall or web server. A typical configuration is to have an Apache web server on address A that is publicly accessible and redirects the requests to a Tomcat server on a private address B. In this case you have to enter A in the host parameter.
 
-*Port* The node’s port (usually 80 or 8080). If the node is hidden, you have to enter the port on the public firewall or web server.
+*Port* The node’s port (usually 80 or 8080). If the node is hidden, you have to enter the port on the public firewall or web server. 
 
-*Intranet* A common need for an organisation is to discriminate between internal anonymous users (users that access the node from within the organisation) and external ones (users from the Internet). Node’s administrators can specify different privileges for internal and external anonymous users and, in order to do so, they have to specify the parameters of the internal network.
+
+Intranet Parameters
+```````````````````
+
+A common need for an organisation is to discriminate between internal anonymous users (users that access the node from within the organisation) and external ones (users from the Internet). Node’s administrators can specify different privileges for internal and external anonymous users and, in order to do so, they have to specify the parameters of the internal network.
 
 *Network* The internal network’s address in IP form.
 
 *Netmask* The network’s mask.
 
-Catalogue services (CSW, Z39.50)
-````````````````````````````````
 
-OGC CSW configuration
-~~~~~~~~~~~~~~~~~~~~~
+Metadata Search Results
+```````````````````````
 
-See :doc:`../cswserver/index`
+Configuration settings in this group determine what the limits are on user interaction with the search results.
+
+*Maximum Selected Records* The maximum number of search results that a user can select and process with the batch operations eg. Set Privileges, Categories etc.
+
+
+Multi-Threaded Indexing
+```````````````````````
+
+Configuration settings in this group determine how many processor threads are allocated to indexing tasks in GeoNetwork. If your machine has many processor cores, you can now determine how many to allocate to GeoNetwork indexing tasks. This can bring dramatic speed improvements on large indexing tasks (eg. changing the privileges on 20,000 records) because GeoNetwork can split the indexing task into a number of pieces and assign them to different processor cores.
+
+*Number of processing threads* The maximum number of processing threads that can be allocated to an indexing task. 
+
+Note: this option is only available for databases that have been tested. Those databases are PostGIS and Oracle.
+
+Lucene Index Optimizer
+```````````````````````
+
+Configuration settings in this group determine when the Lucene Index Optimizer is run. By default, this takes place at midnight each day. With recent upgrades to Lucene, particularly Lucene 3.6.1, the optimizer is becoming less useful, so this configuration group will very likely be removed in future versions.
 
 Z39.50 configuration
 ~~~~~~~~~~~~~~~~~~~~
 
-*Z39.50*: GeoNetwork can act as a Z39.50 server, which
-is an OGC communication protocol to query and retrieve metadata.
+GeoNetwork can act as a Z39.50 server. Z39.50 is an older communication protocol used for distributed searching.
 
-*Enable*: Check this option to start the Z39.50
-submodule. Please, notice that GeoNetwork must be restarted in order to make
-this change active.
+*Enable*: Check this option to start the Z39.50 server. Please, notice that GeoNetwork must be restarted in order to make this change active.
 
 *port*: This is the port on which GeoNetwork will be
-listening for incoming Z39.50 requests. Usually, the value of 2100 is a
-standard one, but to have multiple GeoNetwork nodes on the same machine you
+listening for incoming Z39.50 requests. Z3950 servers can run on different ports, but 210, 2100 and 6668 are common choices.
+To have multiple GeoNetwork nodes on the same machine you
 have to change this value in order to avoid port conflicts between the
 different nodes.
 
@@ -201,6 +225,10 @@ When using either the GeoNetwork database or LDAP for authentication, you can al
 Shibboleth authentication requires interaction with Apache web server. In particular, the apache web server must be configured to require Shibboleth authentication to access the path entered in the configuration. The apache web server configuration will contain the details of the shibboleth server that works out where a user is located (sometimes called a 'where are you from' server).
 
 The remainder of the shibboleth login configuration describes how shibboleth authentication attributes are mapped to GeoNetwork user database fields as once a user is authenticated against shibboleth, their details are copied to the local GeoNetwork database.
+
+Configuring OGC Catalogue Services Web (CSW)
+````````````````````````````````````````````
+See :doc:`../cswserver/index`
 
 Configuring User Self-Registration
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

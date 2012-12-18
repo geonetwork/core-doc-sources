@@ -1,7 +1,7 @@
 .. _multilingual:
 
 Multilingual search
-=========
+===================
 
 Introduction
 ------------

@@ -12,23 +12,23 @@ System configuration
 Many GeoNetwork System configuration parameters can be changed using the
 web interface. Database parameters can be changed using the GAST application.
 
-.. important:: Configuration of these parameters is critically important for a proper
-   functioning of the GeoNetwork catalogue in an operational context. Failing to
-   properly change these settings may result in a system that does not function as
-   expected. For example, downloads may fail to be correctly processed, or metadata
-   harvesting from other servers may not work.
+.. important:: Configuration of these parameters is critically important for 
+   for a GeoNetwork catalogue in an operational context. Misunderstanding 
+   these settings may result in a system that does not function as
+   expected. For example, downloads may fail to be correctly processed, or 
+	 metadata harvesting from other servers may not work.
 
 To get to the System configuration parameters, you must be logged on as administrator first. Open the Administration page and select System configuration (The link is inside the red ellipse).
 
 .. important:: New installations of GeoNetwork use admin for both username
-   and password. It is important to change this from the Administration page once
-   you logged on!
+   and password. It is important to change the password using the links in the
+	 Administration page the first time you log on!
 
 .. figure:: web-config-where.png
 
     *The link to the System configuration page*
 
-Clicking the page’s link you will get the set of parameters that you can change. A detailed description of these parameters follows:
+Clicking the link bring up the system configuration menu. A detailed description of these parameters follows.
 
 .. figure:: web-config-options-1.png
 
@@ -42,7 +42,7 @@ Clicking the page’s link you will get the set of parameters that you can chang
 
     *The configuration options - part 3*
 
-Firstly, at the bottom of the page (you will need to scroll down) there are three buttons with the following purpose:
+Note: at the bottom of the page (you will need to scroll down) there are three buttons with the following purpose:
 
  - **Back** Simply returns to the main administration page, ignoring any changes you may have made. 
  - **Save** Saves the current options. If some options are invalid, the system will show a dialogue with the wrong parameter and will focus its text field on the page. Once the configuration is saved a success dialogue will be shown. 
@@ -63,12 +63,12 @@ Server parameters
 Here you have to enter the details of the web address of your GeoNetwork node. This address is important because it will be used to build addresses that access services and data on the GeoNetwork node. In particular:
 
 #. building links to data file uploaded with a metadata record in the editor.
-#. when the OGC CSW server is asked to describe it's capabilities. The GetCapabilities operation returns an XML document with HTTP links to the CSW services provided by the server. These links are dynamically built using the host and port values.
+#. when the OGC CSW server is asked to describe its capabilities. The GetCapabilities operation returns an XML document with HTTP links to the CSW services provided by the server. These links are dynamically built using the host and port values.
 
 
 *Protocol* The HTTP protocol used to access the server. Choosing http means that all communication with GeoNetwork will be visible to anyone listening to the protocol. Since this includes usernames and passwords this is not secure. Choosing https means that all communication with GeoNetwork will be encrypted and thus much harder for a listener to decode. 
 
-*Host* The node’s address or IP number. If your node is publicly accessible from the Internet, you have to use the machine’s domain/address. If your node is hidden into your private network and you have a firewall or web server that redirects incoming calls to the node, you have to enter the public address of the firewall or web server. A typical configuration is to have an Apache web server on address A that is publicly accessible and redirects the requests to a Tomcat server on a private address B. In this case you have to enter A in the host parameter.
+*Host* The node’s address or IP number. If your node is publicly accessible from the Internet, you have to use the domain name. If your node is hidden inside your private network and you have a firewall or web server that redirects incoming requests to the node, you have to enter the public address of the firewall or web server. A typical configuration is to have an Apache web server on address A that is publicly accessible and redirects the requests to a Tomcat server on a private address B. In this case you have to enter A in the host parameter.
 
 *Port* The node’s port (usually 80 or 8080). If the node is hidden, you have to enter the port on the public firewall or web server. 
 
@@ -76,11 +76,11 @@ Here you have to enter the details of the web address of your GeoNetwork node. T
 Intranet Parameters
 ```````````````````
 
-A common need for an organisation is to discriminate between internal anonymous users (users that access the node from within the organisation) and external ones (users from the Internet). Node’s administrators can specify different privileges for internal and external anonymous users and, in order to do so, they have to specify the parameters of the internal network.
+A common need for an organisation is to automatically discriminate between anonymous internal users that access the node from within an organisation (Intranet) and anonymous external users from the Internet. GeoNetwork defines anonymous users from inside the organisation as belonging to the group *Intranet*, while anonymous users from outside the organisation are defined by the group *All*. To automatically distinguish users that belong to the Intranet group you need to tell GeoNetwork the intranet IP address and netmask.
 
-*Network* The internal network’s address in IP form.
+*Network* The intranet address in IP form (eg. 147.109.100.0).
 
-*Netmask* The network’s mask.
+*Netmask* The intranet netmask (eg. 255.255.255.0).
 
 
 Metadata Search Results
@@ -213,9 +213,9 @@ For some functions (eg. harvesting) GeoNetwork must be able to connect to remote
 
     *The proxy configuration options*
 
-*Host*: The proxy’s name or address to use (usually an IP address).
+*Host*: The proxy server name or address to use (usually an IP address).
 
-*Port*: The proxy’s port to use.
+*Port*: The proxy server port to use.
 
 *Username* (optional): a username should be provided if the proxy server requires authentication.
 

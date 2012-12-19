@@ -11,4 +11,5 @@ Quick Start Guide
     viewing/index.rst
     new_metadata/index.rst
     metadata_concepts/index.rst
+    newfeatures/index.rst
     installing/index.rst

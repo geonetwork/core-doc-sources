@@ -196,12 +196,41 @@ Notes:
 - Oracle ojdbc-14.jar or ojdbc5.jar or ojdbc6.jar (depending on the version of Java being used) and sdoapi.jar should also be installed in the container class path (for tomcat: `common/lib` or `lib` and for jetty: `jetty/lib/ext`). 
 - advanced: you should check the default transaction isolation level for your database driver. READ_COMMITTED appears to be a safe level of isolation to use with GeoNetwork for commonly used databases. Also note that McKoi can only support SERIALIZABLE (does anyone still use McKoi?). For more on transaction isolation see http://en.wikipedia.org/wiki/Isolation_%28database_systems%29.
 
-Oracle specific issues
-~~~~~~~~~~~~~~~~~~~~~~
+.. _database_specific_issues:
+
+Specific Database Issues
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+Oracle
+''''''
 
 ORACLE on Linux (x86_64): if your connection with the database takes a long time to establish or frequently times out then adding `-Djava.security.egd=file:/dev/../dev/urandom` to your JAVA_OPTS environment variable (for tomcat) or the start-geonetwork.sh script may help. For more information on this see https://kr.forums.oracle.com/forums/thread.jspa?messageID=3699989.
 
 ORACLE returns `ORA-01000: maximum open cursors exceeded` whilst filling the tables in a newly created GeoNetwork database. This occurs because you have enabled the prepared statement pool in either the container database configuration or the GeoNetwork database configuration in `WEB-INF/config.xml`. Until the database fill statements used by GeoNetwork are refactored, you will not be able to use a prepared statement cache with ORACLE if you are creating and filling a new GeoNetwork database so you should set the DBCP maxOpenPreparedStatements parameter to -1. *However*, after the database has been created and filled, you *can* use a prepared statement cache so, you should stop GeoNetwork and configure the prepared statement cache as described above before restarting.
+
+
+DB2
+'''
+
+DB2 may produce an exception when GeoNetwork is started for the first time::
+
+        DB2 SQL error: SQLCODE: -805, SQLSTATE: 51002, SQLERRMC: NULLID.SYSLH203
+
+There are two possible solutions to this problem:
+
+- Setup the database manually using a procedure like the following::
+
+        db2 create db geonet
+        db2 connect to geonet user db2inst1 using mypassword
+        db2 -tf INSTALL_DIR/WEB-INF/classes/setup/sql/create/create-db-db2.sql > res1.txt
+        db2 -tf INSTALL_DIR/WEB-INF/classes/setup/sql/data/data-db-default.sql > res2.txt
+        db2 connect reset
+
+After execution, check **res1.txt** and **res2.txt** if errors have occurred.
+
+- Drop the database, re-create it, locate the file db2cli.lst in the db2 installation folder and execute the following command::
+
+        db2 bind @db2cli.lst CLIPKG 30**
 
 .. _adv_configuration_larger_catalogs:
 

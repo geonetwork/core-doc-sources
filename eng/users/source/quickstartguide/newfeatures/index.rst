@@ -22,7 +22,9 @@ The new GeoNetwork opensource comes with substantial upgrades of different compo
 - **Virtual CSW Endpoints:** Now you can define a custom CSW service that works with a set of metadata records that you define. See :ref:`VirtualCSW`.
 - **Configuration Overrides:** Now you can add your own configuration options to GeoNetwork, keep them in one file and maintain them independently from GeoNetwork. See :ref:`adv_configuration_overriddes`.
 - **Multilingual Indexing:** If you have to cope with metadata in different languages, GeoNetwork can now index each language and search all across language indexes by translating your search terms. See :ref:`multilingual`.
-- **Many other improvements:** charset detection and conversion on import, batch application of an XSLT to a selected set of metadata records, remote notification of metadata changes, automatic integration tests to improve development and reduce regression and, of course, many bug fixes.
+- **Enhanced Thesaurus support:** Thesauri can be loaded from ISO19135 register records and SKOS files. Keywords in ISO records are anchored to the definition of the concept in the thesaurus.  See :ref:`thesaurus`.
+- **System Monitoring:** Automatically monitoring the health of a Geonetwork web application. See :ref:`monitoring`.
+- **Many other improvements:** charset detection and conversion on import, batch application of an XSLT to a selected set of metadata records (see :ref:`processing`), remote notification of metadata changes, automatic integration tests to improve development and reduce regression and, of course, many bug fixes.
 
 .. figure:: Home_page_tn.png
 

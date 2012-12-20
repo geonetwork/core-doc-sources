@@ -16,13 +16,13 @@ web interface. Database parameters can be changed using the GAST application.
    for a GeoNetwork catalogue in an operational context. Misunderstanding 
    these settings may result in a system that does not function as
    expected. For example, downloads may fail to be correctly processed, or 
-	 metadata harvesting from other servers may not work.
+   metadata harvesting from other servers may not work.
 
 To get to the System configuration parameters, you must be logged on as administrator first. Open the Administration page and select System configuration (The link is inside the red ellipse).
 
 .. important:: New installations of GeoNetwork use admin for both username
    and password. It is important to change the password using the links in the
-	 Administration page the first time you log on!
+   Administration page the first time you log on!
 
 .. figure:: web-config-where.png
 
@@ -286,6 +286,8 @@ The remainder of the shibboleth login configuration describes how shibboleth aut
 Configuring OGC Catalogue Services Web (CSW)
 --------------------------------------------
 See :doc:`../csw-configuration/index`
+
+.. _config_user_self_registration:
 
 Configuring User Self-Registration
 ----------------------------------

@@ -3,7 +3,7 @@
 User Self-Registration Functions
 ================================
 
-To enable the self-registration functions, see the 'Basic Administration' section of this manual. When self-registration is enabled, the banner menu functions shown to a user who has not logged in should contain two additional choices: 'Forgot your password?' and 'Register' as follows:
+To enable the self-registration functions, see :ref:`config_user_self_registration` section of this manual. When self-registration is enabled, the banner menu functions shown to a user who has not logged in should contain two additional choices: 'Forgot your password?' and 'Register' as follows:
 
 .. figure:: usr-banner-functions.png
 

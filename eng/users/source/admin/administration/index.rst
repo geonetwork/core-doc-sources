@@ -140,4 +140,4 @@ Rights associated with the profiles are illustrated in detail in the list below:
 User Self-Registration
 ----------------------
 
-
+See :ref:`user_self_registration`.

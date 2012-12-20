@@ -6,39 +6,28 @@ Import facilities
 .. index:: pair: MEF; import
 .. index:: pair: XML; import
 
-File import
------------
+Importing a metadata record from XML or a MEF file
+--------------------------------------------------
 
-The file import facility allows you to import metadata records in XML format or MEF format or copy/paste XML metadata to insert. In order to use this facility, you have to be logged in as an editor. After the login step, go to the administration page and select the Metadata insert link.
+The file import facility allows you to import metadata records in three ways:
+
+#. XML file from the filesystem on your machine.
+#. MEF file from the filesystem on your machine
+#. Copy/Paste XML
+
+In order to use this facility, you have to be logged in as an editor. After the login step, go to the administration page and select the Metadata insert link.
 
 .. figure:: web-xmlimport-where.png
 
-Clicking the link, you will open the metadata import page. You have to specify a set of parameters to make the import working. Depending on the insert type you will perform:
-
-XML file import
-```````````````
+Clicking the link will open the metadata import page. You will then have to specify a set of parameters. The following screenshot shows the parameters for importing an XML file.
 
 .. figure:: xmlfileimport-options.png
 
     *The XML file import options*
 
-For both, XML and MEF file import, you could choose actions to be performed at import.
-Import actions options are: *No action on import* (nothing
-done during import process), *Overwrite metadata with same UUID*
-(this option will delete existing metadata with the same UUID, and add the new one),
-*Generate UUID for inserted metadata* (this option will force a new
-UUID for each metadata inserted).
+We'll describe the options you see on this page because they are common ways you can import metadata records in this interface. 
 
-Stylesheet option: This is a powerful option because allows you to specify a stylesheet for
-an XSL transformation. The drop down control is filled with files taken from the
-web/xsl/conversion/import folder: all XSL files you put there will be made available.
-This is a dynamic process so you don’t have to  restart GeoNetwork. The purpose of this option
-is to allow the conversion of a metadata into a suitable format that is supported by GeoNetwork.
-Validate option: This is a simple validation step that you can choose to perform.
-The metadata is validated against its schema. Group option: You have to select a group to
-associate to the imported metadata. Usually the group is the creator of the metadata set.
-Category option: You can specify one category to associate to your metadata in order to
-simplify the search.
+.. include:: importActions.rst
 
 MEF file import
 ```````````````
@@ -47,84 +36,67 @@ MEF file import
 
     *The MEF file import options*
 
-As presented before, only actions options could be selected during a MEF import.
+If you select *MEF file* in the *File type* option, only the Import actions option group is show. See above for more details. Note: a MEF file can contain more than one metadata record.
 
-XML metadata insert
-```````````````````
+Copy/Paste XML
+``````````````
 
 .. figure:: xmlinsert-options.png
 
     *The XML insert options*
 
-Choosing the radio button Copy/Paste, you could perform an XML insert, directly copy/pasting
-your metadata record. Please refer to XML import for options you could use.
+If you select *Copy/Paste* in the Insert mode option, then a text box appears. You can copy the XML from another window and paste it into that text box. The options for loading that XML are the same as those for loading an XML file - see above. 
 
 Batch import
 ------------
 
-The batch import facility allows you to import a set of metadata into the
-system all at once. In order to use this facility, you have to be logged in as
-an administrator. After the login step, go to the administration page and select
-the batch import’s link.
+The batch import facility allows you to import a set of metadata records in the form of XML or MEF files. In order to use this facility, you have to be logged in as an administrator. After the login step, go to the administration page and select the *Batch Import* link.
 
 .. figure:: web-batchimport-where.png
 
     *How to reach the batch import page*
 
-Clicking the link will open the batch import page. You have to specify a set of parameters to make the import working.
-They are:
-
-Directory This is the full path on the server’s file system of the directory
-to scan. GeoNetwork will look for and try to import all XML or MEF files present 
-into this directory. It is important to notice that this is the directory on the
-*server* machine and *not* on the client of the user that is doing the import.
-Import actions options are also available from bacth import (please refer to
-XML import for options you could use). Validate This is a simple validation 
-step that you can choose to perform. The metadata is validated
-against its schema. Group You have to select a group to associate to the
-imported metadata. Usually the group is the creator of the metadata set.
-Category You can specify one category to associate to your metadata in order to
-simplify the search. Stylesheet This is a powerful option because allows you to
-specify a stylesheet for an XSL transformation. The drop down control is filled
-with files taken from the web/xsl/conversion/import folder: all XSL files you
-put there will be made available. This is a dynamic process so you don’t have to
-restart GeoNetwork. The purpose of this option is to allow the conversion of a
-metadata into a suitable format that is supported by GeoNetwork. Therefore, it
-is important that the result of the transformation matches the schema format
-selected above.
-
-Below the page, there are the following buttons:
-
-Back Goes back to the administration form. Upload Starts the import process.
-When the process ends, the total count of imported metadata will be shown.
-Please notice that the import is transactional: the metadata set will be fully
-imported or fully discarded (there are no partial imports). Files that starts
-with ’.’ or that do not end with ’.xml’ are ignored.
+Clicking the link will open the batch import page. You will then have to specify a set of parameters. The following screenshot shows the parameters for batch import of a set of XML or MEF files.
 
 .. figure:: web-batchimport-options.png
 
     *The batch import options*
 
-Structured import
-`````````````````
+- *Directory* This is the full path on the server’s file system of the directory to scan. GeoNetwork will look for and try to import all XML or MEF files present into this directory. It is important to notice that this is the directory on the *server* machine and *not* on the client of the user that is doing the import.
 
-An hidden feature of the batch import is the possibility to specify some
-import parameters in more detail. This feature is triggered when the
-specified folder contains the import-config.xml file. When this happen, this
-file is read and the standard import switches to the structured one.
+.. include:: importActions.rst
 
-The import-config.xml file has a config root element with the following children:
+At the bottom of the page there are two buttons:
+
+- *Back* Goes back to the administration form. 
+- *Upload* Starts the import process.
+
+Notes on the batch import process
+`````````````````````````````````
+
+- When the import process ends, the total count of imported metadata will be shown
+- The import is transactional: the metadata set will be fully imported or fully discarded (there are no partial imports)
+- Files that start with ’.’ or that do not end with ’.xml’ or '.mef' are ignored
+
+
+Structured batch import using import-config.xml
+```````````````````````````````````````````````
+
+Finer control of the batch import process can be obtained by structuring the metadata files into directories mapped to categories and metadata schemas and describing the mapping in a file called import-config.xml.
+
+The import-config.xml should be placed in the directory from which you will batch import (see *Directory* parameter above). It has a config root element with the following children:
 
 #.  categoryMapping \[1]: this element specifies the mapping of
     directories to categories.
     
     #.  mapping \[0..n]: This element can appear 0 or more times
         and maps one directory name to a category name. It must have
-        a dir attribute that indicates the directory and a to
+        a "dir" attribute that indicates the directory and a "to"
         attribute that indicates the category name.
     #.  default \[1]: This element specifies a default mapping of
         categories for all directories that do not match the other
-        mapping elements. It must have only the to attribute.
+        mapping elements. The default element can only have one 
+        attribute called "to".
 
 #.  schemaMapping \[1]: this element specifies the mapping of
     directories to metadata schemas.
@@ -133,13 +105,13 @@ The import-config.xml file has a config root element with the following children
         and maps one directory to the schema name that must be used
         when importing. The provided schema must match the one used
         by the metadata contained into the specified directory,
-        which must all have the same schema. It must have a dir
-        attribute that indicates the directory and a to attribute
+        which must all have the same schema. It must have a "dir"
+        attribute that indicates the directory and a "to" attribute
         that indicates the schema name.
         
     #.  default \[1]: default behaviour to use when all other
-        mapping elements do not match. It must have only the to
-        attribute.
+        mapping elements do not match. The default element can only have one 
+        attribute called "to".
 
 Here is an example of the import-config.xml file:
 
@@ -159,11 +131,4 @@ Here is an example of the import-config.xml file:
 		</schemaMapping>
 	</config>
 
-The import procedure starts by scanning the provided directory. This can
-contain, beside the import-config.xml file, only subdirectories which name
-will be ignored but used only as a container. Inside each directory, there
-is another level made only by directories that represent a metadata grouping
-for categories. Each directory name will be used as the dir attribute in the
-mapping scheme previously described.
-
-
+As described above, the import procedure starts by scanning the specified *Directory*. Apart from the import-config.xml file, this directory should only contain subdirectories - these are the category directories referred to in the categoryMapping section of the import-config.xml file described above. Each of the category directories should only contain subdirectories - these are the schema directories referred to in the schemaMapping section of the import-config.xml file described above.

@@ -15,3 +15,4 @@ Managing Metadata
     harvesting/index.rst
     formatter/index.rst
     processing/index.rst
+    schemas/index.rst

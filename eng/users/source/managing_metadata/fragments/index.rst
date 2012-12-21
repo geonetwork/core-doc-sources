@@ -31,6 +31,10 @@ Fragments are not handled by GeoNetwork unless xlink support is enabled. See :re
 
 .. figure:: xlink-mechanism.png 
 
+Extracting subtemplates
+```````````````````````
 
+Managing Directories of subtemplates
+````````````````````````````````````
 
 

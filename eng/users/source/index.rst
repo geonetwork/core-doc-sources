@@ -17,6 +17,8 @@ Other documents:
     preface.rst
     quickstartguide/index.rst
     admin/index.rst
+    managing_metadata/index.rst
+    features/index.rst
     appendix/glossary_of_metadata/index.rst
     appendix/iso_topic_categories/index.rst
     appendix/foss4g/index.rst

@@ -98,39 +98,36 @@ its UUID only one copy will be stored. When (a) will be changed in (A), a new
 version will flow to (D) but, thanks to the change date, the copy in (D) will be
 updated with the most recent version.
 
-General notes and issues
-------------------------
-
-General
-```````
+Notes and issues
+----------------
 
 #. The harvesting engine does not store harvesting results. This implies that if the server is restarted the last results are lost.
 
 #. Changes to the harvesting parameters (for example privileges and categories) are taken into account in the next harvesting run.
 
-GeoNetwork harvesting type
-``````````````````````````
+GeoNetwork harvesting
+`````````````````````
 
 #. During harvesting, site icons are harvested and local copies updated. Icons are propagated to new nodes as soon as these nodes harvest from this one.
 #. The metadata UUID is taken from the info.xml file of the MEF bundle. Any UUID stored inside the metadata will be overwritten with this one.
 
-WebDAV harvesting type
-``````````````````````
+WebDAV harvesting
+`````````````````
 
 #.  The same metadata could be harvested several times by different
     harvesting nodes. Anyway, this is not a good practise because every copy
     of the metadata will have a different UUID and the system will fill with
     different copies of the same metadata.
 
-CSW harvesting type
-```````````````````
+CSW harvesting
+``````````````
 
 #.  If the dct:modified element is missing from the GetRecords response
     the metadata will be always harvested.
 #. Any exception during getRecordById operation is discarded and the metadata skipped.
 
-OAI-PMH harvesting type
-```````````````````````
+OAI-PMH harvesting
+``````````````````
 
 #.  The id of the remote server must be a UUID. If not, metadata can be
     harvested but during hierarchical propagation id clashes could corrupt
@@ -139,8 +136,8 @@ OAI-PMH harvesting type
     each metadata. If the schema is not supported the metadata is
     skipped.
 
-OGC service harvesting type
-```````````````````````````
+OGC service harvesting
+``````````````````````
 
 #.  Every time the harvester runs, it will remove previously harvested information
     and create new ones. GeoNetwork will generate the id for all metadata (both service and datasets).
@@ -150,19 +147,19 @@ OGC service harvesting type
 #.  Thumbnails are generated only for Web Map Service (WMS). The service should also support
     the WGS84 projection.
 
-THREDDS catalog harvesting type
-```````````````````````````````
+THREDDS catalog harvesting
+``````````````````````````
 
 #.	Every time the harvester runs, it will remove previously harvested fragments/records and create new fragments/records.
 
-OGC WFS GetFeature harvesting type
-``````````````````````````````````
+OGC WFS GetFeature harvesting
+`````````````````````````````
 
 #.	The first time the harvester runs, new records will be created by combining metadata fragments with a user specified template. Fragments can be saved into the GeoNetwork catalog as subtemplates and XLink'd into the template or they can be copied into the template.
 #.	Thereafter, every time the harvester runs, new fragments will replace the old ones.
 
-Z3950 server(s) harvesting type
-```````````````````````````````
+Z3950 server(s) harvesting
+``````````````````````````
 
 #.	Every time the harvester runs, it will remove previously harvested records and create new ones.
 
@@ -691,7 +688,7 @@ The available options are:
 - **Category for subtemplates** - When fragments are saved to GeoNetwork as subtemplates they will be assigned to the category selected here.
 
 More about turning the GetFeature Response into metadata fragments
-``````````````````````````````````````````````````````````````````
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The structure of the metadata fragments document that your XSLT (see *Stylesheet used to create fragments* above) must produce from the GetFeature response is shown below.
 
@@ -729,7 +726,7 @@ ReplacementGroup                Id                              Id of element in
 Finally, two examples of how to harvest metadata from the Features of an OGC WFS harvester can be given using stylesheets and templates supplied with GeoNetwork.
 
 Bundled GeoServer Boundaries Harvest example
-`````````````````````````````````````````````
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This example assumes that you have installed the bundled GeoServer that comes with GeoNetwork. The end result of this example will be 251 ISO19139 metadata records that link in 1506 fragments (6 per record) created from a GetFeature response on the boundaries shapefile in the GeoServer instance supplied with GeoNetwork. The records created contain metadata about the countries of the world.
 
@@ -773,7 +770,7 @@ The results page shows that there were 1506 fragments of metadata harvested from
 
 
 Deegree Version 2.2 Philosopher Database example
-````````````````````````````````````````````````
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 This example assumes that you have downloaded Deegree version 2.2 and loaded the Philosopher example database. The end result of this example will be 7 ISO19139 metadata records that link in 42 fragments (6 per record) created from the GetFeature response from your deegree installation. The records contain metadata about 7 famous philosophers.
 
@@ -863,7 +860,7 @@ At the bottom of the page there are the following buttons:
 - **Save** - Saves this node’s data creating a new harvesting node. After the save operation has completed, the main harvesting page will be displayed.
 
 More about harvesting THREDDS DIF metadata elements with the THREDDS Harvester
-``````````````````````````````````````````````````````````````````````````````
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 THREDDS catalogs can include elements from the DIF metadata standard. The Unidata netcdf-java library provides a DIFWriter process that can create a DIF metadata record from these elements. GeoNetwork has a DIFToISO stylesheet to transform these DIF records to ISO. An example of a THREDDS Catalog with DIF-compliant metadata elements is shown below.
 
@@ -872,7 +869,7 @@ THREDDS catalogs can include elements from the DIF metadata standard. The Unidat
 		*A THREDDS catalog with DIF compliant metadata elements*
 
 More about harvesting Unidata dataset discovery metadata with the THREDDS Harvester
-```````````````````````````````````````````````````````````````````````````````````
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 The options described above for the *Extract Unidata dataset discovery metadata using fragments* (see http://www.unidata.ucar.edu/software/netcdf-java/formats/DataDiscoveryAttConvention.html for more details of these conventions) invoke the following process for each collection dataset or atomic dataset in the THREDDS catalog:
 
@@ -885,7 +882,7 @@ The options described above for the *Extract Unidata dataset discovery metadata 
 		*An example THREDDS dataset document created by the THREDDS fragment harvester*
 
 Example
-```````
+^^^^^^^
 
 DIF Metadata elements on datasets in THREDDS catalogs are not as widely used as metadata elements that follow the Unidata dataset discovery metadata conventions. This example will show how to harvest metadata elements that follow the Unidata data discovery conventions. (see http://www.unidata.ucar.edu/software/netcdf-java/formats/DataDiscoveryAttConvention.html). 
 
@@ -969,7 +966,7 @@ The available options are:
 - **Categories** - Same as for WebDAV harvesting but this harvester automatically creates a new Category named after each of the Z3950 servers that return records. Records that are returned by a server are assigned to the category named after that server.
 
 More about PQF Z3950 Queries
-````````````````````````````
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 PQF is a rather arcane query language. It is based around the idea of attributes and attribute sets. The most common attribute set used for geospatial metadata in Z3950 servers is the GEO attribute set (which is an extension of the BIB-1 and GILS attribute sets - see http://www.fgdc.gov/standards/projects/GeoProfile). So all PQF queries to geospatial metadata Z3950 servers should start off with @attrset geo.
 
@@ -1037,3 +1034,28 @@ A more sophisticated search on a bounding box might be formulated as:
 - @attr 4=201 means that the query contains coordinate strings 
 - @attr 2=7 means that we are searching for records whose bounding box overlaps the query box specified at the end of the query
 
+.. _harvest_history:
+
+Harvest History
+---------------
+
+Each time a harvester is run, it generates a status report of what was harvested and/or what went wrong (eg. exception report). These reports are stored in a table in the database used by GeoNetwork. The entire harvesting history for all harvesters can be recalled using the History button on the Harvesting Management page. The harvest history for an individual harvester can also be recalled using the History link in the Operations for that harvester.
+
+
+.. figure:: web-harvesting-with-history.png
+		
+		*An example of the Harvesting Management Page with History functions*
+
+.. figure:: web-harvesting-all-harvesters-history.png
+		
+		*An example of the Harvesting History for all harvesters*
+
+.. figure:: web-harvesting-harvester-history.png
+		
+		*An example of the Harvesting History for a harvester*
+
+Once the harvest history has been displayed it is possible to:
+
+- expand the detail of any exceptions
+- sort the history by harvest date (or in the case of the history of all harvesters, by harvester name)
+- delete any history entry or the entire history

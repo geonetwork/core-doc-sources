@@ -7,10 +7,6 @@ This tool is located under the Management tool on the left panel and
 allows you to export a set of metadata using the MEF format. Selecting the Export
 tool opens the option panel.
 
-.. figure:: gast-mef-export.png
-
-    *The metadata export panel*
-    
 - **Output folder** - 
   The target folder in your file system where GAST will put the
   exported metadata. You can either select the Browse button to navigate through

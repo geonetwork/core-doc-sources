@@ -5,7 +5,7 @@ OAIPMH Harvesting
 
 This is a harvesting protocol that is widely used among libraries. GeoNetwork implements version 2.0 of the protocol.
         
-Notes:
+*Notes:*
 
 #.  The id of the remote server must be a UUID. If not, metadata can be
     harvested but during hierarchical propagation id clashes could corrupt

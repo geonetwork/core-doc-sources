@@ -1,12 +1,12 @@
 .. _formatter:
 
-Metadata formatter
-==================
+Formatter
+=========
 
 Introduction
 ------------
 
-The metadata.show displays a metadata document using the default metadata display stylesheets.  However it can be useful to provide alternate stylesheets for displaying the metadata.  Consider a central catalog that is used by several partners.  Each partner might have special branding and wish to emphasize particular components of the metadata document.  
+The metadata.show service (the metadata viewer) displays a metadata document using the default metadata display stylesheets.  However it can be useful to provide alternate stylesheets for displaying the metadata.  Consider a central catalog that is used by several partners.  Each partner might have special branding and wish to emphasize particular components of the metadata document.  
 
 To this end the metadata.formatter.html and metadata.formatter.xml services allow an alternate stylesheet to be used for displaying the metadata.  The urls of interest to an end-user are:
 

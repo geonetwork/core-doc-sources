@@ -1,7 +1,7 @@
 .. _ownership:
 
-Metadata ownership
-==================
+Ownership
+=========
 
 Introduction
 ------------

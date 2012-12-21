@@ -1,7 +1,7 @@
 .. _templates:
 
-Templates (For Application Administrator only)
-==============================================
+Templates
+=========
 
 The *Templates* options allow to manage the metadata templates in the catalog. You have to be logged in as an administrator. 
 

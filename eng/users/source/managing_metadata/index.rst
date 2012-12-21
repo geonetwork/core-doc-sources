@@ -15,4 +15,5 @@ Managing Metadata
     harvesting/index.rst
     formatter/index.rst
     processing/index.rst
+    fragments/index.rst
     schemas/index.rst

@@ -14,7 +14,23 @@ GeoNetwork has (an extensible) set of states that a metadata record can have:
 - **Rejected** - the content reviewer has reviewed and rejected the metadata record
 - **Retired** - the record has been retired  
 
-It is also possible for the an extra 'Restrict to' search option in the 'Advanced Search' tab that allows the user to search on 'Status' 
+Status can be assigned to metadata records individually or as a selected set.
+
+.. figure:: status-change-individual.png
+
+*Initiating status change for a single metadata record*
+
+.. figure:: status-change-selected-set.png
+
+*Initiating status change for a set of metadata records*
+
+The interface for setting the status looks like the following:
+
+.. figure:: status-set-interface.png
+
+*Changing the status of a set of metadata records*
+
+It is also possible to search for metadata records with a particular status using a search restriction in the 'Advanced Search' menu.
 
 Status actions
 ``````````````
@@ -68,5 +84,5 @@ Changing the status actions
 ```````````````````````````
 
 These actions can be replaced with different behaviours by:
- * writing Java code in the form of a new class that implements the interface defined in org.fao.geonet.services.metadata.!StatusActions.java and placing a compiled version of the class in the GeoNetwork class path 
- * defining the name of the new class in the statusActionsClass configuration parameter in ``INSTALL_DIR/web/geonetwork/WEB-INF/config.xml``
+#. writing Java code in the form of a new class that implements the interface defined in org.fao.geonet.services.metadata.!StatusActions.java and placing a compiled version of the class in the GeoNetwork class path 
+#. defining the name of the new class in the statusActionsClass configuration parameter in ``INSTALL_DIR/web/geonetwork/WEB-INF/config.xml``

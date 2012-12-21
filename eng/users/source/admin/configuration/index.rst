@@ -98,7 +98,7 @@ Configuration settings in this group determine how many processor threads are al
 
 *Number of processing threads* The maximum number of processing threads that can be allocated to an indexing task. 
 
-Note: this option is only available for databases that have been tested. Those databases are PostGIS and Oracle.
+Note: this option is only available for databases that have been tested. Those databases are PostGIS and Oracle. You should also carefully consider how many connections to the database you allocate in the database configuration as each thread could tie up one database connection for the duration of a long indexing session (for example). See :ref:`adv_configuration` for more details of how to configure the number of connections in the database connection pool.
 
 Lucene Index Optimizer
 ```````````````````````
@@ -137,6 +137,8 @@ The XLink resolver replaces the content of elements with an attribute @xlink:hre
 *Enable*: Enables/disables the XLink resolver. 
 
 Note: to improve performance GeoNetwork will cache content that is not in the local catalog.
+
+.. _search_stats_config:
 
 Search Statistics 
 `````````````````

@@ -8,7 +8,7 @@ Searches made through the user interface on the local catalog are logged to the 
 Querying search statistics
 ``````````````````````````
 
-The search statistics page is part of the Administration menu. You need to be logged in as an Administrator to access it.
+The search statistics page is part of the Administration menu. You need to be logged in as an Administrator to access it **and** search statistics needs to be **enabled** in the System Configuration. See :ref:`search_stats_config` in the 'System Configuration' section of the manual.
 
 .. figure:: search-statistics-administration.png
 

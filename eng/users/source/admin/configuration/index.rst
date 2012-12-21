@@ -1,8 +1,5 @@
 .. _configuration:
 
-.. toctree::
-   :maxdepth: 2
-
 Basic configuration
 ===================
 
@@ -128,6 +125,8 @@ Options in this group control the way in which the OAI Server in GeoNetwork resp
 *Cache size*: The maximum number of concurrent OAI harvests that the GeoNetwork OAI server can support.
 
 GeoNetwork must be restarted to put any changes to the resumption token timeout and the Datesearch options into use.
+
+.. _xlink_config:
 
 XLink resolver
 ``````````````

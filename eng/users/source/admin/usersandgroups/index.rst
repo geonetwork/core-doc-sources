@@ -89,6 +89,8 @@ To add a new user to the GeoNetwork system you do the following:
 
 #. Click on *Save*.
 
+.. _user_profiles:
+
 User Profiles
 -------------
 

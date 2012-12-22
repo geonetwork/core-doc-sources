@@ -213,6 +213,8 @@ Editing a register thesaurus
 
 A register thesaurus is created from an ISO19135 metadata record as described above, so a register thesaurus is updated by editing the ISO19135 metadata record and then regenerating the register thesaurus. The ISO19135 metadata record can be created and edited in the GeoNetwork editor. 
 
+.. _xlinks_thesaurus:
+
 Preparing to edit an ISO19135 register record
 `````````````````````````````````````````````
 

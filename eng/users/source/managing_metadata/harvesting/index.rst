@@ -90,6 +90,7 @@ its UUID only one copy will be stored. When (a) will be changed in (A), a new
 version will flow to (D) but, thanks to the change date, the copy in (D) will be
 updated with the most recent version.
 
+.. _harvesting_fragments:
 
 Harvesting Fragments of Metadata to support re-use
 ``````````````````````````````````````````````````

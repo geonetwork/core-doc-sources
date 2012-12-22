@@ -1,30 +1,20 @@
 .. _ownership:
 
-Ownership
-=========
+Ownership and Privileges
+========================
 
-Introduction
-------------
+Please review and make sure that you understand :ref:`user_profiles` in the User and Group Administration section of this manual.
 
-Starting from release 2.1.0, GeoNetwork has a new metadata access policy. The old
-edit and admin privileges have been removed and the concept of Content Reviewer has been
-introduced. The purpose of this new profile is to control when a metadata can be
-published outside or not. In previous releases, all users belonging to a group with
-edit privileges could edit the same metadata. Now, a metadata is only visible to its
-creator, to a reviewer which has access to the group owner and to an
-administrator.
+.. note:: A public metadata record is a metadata record that has the view privilege for the group named "All".
 
-Access policy
--------------
+The following rules apply to Viewing and Editing permissions on a metadata record:
 
-A public metadata is a metadata that has the view privilege for the group named all.
-
-Visualisation
-`````````````
+Viewing
+-------
 
 An *administrator* can view any metadata.
 
-A *reviewer* can view a metadata if:
+A *content reviewer* can view a metadata if:
 
 #. The metadata owner is member of one of the groups assigned to the reviewer.
 
@@ -43,7 +33,7 @@ A *registered user* can view:
 Public metadata can be viewed by any user (logged in or not).
 
 Editing
-```````
+-------
 
 An *administrator* can edit any metadata.
 
@@ -55,10 +45,10 @@ A *reviewer* can edit a metadata if:
 
 A *User Administrator* or an *Editor* can only edit metadata she/he created.
 
-Privileges
-----------
+Setting Privileges on a metadata record
+---------------------------------------
 
-The Privileges administration page is accessible only by:
+A button to access the Privileges page for a metadata record will appear in the search results or when the record is being viewed for:
 
 #. All Administrators
 
@@ -67,6 +57,18 @@ The Privileges administration page is accessible only by:
 #. The Owner of the metadata
 
 Privileges for the All and Intranet groups can only be edited by Administrators and Reviewers.
+
+Setting Privileges on a selected set of metadata records
+--------------------------------------------------------
+
+Privileges can be set on a selected set of records in the search results using the "actions on selected set" menu. The following screenshot shows how to access this function:
+
+.. figure:: setting-privileges-selected-set.png
+
+The following rules apply:
+
+- the groups that will appear in the Privileges page will be those that the user belongs to
+- the Privileges specified will only be applied to records that the user has ownership or administration rights on - any other records will be skipped.
 
 Transfer Ownership
 ------------------
@@ -97,4 +99,16 @@ Once a Source Editor has been selected, a set of rows is displayed. Each row ref
 
 By selecting the *Transfer* operation, if the Source group is different than the Target group, the system performs the Transfer of Ownership, shows a brief summary and removes the current row because now there are no privileges to transfer anymore.
 
+Setting Ownership on a selected set of metadata records
+------------------------------------------------------------
 
+Ownership can be set on a selected set of records in the search results using the "actions on selected set" menu. The following screenshot shows how to access this function:
+
+.. figure:: setting-ownership-selected-set.png
+
+The following rules apply:
+
+- Only *administrators* or *user administrators* can set ownership on a selected set of records
+- *administrators* can set ownership to any user
+- *user administrators* can set ownership to any user in the same group(s) as them
+- Ownership will only be transferred on those records that the ownership or administration rights on - any others will be skipped.

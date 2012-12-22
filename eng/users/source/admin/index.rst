@@ -9,6 +9,6 @@ Administration
     configuration/index.rst
     csw-configuration/index.rst
     advanced-configuration/index.rst
-    administration/index.rst
+    usersandgroups/index.rst
     localization/index.rst
     monitoring/index.rst

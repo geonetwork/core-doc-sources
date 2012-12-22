@@ -3,12 +3,13 @@
 Processing
 ==========
 
-GeoNetwork provides some batch processing capability. Process are defined using XSL in the schema process folder.
-Process could be used in:
+GeoNetwork can batch process metadata records by applying an XSLT. The processing XSLTs are schema dependent and must be stored in the process folder of each metadata schema. For example, the process folder for the iso19139 metadata schema can be found in **GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/process**.
 
- * Harvesting for filtering harvested records from another GeoNetwork node (See :ref:`harvesting_gn`)
- * Editor for the suggestion mechanism
- * Advanced administration to manually calling xml.batch.processing service
+Some examples of batch processing are:
+
+ * Filtering harvested records from another GeoNetwork node (See :ref:`harvesting_gn` in the Harvesting section of this manual)
+ * Suggesting content for metadata elements (editor suggestion mechanism)
+ * Applying an XSLT to a selected set of metadata records by using the xml.batch.processing service (this service does not have a user interface, it is intended to be used with an http submitter such as curl).
 
 Process available
 -----------------
@@ -19,15 +20,14 @@ Anonymizer
  * schema: ISO19139
  * usage: Harvester
 
-Anonymiser is an XSL transformation provided for ISO19139 record in GeoNetwork which removes
-all resource's contact except point of contact. It also have some custom options to replace email,
-remove keywords and remove internal online resources. For this, 3 optional parameters are available:
+Anonymiser is an XSL transformation provided for ISO19139 records which removes
+all resource contacts except point of contact. In addition, it has three custom options to replace email addresses, remove keywords and remove internal online resources. These options are controlled by the following parameters:
  
- * protocol: Protocol name for which online resource must be removed
+ * protocol: Protocol of the online resources that must be removed
  
- * email: Generic email to use for all email in same domain (ie. after @domain.org).
+ * email: Generic email to use for all email addresses in a particular domain (ie. after @domain.org).
  
- * thesaurus: Portion of thesaurus name for which keyword should be removed
+ * thesaurus: Portion of thesaurus name for which keywords should be removed
  
 It could be used in the GeoNetwork harvesting XSL filter configuration using::
 
@@ -56,7 +56,7 @@ WMS synchronizer
  * schema: ISO19139
  * usage: Suggestion
 
-If WMS server defined in distribution section, suggest to add extent, CRS and graphic overview based on WMS.
+If an OGC WMS server is defined in distribution section, suggest that the user add extent, CRS and graphic overview based on that WMS.
 
 
 Add INSPIRE conformity
@@ -65,7 +65,7 @@ Add INSPIRE conformity
  * schema: ISO19139
  * usage: Suggestion
 
-If INSPIRE themes found, suggest to add an INSPIRE conformity section.
+If INSPIRE themes are found, suggest that the user add an INSPIRE conformity section.
 
 
 Add INSPIRE data quality report
@@ -83,7 +83,7 @@ Keywords comma exploder
  * schema: ISO19139
  * usage: Suggestion
 
-Suggest to explode keywords which contains comma (which is better for indexing and searching).
+Suggest that comma separated keywords be expanded to remove the commas (which is better for indexing and searching).
 
 Keywords mapper
 ~~~~~~~~~~~~~~~
@@ -109,7 +109,7 @@ Thumbnail linker
  * schema: ISO19139
  * usage: Batch process
 
-This batch process updates in batch all the metadata records to set a thumbnail.
+This batch process creates a browse graphic or thumbnail for all metadata records.
 
 Process parameters:
 

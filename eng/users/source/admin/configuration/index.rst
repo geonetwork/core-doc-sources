@@ -209,6 +209,16 @@ It is intended to provide a flat, simple view of the metadata record. A disadvan
 *Enable INSPIRE view*: Enables the metadata element groups defined in the EU INSPIRE directive.
 *Enable XML view*: This is a raw text edit view of the XML record. You can disable this if (for example), you don't want inexperienced users to be confused by the XML presentation provided by this view.
 
+Metadata Privileges
+```````````````````
+
+*Only set privileges to user's groups*: If enabled then only the groups that the user belongs to will be displayed in the metadata privileges page (unless the user is an Administrator). At the moment this option cannot be disabled and is likely to be deprecated in the next version of GeoNetwork.
+
+Harvesting
+``````````
+
+*Allow editing on harvested records*: Enables/Disables editing of harvested records in the catalogue. By default, harvested records cannot be edited.
+
 Proxy
 `````
 

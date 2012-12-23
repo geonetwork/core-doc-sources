@@ -22,6 +22,8 @@ If they are missing, a cardinality of \[1..1] should be considered.
 The system hierarchy
 --------------------
 
+Some examples:
+
 - site: Contains information about the site
 
   - name (*string*): Name used to present this

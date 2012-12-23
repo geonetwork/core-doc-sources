@@ -187,10 +187,10 @@ Here is a list of steps to follow when adding a new harvesting type:
     will not conflict with the other one. As a side effect, this prevent locally
     created metadata from being changed.
 
-#.  The harvesting engine does not store results on disk so they will get lost
-    when the server will be restarted.
+#.  The harvesting engine stores results in the database as part of the harvest
+    history.
 
-#.  When some harvesting parameters are changed, the new harvesting type must
-    use them during the next harvesting without requiring to reboot the server.
+#.  When harvesting parameters are changed, the new harvesting type must
+    use them during the next harvesting without requiring server restart.
 
 

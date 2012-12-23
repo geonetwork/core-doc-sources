@@ -6,14 +6,14 @@ Metadata Exchange Format
 Introduction
 ------------
 
-The metadata exchange format (MEF in short) is a special designed file format
-whose purpose is to allow metadata exchange between different platforms. A metadata
-exported into this format can be imported by any platform which is able to
-understand it. This format has been developed with GeoNetwork in mind so the
-information it contains is mainly related to it. Nevertheless, it can be used as an
-interoperability format between any platform.
+The metadata exchange format (MEF in short) is a specially designed file format
+for the purpose of metadata exchange between different platforms. A metadata
+exported as a MEF can be imported by any platform which is able to
+understand MEF. This format has been developed with GeoNetwork in mind so the
+information it contains is mainly related to GeoNetwork. Nevertheless, it can be 
+used as an interoperability format between different platforms.
 
-This format has been designed with these needs in mind:
+This format has been designed with the following needs in mind:
 
 #.  Export a metadata record for backup purposes
 
@@ -22,7 +22,7 @@ This format has been designed with these needs in mind:
 #.  Import a metadata record from a different GeoNetwork version to allow a
     smooth migration from one version to another.
 
-All these operations regard the metadata and its related data as well.
+#.  Capture metadata plus thumbnails and any data uploaded with the metadata record.
 
 In the paragraphs below, some terms should be intended as follows:
 
@@ -52,33 +52,31 @@ A MEF file is simply a ZIP file which contains the following files::
 
 
 #.  *metadata.xml*: this file contains the metadata itself, in XML format. The
-    text encoding of the metadata is that one specified into the XML
+    text encoding of the metadata (eg. UTF-8) is specified in the XML
     declaration.
 
 #.  *info.xml*: this is a special XML file which contains information related
-    to the metadata but that cannot be stored into it. Examples of such
-    information are the creation date, the last change date, privileges on the
-    metadata and so on. Now this information is related to the GeoNetwork’s
-    architecture.
+    to the metadata (metadata about the metadata). Examples of the information
+    in the info.xml file are: creation date, modification date, privileges
+    This information is needed by GeoNetwork.
 
 #.  *public*: this is a directory used to store the metadata thumbnails and
-    other public files. There are no restrictions on the images’ format but it
-    is strongly recommended to use the portable network graphics (PNG), the JPEG
-    or the GIF formats.
+    other public files. There are no restrictions on the image format but it
+    is strongly recommended to use the portable network graphics (PNG), JPEG
+    or GIF format.
 
 #.  *private*: this is a directory used to store all data (maps, shape files
-    etc...) associated to the metadata. Files in this directory are
-    *private* in the sense that an authorisation is
+    etc...) uploaded with the metadata in the GeoNetwork editor. Files in this 
+		directory are *private* in the sense that authorisation is
     required to access them. There are no restrictions on the file types that
     can be stored into this directory.
 
 
-Any other file or directory present into the MEF file should be ignored by readers
+Any other file or directory present in the MEF file should be ignored by readers
 that don’t recognise them. This allows actors to add custom extensions to the MEF
 file.
 
-A MEF file can have empty public and private folders depending on the export
-format, which can be:
+A MEF file can have empty public and private folders depending upon the export format, which can be:
 
 #.  *simple*: both public and private are omitted.
 
@@ -88,18 +86,15 @@ format, which can be:
 
 It is recommended to use the .mef extension when naming MEF files.
 
-
-
-
 MEF v2 file format
 ------------------
 
 MEF version 2 support the following:
 
-- multi-metadata support: be able to have more than one metadata record in a single MEF file.
-- multi-metadata format support: be able to store in a single MEF n formats (eg. for an ISO profile, also store a version of that record in the base ISO19115/ISO19139 schema).
+- multi-metadata support: more than one metadata record and data can be stored in a single MEF file.
+- multi-schema support: be able to store in a single MEF n formats (eg. for an ISO profile, also store a version of that record in the base ISO19115/ISO19139 schema).
 
-In the future support may be added for related metadata records. Related metadata records could be :
+In future, support may be added for holding related metadata records in the MEF file. Related metadata records could be :
  - child metadata (Using parentUuid search field)
  - service metadata (Using operatesOn search field)
  - other related metadata (Using xml.relation.get service eg, siblings)
@@ -168,7 +163,7 @@ The root element must have the following children:
 				metadata-iso19139.xml could be loaded because the iso19139 schema is 
 				present).
     #.  *format*: Indicates the MEF export format. The element’s value must
-        belong to the following set: { *simple, partial*, *full* }.
+        belong to the following set: { *simple*, *partial*, *full* }.
     #.  *localId*: This is an optional element. If present, indicates the
         id used locally by the sourceId actor to store the metadata. Its
         purpose is just to allow the reuse of the same local id when
@@ -234,7 +229,7 @@ Example of info file::
 
     <info version="1.0">
         <general>
-            <UUID>0619abc0-708b-eeda-8202-000d98959033</uuid>
+            <uuid>0619abc0-708b-eeda-8202-000d98959033</uuid>
             <createDate>2006-12-11T10:33:21</createDate>
             <changeDate>2006-12-14T08:44:43</changeDate>
             <siteId>0619cc50-708b-11da-8202-000d9335906e</siteId>

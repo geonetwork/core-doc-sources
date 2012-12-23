@@ -7,50 +7,50 @@ System Requirements
 -------------------
 
 GeoNetwork is a Java application that runs as a servlet so the Java Runtime
-Environment (JRE) must be installed in order to run it. You can get the JRE from the
-following address http://java.sun.com and you have to download the Java 5 Standard
-Edition (SE). GeoNetwork won’t run with Java 1.4 and Java 6 has some problems with
-it so we recommend to use Java 5. Being written in Java, GeoNetwork can run on any
-platform that supports Java, so it can run on Windows, Linux and Mac OSX. For the
-latter one, make sure to use version 10.4 (Tiger) or newer. Version 10.3 (Panther)
+Environment (JRE) must be installed in order to run it. You can get the JRE from http://www.oracle.com/technetwork/java/javase/downloads and you have to download the Java 6 Standard Edition (SE). GeoNetwork won’t run with Java 1.4. It will run with:
+
+- Java 5 - but few people should be using that now as it is unsupported.
+- Java 6 - most testing has taken place under Java 6, so we recommend Java 6.
+- OpenJDK 7 - note: problems have been reported with OpenJDK 6.
+
+Being written in Java, GeoNetwork can run on any
+platform that supports Java, so it can run on Windows, Linux and Mac OSX. For
+MacOSX, make sure you use version 10.4 (Tiger) or newer. Version 10.3 (Panther)
 has only Java 1.4 so it cannot run GeoNetwork.
 
-Next, you need a servlet container. GeoNetwork comes with an embedded one (Jetty)
+Next, you need a servlet container. GeoNetwork comes with an embedded container (Jetty)
 which is fast and well suited for most applications. If you need a stronger one, you
 can install Tomcat from the Apache Software Foundation (http://tomcat.apache.org).
-It provides load balance, fault tolerance and other corporate needed stuff. If you
-work for an organisation, it is probable that you already have it up and running.
-The tested version is 5.5 but GeoNetwork should work with all other versions.
+It provides load balancing, fault tolerance and other production features. If you
+work for an organisation, it is probable that you already use Tomcat.
+The tested version is 6.0.x but GeoNetwork should work with all other versions (>= 5.5).
 
 Regarding storage, you need a Database Management System (DBMS) like Oracle,
-MySQL, Postgresql and so on. GeoNetwork comes with an embedded one (McKoi) which is
+MySQL, Postgresql etc. GeoNetwork comes with an embedded DBMS (H2) which is
 used by default during installation. This DBMS can be used for small or desktop
-installations, where the speed is not an issue. You can use this DBMS for several
-thousands of metadata. If you manage more than 10.000 metadata it is better to use a
-professional, stand alone DBMS. In this case, using a separate DBMS also frees up
-some memory for the application.
+installations of no more than a few thousand metadata records with one or 
+two users. If you have heavier demands then you should use a professional, stand 
+alone DBMS. 
 
-GeoNetwork does not require a strong machine to run. A good performance can be
-obtained even with 128 Mb of RAM. The suggested amount is 512 Mb. For the hard disk
-space, you have to consider the space required for the application itself (about 40
-Mb) and the space required for data maps, which can require 50 GB or more. A simple
-disk of 250 GB should be OK. Maybe you can choose a fast one to reduce backup time
-but GeoNetwork itself does not speed up on a faster disk. You also need some space
-for the search index which is located in ``WEB-INF/lucene``. Even with a lot of
-metadata the index is small so usually 10-20 Mb of space is enough.
+GeoNetwork does not require a powerful machine. Good performance can be
+obtained even with 1GB of RAM. The suggested amount is 2GB. For hard disk
+space, you have to consider the space required for the application itself 
+(about 350 MB) and the space required for data, which can require 50 GB or 
+more. A simple disk of 250 GB should be OK.  You also need some space
+for the search index which is located in ``GEONETWORK_DATA_DIR/index`` (by default GEONETWORK_DATA_DIR is ``INSTALL_DIR/web/geonetwork/WEB_INF/data``. However, even with a few thousand metadata records, the index is small so usually 500 MB of space is more than enough.
 
 The software is run in different ways depending on the servlet container you are
 using:
 
-- **Tomcat** - You can use the manager web application to start/stop GeoNetwork. You can also use the startup.* and shutdown.* scripts located into Tomcat’s bin folder (.* means .sh or .bat depending on your OS) but this way you restart all applications you are running, not only GeoNetwork. After installation and before running GeoNetwork you must link it to Tomcat. 
-- **Jetty** - If you use the provided container you can use the scripts into GeoNetwork’s bin folder. The scripts are start-geonetwork.* and stop-geonetwork.* and you must be inside the bin folder to run them. You can use these scripts just after installation.
+- **Tomcat** - GeoNetwork is available as a WAR file which you can put into the Tomcat webapps directory. Tomcat will deploy the WAR file when it is started. You can then use the Tomcat manager web application to stop/start GeoNetwork. You can also use the startup.* and shutdown.* scripts located in the Tomcat bin directory (.* means .sh or .bat depending on your OS) but if you have other web applications in the tomcat container, then they will also be affected. 
+- **Jetty** - If you use the provided container you can use the scripts in GeoNetwork’s bin directory. The scripts are start-geonetwork.* and stop-geonetwork.* and you must be inside the bin directory to run them. You can use these scripts just after installation.
 
 Tools
----------------------
+-----
 
 The following tools are required to be installed to setup a development environment for GeoNetwork:
 
-- **Java** - Developing with GeoNetwork requires a `Java Development Kit (JDK) <http://java.sun.com/javase/downloads/index_jdk5.jsp>`_ 1.5 or greater. 
+- **Java** - Developing with GeoNetwork requires `Java Development Kit (JDK) <http://www.oracle.com/technetwork/java/javase/downloads/>`_ 1.6 or greater (scroll down to find 1.6) OR the `OpenJDK (version 7 or higher only) <http://openjdk.java.net/install/>`_ for Linux users. 
 
 - **Maven** - GeoNetwork uses `Maven <http://maven.apache.org/>`_ to manage the build process and the dependencies. Once is installed, you should have the mvn command in your path (on Windows systems, you have to open a shell to check).
 
@@ -71,18 +71,20 @@ The Geonetwork Repository is at: https://github.com/geonetwork/core-geonetwork.
 
 Follow the instructions on the Github website to get started (make accounts, how to fork etc...) http://help.github.com/
 
-Once you have the repository forked and cloned locally you can begin to work.
+Once you have the repository forked or cloned locally you can begin to work.
 
-A clone contains all branches so you can list the branches with:
+A clone contains all branches so you can list the branches with::
 
      $ git branch -a
      
-Just look at last section (ignoring remotes/origin/).  To checkout a branch just:
+Just look at last section (ignoring remotes/origin/).  To checkout a branch just::
 
      $ git checkout 2.8.x
      
 Typically work is done on branches and merged back so when developing normally you will go change to the branch you want to work on, create a branch from there, work and then merge the changes back (or make a Pull Request on Github).  There are many great guides (See the links above) but here is a quick sequence illustrating how to make a change and commit the change.
 
+::
+     
      $ git checkout master 
         # master is the 'trunk' and main development branch
         # the checkout command "checks out" the requested branch
@@ -98,9 +100,9 @@ Typically work is done on branches and merged back so when developing normally y
      $ git commit
         # Commit often.  it is VERY fast to commit
         # NOTE: doing a commit is a local operation.  It does not push the change to Github
-      # more work
-      # another commit
-      $ git push origin myfeature
+     # more work
+     # another commit
+     $ git push origin myfeature
         # this pushed your new branch to Github now you are ready to make a Pull Request to get the new feature added to Geonetwork
 
 Build GeoNetwork
@@ -108,7 +110,7 @@ Build GeoNetwork
 
 Once you checked out the code from Github repository, go inside the GeoNetwork’s root folder and execute the maven build command::
 
-     $ mvn clean install
+  $ mvn clean install
     
     
 If the build is succesful you'll get an output like::
@@ -138,7 +140,7 @@ and your local maven repository should contain the GeoNetwork artifacts created 
 
 .. note :: Many Maven build options are available. Please refer to the maven documentation for any other options, `Maven: The Complete Reference <http://www.sonatype.com/books/mvnref-book/reference/public-book.html>`_
 
-For instance, you would like to use following options : ::
+For instance, you might like to use following options : ::
     
     -- Skip test
     $ mvn install -Dmaven.test.skip=true
@@ -187,7 +189,7 @@ Both platform independent and Windows specific installers are generated by
 default.
 
 Make sure you update version number and other relevant properties in the
-installer/build.xml file
+``installer/build.xml`` file
 
 You can also create an installer that includes a Java Runtime Environment
 (JRE) for Windows. This will allow GeoNetwork to run on a compatible, embedded

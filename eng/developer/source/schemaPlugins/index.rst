@@ -8,9 +8,9 @@ descriptions (XSDs) and other information necessary for GeoNetwork to index,
 view and possibly edit content from XML metadata records. 
 
 To be used in GeoNetwork, a schema directory can be manually placed in the 
-`config/schema_plugins` sub directory of 
+``config/schema_plugins`` sub directory of 
 the geonetwork data directory. The default geonetwork data directory location is 
-`INSTALL_DIR/web/geonetwork/WEB-INF/data`. The contents of these schemas are 
+``INSTALL_DIR/web/geonetwork/WEB-INF/data``. The contents of these schemas are 
 parsed during GeoNetwork initialization. If valid, they will be available for 
 use when GeoNetwork starts up.
 
@@ -22,7 +22,7 @@ ways using functions in the Administration menu:
 #. HTTP URL (eg. http://somehost/somedirectory/iso19139.mcp.zip)
 #. As an online resource attached to an ISO19115/19139 metadata record
 
-Uploaded schemas are also stored in the `config/schema_plugins` sub directory of the geonetwork data directory.
+Uploaded schemas are also stored in the ``config/schema_plugins`` sub directory of the geonetwork data directory.
 
 Contents of a GeoNetwork schema
 ```````````````````````````````
@@ -32,7 +32,7 @@ When installed, a GeoNetwork schema is a directory.
 The following subdirectories can be present:
 
 - **convert**: (*Mandatory*) Directory of XSLTs to convert metadata from or to this schema. This could be to convert metadata to other schemas or to convert metadata from other schemas and formats to this schema. Eg. ``convert/oai_dc.xsl``
-- **loc**: (*Optional*) Directory of localized information: labels, codelists or schema specific strings. Eg. ``loc/en/codelists.xml``
+- **loc**: (*Optional*) Directory of localized information: labels, codelists or schema specific strings. Eg. ``loc/eng/codelists.xml``
 - **present**: (*Mandatory*) contains XSLTs for presenting metadata in the viewer/editor and in response to CSW requests for brief, summary and full records.
 - **process**: (*Optional*) contains XSLTs for processing metadata elements by metadata suggestions mechanism (see **suggest.xsl** below).
 - **sample-data**: (*Mandatory*) Sample metadata for this schema. The metadata samples are in MEF format so that samples can have thumbnails or browse graphics as well as online resources.
@@ -59,12 +59,13 @@ The following configuration files can be present:
 - **oasis-catalog.xml**: (*Optional*) An oasis catalog describing any mappings that should be used for this schema eg. mapping URLs to local copies such as schemaLocations eg. http://www.isotc211.org/2005/gmd/gmd.xsd is mapped to ``schema/gmd/gmd.xsd``. Path names used in the oasis catalog are relative to the location of this file which is the schema directory.
 - **schema.xsd**: (*Optional*) XML schema directory file that includes the XSDs used by this metadata schema. If the schema uses a DTD then this file should not be present. Metadata records from schemas that use DTDs cannot be edited in GeoNetwork.
 - **schema-conversions.xml**: (*Optional*) XML file that describes the converters that can be applied to records belonging to this schema. This information is used to show these conversions as options for the user to choose when a metadata record belonging to this schema is shown in the search results.
-- **schema-ident.xml**: (*Mandatory*) XML file that contains the schema name, identifier, version number and details on how to recognise metadata records that belong to this schema. This file has an XML schema definition in `INSTALL_DIR/web/geonetwork/xml/validation/schemaPlugins/schema-ident.xsd` which is used to validate it when the schema is loaded.
+- **schema-ident.xml**: (*Mandatory*) XML file that contains the schema name, identifier, version number and details on how to recognise metadata records that belong to this schema. This file has an XML schema definition in ``INSTALL_DIR/web/geonetwork/xml/validation/schemaPlugins/schema-ident.xsd`` which is used to validate it when the schema is loaded.
 - **schema-substitutes.xml**: (*Optional*) XML file that redefines the set of elements that can be used as substitutes for a specific element.
 - **schema-suggestions.xml**: (*Optional*) XML file that tells the editor which child elements of a complex element to automatically expand in the editor. 
 
 To help in understanding what each of these components is and what is required, we will now give a step-by-step example of how to build a schemaPlugin for GeoNetwork.
 
+.. _preparation:
 
 Preparation
 ```````````
@@ -140,7 +141,7 @@ Each of the elements is as follows:
 - **schemaLocation** - a set of pairs, where the first member of the pair is a namespace URI and the second member is the official URL of the XSD. The contents of this element will be added to the root element of any metadata record displayed by GeoNetwork as a schemaLocation/noNamespaceSchemaLocation attribute, if such as attribute does not already exist. It will also be used whenever an official schemaLocation/noNamespaceSchemaLocation is required (eg. in response to a ListMetadataFormats OAI request). 
 - **autodetect** - contains elements or attributes (with content) that must be present in any metadata record that belongs to this schema. This is used during schema detection whenever GeoNetwork receives a metadata record of unknown schema.
 
-After creating this file you can validate it manually using the XML schema definition (XSD) in `INSTALL_DIR/web/geonetwork/xml/validation/schemaPlugins/schema-ident.xsd`. This XSD is also used to validate this file when the schema is loaded. If schema-ident.xml failes validation, the schema will not be loaded.
+After creating this file you can validate it manually using the XML schema definition (XSD) in ``INSTALL_DIR/web/geonetwork/xml/validation/schemaPlugins/schema-ident.xsd``. This XSD is also used to validate this file when the schema is loaded. If schema-ident.xml failes validation, the schema will not be loaded.
 
 ~~~~~~~~~~~~~~~~~~
 More on autodetect
@@ -192,7 +193,7 @@ Some other points about attributes autodetect:
 Some other points about elements autodetect:
 
 - multiple elements can be specified - eg. as in the above, both metadataStandardName and metadataStandardVersion have been specified - all must be match for the record to be recognized as belonging to this schema.
-- multiple values for the elements can be specified. eg. as in the above, a match for gmd:metadataStandardVersion will be found for `1.5-experimental` OR `MCP:BlueNet V1.5-experimental` OR `MCP:BlueNet V1.5` - the vertical line or pipe character '|' is used to separate the options here.
+- multiple values for the elements can be specified. eg. as in the above, a match for gmd:metadataStandardVersion will be found for ``1.5-experimental`` OR ``MCP:BlueNet V1.5-experimental`` OR ``MCP:BlueNet V1.5`` - the vertical line or pipe character '|' is used to separate the options here.
 - if the elements have a namespace then the namespace(s) should be specified on the autodetect element or somewhere in the schema-ident.xml document before the element in which they are used - eg. in the above there are there namespace declarations on the autodetect element so as not to clutter the content.
 
 **3. Root element** - root element of the document must match. An example use case is the one used for the eml-gbif schema. Documents belonging to this schema always have root element of eml:eml so the autodetect section for this schema is:
@@ -223,7 +224,7 @@ Some other points about namespaces autodetect:
 - multiple namespaces can be specified - all must be present for the record to be recognized as belonging to this schema.
 - the prefix is ignored. A namespace match occurs if the namespace URI found in the record matches the namespace URI specified in the namespaces autodetect element.
 
-**5. Default schema** - This is the fail-safe provision for records that don't match any of the installed schemas. The value for the default schema is specified in the appHandler configuration of the `INSTALL_DIR/web/geonetwork/WEB-INF/config.xml` config file or it could be a default specified by the operation calling autodetect (eg. a value parsed from a user bulk loading some metadata records). For flexibility and accuracy reasons it is preferable that records be detected using the autodetect information of an installed schema. The default schema is just a 'catch all' method of assigning records to a specific schema. The config element in `INSTALL_DIR/web/geonetwork/WEB-INF/config.xml` looks like the following:
+**5. Default schema** - This is the fail-safe provision for records that don't match any of the installed schemas. The value for the default schema is specified in the appHandler configuration of the ``INSTALL_DIR/web/geonetwork/WEB-INF/config.xml`` config file or it could be a default specified by the operation calling autodetect (eg. a value parsed from a user bulk loading some metadata records). For flexibility and accuracy reasons it is preferable that records be detected using the autodetect information of an installed schema. The default schema is just a 'catch all' method of assigning records to a specific schema. The config element in ``INSTALL_DIR/web/geonetwork/WEB-INF/config.xml`` looks like the following:
 
 ::
 
@@ -317,6 +318,8 @@ After setting up schema-ident.xml, our new GeoNetwork plugin schema for MCP cont
 
    schema-ident.xml
 
+.. _schema_conversions:
+
 Creating the schema-conversions.xml file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -353,9 +356,10 @@ Each converter has the following attributes:
 After setting up schema-conversions.xml, our new GeoNetwork plugin schema for MCP contains:
 
 ::
-
+    
    schema-conversions.xml  schema-ident.xml
 
+.. _schema_and_schema_xsd:
 
 Creating the schema directory and schema.xsd file
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -366,15 +370,13 @@ GeoNetwork's editor uses the XSDs to build a form that will not only order the e
 
 If you are defining your own metadata schema then you can create an XML schema document using the XSD language. The elements of the language can be found online at http://www.w3schools.com/schema/ or you can refer to a textbook such as Priscilla Walmsley's Definitive XML Schema (Prentice Hall, 2002). GeoNetwork's XML schema parsing code understands almost all of the XSD language with the exception of redefine, any and anyAttribute (although the last two can be handled under special circumstances).
 
-In the case of the Marine Commuity Profile, we are basically defining a number of extensions to the base standard ISO19115/19139. These extensions are defined using the XSD extension mechanism on the types defined in ISO19139. The following snippet shows how the Marine Community Profile extends the gmd:MD_Metadata element to add a new element called revisionDate:
- 
-::
+In the case of the Marine Commuity Profile, we are basically defining a number of extensions to the base standard ISO19115/19139. These extensions are defined using the XSD extension mechanism on the types defined in ISO19139. The following snippet shows how the Marine Community Profile extends the gmd:MD_Metadata element to add a new element called revisionDate::
 
   <xs:schema targetNamespace="http://bluenet3.antcrc.utas.edu.au/mcp" 
              xmlns:mcp="http://bluenet3.antcrc.utas.edu.au/mcp" .....>
-
+  
   ....
-
+  
   <xs:element name="MD_Metadata" substitutionGroup="gmd:MD_Metadata" 
                                  type="mcp:MD_Metadata_Type"/>
 
@@ -520,9 +522,9 @@ You should provide localized strings in whatever languages you expect your schem
 Localized strings for this schema can be used in the presentation xslts and
 schematron error messages. For the presentation xslts:
 
-- codelists for controlled vocabulary fields should be in loc/<language_abbreviation>/codelists.xml eg. loc/en/codelists.xml
-- label strings that replace XML element names with more intelligible/alternative phrases and rollover help strings should be in loc/<language_abbreviation>/labels.xml eg. loc/en/labels.xml. 
-- all other localized strings should be in loc/<language_abbreviation>/strings.xml eg. loc/en/strings.xml
+- codelists for controlled vocabulary fields should be in loc/<language_abbreviation>/codelists.xml eg. ``loc/eng/codelists.xml``
+- label strings that replace XML element names with more intelligible/alternative phrases and rollover help strings should be in loc/<language_abbreviation>/labels.xml eg. ``loc/eng/labels.xml``. 
+- all other localized strings should be in loc/<language_abbreviation>/strings.xml eg. ``loc/eng/strings.xml``
 
 Note that because the MCP is a profile of ISO19115/19139 and we have followed the GeoNetwork naming convention for profiles, we need only include the labels and codelists that are specific to the MCP or that we want to override. Other labels and codelists will be retrieved from the base schema iso19139.
 
@@ -608,7 +610,7 @@ More on labels.xml
 
 A localized copy of labels.xml is made available on an XPath to the presentation XSLTs eg. /root/gui/schemas/iso19139/labels for the iso19139 schema.
 
-The labels.xml file can also be used to provide helper values in the form of a drop down/select list for free text fields. As an example:
+The ``labels.xml`` file can also be used to provide helper values in the form of a drop down/select list for free text fields. As an example:
 
 ::
 
@@ -629,9 +631,7 @@ This would result in the Editor (through the XSLT metadata.xsl) displaying the c
 More on strings.xml
 ~~~~~~~~~~~~~~~~~~~
 
-A localized copy of strings.xml is made available on an XPath to the presentation XSLTs eg. /root/gui/schemas/iso19139/strings for the iso19139 schema.
-
-
+A localized copy of ``strings.xml`` is made available on an XPath to the presentation XSLTs eg. /root/gui/schemas/iso19139/strings for the iso19139 schema.
 
 After adding the localized strings, our new GeoNetwork plugin schema for MCP contains:
 
@@ -645,9 +645,9 @@ After adding the localized strings, our new GeoNetwork plugin schema for MCP con
 Creating the presentations XSLTs in the present directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Each metadata schema should contain XSLTs that display and possibly edit metadata records that belong to the schema. These XSLTs are held in the `present` directory.
+Each metadata schema should contain XSLTs that display and possibly edit metadata records that belong to the schema. These XSLTs are held in the ``present`` directory.
 
-To be be used in the XSLT include/import hierarchy these XSLTs must follow a naming convention: metadata-<schema-name>.xsl. So for example, the presentation xslt for the iso19139 schema is `metadata-iso19139.xsl`. For the MCP, since our schema name is iso19139.mcp, the presentation XSLT would be called `metadata-iso19193.mcp.xsl`.
+To be be used in the XSLT include/import hierarchy these XSLTs must follow a naming convention: metadata-<schema-name>.xsl. So for example, the presentation xslt for the iso19139 schema is ``metadata-iso19139.xsl``. For the MCP, since our schema name is iso19139.mcp, the presentation XSLT would be called ``metadata-iso19193.mcp.xsl``.
 
 Any XSLTs included by the presentation XSLT should also be in the present directory (this is a convention for clarity - it is not mandatory as include/import URLs can be mapped in the oasis-catalog.xml for the schema to other locations).
 
@@ -709,12 +709,12 @@ Analyzing this template:
     </xsl:call-template>
 
     ...... (same as for iso19139CompleteTab in 
-   INSTALL_DIR/web/geonetwork/xml/schemas/iso19139/present/
+   GEONETWORK_DATA_DIR/schema_plugins/iso19139/present/
    metadata-iso19139.xsl) ......
 
   </xsl:template>  
 
-This template is called by the template named "tab" (which also adds the "default" and "XML View" tabs) in `INSTALL_DIR/web/geonetwork/xsl/metadata-tab-utils.xsl` using the schema name. That XSLT also has the code for the "displayTab" template. 
+This template is called by the template named "tab" (which also adds the "default" and "XML View" tabs) in ``INSTALL_DIR/web/geonetwork/xsl/metadata-tab-utils.xsl`` using the schema name. That XSLT also has the code for the "displayTab" template. 
 
 'mcpMinimum', 'mcpCore', 'complete' etc are the names of the tabs. The name of the current or active tab is stored in the global variable "currTab" available to all presentation XSLTs. Logic to decide what to display when a particular tab is active should be contained in the root element processing tab.
 
@@ -878,20 +878,20 @@ Finally, a profile may also extend some of the existing codelists in the base sc
     <gmd:CI_RoleCode codeList="http://www.isotc211.org/2005/resources/Codelist/gmxCodelists.xml#CI_RoleCode" codeListValue="custodian">custodian</gmd:CI_RoleCode>
   </gmd:role>
 
-Templates for handling these elements are in the iso19139 presentation XSLT `INSTALL_DIR/web/geonetwork/xml/schemas/iso19139/present/metadata-iso19139.xsl`. These templates use the name of the element (eg. gmd:CI_RoleCode) and the codelist XPath (eg. /root/gui/schemas/iso19139/codelists) to build select list/drop down menus when editing and to display a full description when viewing. See templates near the template named 'iso19139Codelist'. These templates can handle the extended codelists for any profile because they:
+Templates for handling these elements are in the iso19139 presentation XSLT ``GEONETWORK_DATA_DIR/schema_plugins/iso19139/present/metadata-iso19139.xsl``. These templates use the name of the element (eg. gmd:CI_RoleCode) and the codelist XPath (eg. /root/gui/schemas/iso19139/codelists) to build select list/drop down menus when editing and to display a full description when viewing. See templates near the template named 'iso19139Codelist'. These templates can handle the extended codelists for any profile because they:
 
 - match on any element that has a child element with attribute codeList
 - use the schema name in the codelists XPath
 - fall back to the base iso19139 schema if the profile codelist doesn't have the required codelist
 
-However, if you don't need localized codelists, it is often easier and more direct to extract codelists directly from the gmxCodelists.xml file. This is in fact the solution that has been adopted for the MCP. The gmxCodelists.xml file is included in the presentation xslt for the MCP using a statement like:
+However, if you don't need localized codelists, it is often easier and more direct to extract codelists directly from the ``gmxCodelists.xml`` file. This is in fact the solution that has been adopted for the MCP. The ``gmxCodelists.xml`` file is included in the presentation xslt for the MCP using a statement like:
 
 ::
 
 	<xsl:variable name="codelistsmcp" 
 	              select="document('../schema/resources/Codelist/gmxCodelists.xml')"/>
 
-Check the codelists handling templates in metadata-iso19139.mcp.xsl to see how this works.
+Check the codelist handling templates in ``metadata-iso19139.mcp.xsl`` to see how this works.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 An alternative XSLT design for profiles
@@ -900,7 +900,7 @@ An alternative XSLT design for profiles
 In all powerful languages there will be more than one way to achieve a particular goal. This alternative XSLT design is for processing profiles. The idea behind the alternative is based on the following observations about the GeoNetwork XSLTs: 
 
 #. All elements are initially processed by apply-templates in mode "elementEP".
-#. The template "elementEP" (see `INSTALL_DIR/web/geonetwork/xsl/metadata.xsl`) eventually calls the **main** template of the schema/profile.
+#. The template "elementEP" (see ``INSTALL_DIR/web/geonetwork/xsl/metadata.xsl``) eventually calls the **main** template of the schema/profile.
 #. The main template can initially process the element in a mode particular to the profile and if this is not successful (ie. no template matches and thus no HTML elements are returned), process the element in the mode of the base schema. 
 
 The advantage of this design is that overriding a template for an element in the base schema does not need the priority attribute or an XPath condition check on the schema name.
@@ -1054,7 +1054,7 @@ For example, here is the mapping created between the metadata element mcp:revisi
 
 Notice that we are creating a new XML document. The Field elements in this document are read by GeoNetwork to create a Lucene document object for indexing (see the SearchManager class in the GeoNetwork source).
 
-Once again, because the MCP is a profile of ISO19115/19139, it is probably best to modify index-fields.xsl from the schema iso19139 to handle the namespaces and additional elements of the MCP.
+Once again, because the MCP is a profile of ISO19115/19139, it is probably best to modify ``index-fields.xsl`` from the schema iso19139 to handle the namespaces and additional elements of the MCP.
 
 At this stage, our new GeoNetwork plugin schema for MCP contains:
 
@@ -1068,7 +1068,7 @@ At this stage, our new GeoNetwork plugin schema for MCP contains:
 Creating the sample-data directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is a simple directory. Put MEF files with sample metadata in this directory. Make sure they have a `.mef` suffix. 
+This is a simple directory. Put MEF files with sample metadata in this directory. Make sure they have a ``.mef`` suffix. 
 
 A MEF file is a zip archive with the metadata, thumbnails, file based online resources and an info file describing the contents. The contents of a MEF file are discussed in more detail in the next section of this manual. 
 
@@ -1088,7 +1088,7 @@ Creating schematrons to describe MCP conditions
 
 Schematrons are rules that are used to check conditions and content in the metadata record as part of the two stage validation process used by GeoNetwork.
 
-Schematron rules are created in the schematrons directory that you checked out earlier - see `Preparation` above.
+Schematron rules are created in the schematrons directory that you checked out earlier - see :ref:`preparation` above.
 
 An example rule is:
 
@@ -1135,10 +1135,10 @@ As for most of GeoNetwork, the output of this rule can be localized to different
  
 Procedure for adding schematron rules, working within the schematrons directory:
 
-#. Place your schematron rules in 'rules'. Naming convetion is 'schematron-rules-<suffix>.sch' eg. 'schematron-rules-iso-mcp.sch'. Place localized strings for the rule assertions into 'rules/loc/<language_prefix>'.
-#. Edit 'build.xml'.
+#. Place your schematron rules in 'rules'. Naming convetion is 'schematron-rules-<suffix>.sch' eg. ``schematron-rules-iso-mcp.sch``. Place localized strings for the rule assertions into 'rules/loc/<language_prefix>'.
+#. Edit ``build.xml``.
 #. Add a "clean-schema-dir" target for your plugin schema directory. This target will remove the schematron rules from plugin schema directory (basically removes all files with pattern schematron-rules-\*.xsl).
-#. Add a "compile-schematron" target for your rules - value attribute is the suffix used in the rules name. eg. for 'schematron-rules-iso-mcp.sch' the value attribute should be "iso-mcp". This target will turn the .sch schematron rules into an XSLT using the saxon XSLT engine and 'resources/iso_svrl_for_xslt2.xsl'.
+#. Add a "compile-schematron" target for your rules - value attribute is the suffix used in the rules name. eg. for ``schematron-rules-iso-mcp.sch`` the value attribute should be "iso-mcp". This target will turn the .sch schematron rules into an XSLT using the saxon XSLT engine and 'resources/iso_svrl_for_xslt2.xsl'.
 #. Add a "publish-schematron" target. This target copies the compiled rules (in XSLT form) into the plugin schema directory.
 #. Run 'ant' to create the schematron XSLTs.
 
@@ -1205,7 +1205,7 @@ The three XSLTs that support this interface are:
   </gmd:graphicOverview> 
 
 
-When extract-thumbnails.xsl is run, it creates a small XML hierarchy from this information which looks something like the following:
+When ``extract-thumbnails.xsl`` is run, it creates a small XML hierarchy from this information which looks something like the following:
 
 ::
 
@@ -1254,33 +1254,33 @@ A simple example of MCP processing is to make sure that the gmd:metadataStandard
     </xsl:copy>
   </xsl:template>
 
-Processing by update-fixed-info.xsl can be enabled/disabled using the `Automatic Fixes` check box in the System Configuration menu. By default, it is enabled.
+Processing by ``update-fixed-info.xsl`` can be enabled/disabled using the *Automatic Fixes* check box in the System Configuration menu. By default, it is enabled.
 
-Some important tasks handled in upgrade-fixed-info.xsl: 
+Some important tasks handled in ``upgrade-fixed-info.xsl``: 
 
 - creating URLs for metadata with attached files (eg. onlineResources with 'File for download' in iso19139)
 - setting date stamp/revision date
 - setting codelist URLs to point to online ISO codelist catalogs
 - adding default spatial reference system attributes to spatial extents
 
-A specific task required for the MCP update-fixed-info.xsl was to automatically create an online resource with a URL pointing to the metadata.show service with parameter set to the metadata uuid. This required some changes to the update-fixed-info.xsl supplied with iso19139. In particular:
+A specific task required for the MCP ``update-fixed-info.xsl`` was to automatically create an online resource with a URL pointing to the metadata.show service with parameter set to the metadata uuid. This required some changes to the update-fixed-info.xsl supplied with iso19139. In particular:
 
 - the parent elements may not be present in the metadata record
 - processing of the online resource elements for the metadata point of truth URL should not interfere with other processing of online resource elements
 
-Rather than describe the individual steps required to implement this and the decisions required in the XSLT language, take a look at the update-fixed-info.xsl already present for the MCP schema in the iso19139.mcp directory and refer to the dot points above.
+Rather than describe the individual steps required to implement this and the decisions required in the XSLT language, take a look at the ``update-fixed-info.xsl`` already present for the MCP schema in the iso19139.mcp directory and refer to the dot points above.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Creating the templates directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-This is a simple directory. Put XML metadata files to be used as templates in this directory. Make sure they have a `.xml` suffix. Templates in this directory can be added to the catalog using the Administration menu.
+This is a simple directory. Put XML metadata files to be used as templates in this directory. Make sure they have a ``.xml`` suffix. Templates in this directory can be added to the catalog using the Administration menu.
 
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Editor behaviour: Adding schema-suggestions.xml and schema-substitutes.xml
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-- **schema-suggestions.xml** - The default behaviour of the GeoNetwork advanced editor when building the editor forms is to show elements that are not in the metadata record as unexpanded elements. To add these elements to the record, the user will have to click on the '+' icon next to the element name. This can be tedious especially as some metadata standards have elements nested in others (ie. complex elements). The schema-suggestions.xml file allows you to specify elements that should be automatically expanded by the editor. An example of this is the online resource information in the ISO19115/19139 standard. If the following XML was added to the schema-suggestions.xml file:
+- **schema-suggestions.xml** - The default behaviour of the GeoNetwork advanced editor when building the editor forms is to show elements that are not in the metadata record as unexpanded elements. To add these elements to the record, the user will have to click on the '+' icon next to the element name. This can be tedious especially as some metadata standards have elements nested in others (ie. complex elements). The schema-suggestions.xml file allows you to specify elements that should be automatically expanded by the editor. An example of this is the online resource information in the ISO19115/19139 standard. If the following XML was added to the ``schema-suggestions.xml`` file:
 
 ::
 
@@ -1292,9 +1292,9 @@ Editor behaviour: Adding schema-suggestions.xml and schema-substitutes.xml
 
 The effect of this would be that when an online resource element was expanded, then input fields for the protocol (a drop down/select list), name and description would automatically appear in the editor.
 
-Once again, a good place to start when building a schema-suggestions.xml file for the MCP is the schema-suggestions.xml file for the iso19139 schema.
+Once again, a good place to start when building a ``schema-suggestions.xml`` file for the MCP is the ``schema-suggestions.xml`` file for the iso19139 schema.
 
-- **schema-substitutes.xml** - Recall from the 'Schema and schema.xsd' section above, that the method we used to extend the base ISO19115/19139 schemas is to extend the base type, define a new element with the extended base type and allow the new element to substitute for the base element. So for example, in the MCP, we want to add a new resource constraint element that holds Creative Commons and other commons type licensing information. This requires that the MD_Constraints type be extended and a new mcp:MD_Commons element be defined which can substitute for gmd:MD_Constraints. This is shown in the following snippet of XSD:
+- **schema-substitutes.xml** - Recall from the earlier :ref:`schema_and_schema_xsd` section, that the method we used to extend the base ISO19115/19139 schemas is to extend the base type, define a new element with the extended base type and allow the new element to substitute for the base element. So for example, in the MCP, we want to add a new resource constraint element that holds Creative Commons and other commons type licensing information. This requires that the MD_Constraints type be extended and a new mcp:MD_Commons element be defined which can substitute for gmd:MD_Constraints. This is shown in the following snippet of XSD:
 
 ::
 
@@ -1359,7 +1359,7 @@ If the new GeoNetwork plugin schema is to support on the fly translation of meta
 Supporting OAIPMH conversions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The OAIPMH server in GeoNetwork can deliver metadata records from any of the schemas known to GeoNetwork. It can also be configured to deliver schemas not known to GeoNetwork if an XSLT exists to convert a metadata record to that schema. The file `INSTALL_DIR/web/geonetwork/WEB-INF/config-oai-prefixes.xml` describes the schemas (known as prefixes in OAI speak) that can be produced by an XSLT.
+The OAIPMH server in GeoNetwork can deliver metadata records from any of the schemas known to GeoNetwork. It can also be configured to deliver schemas not known to GeoNetwork if an XSLT exists to convert a metadata record to that schema. The file ``INSTALL_DIR/web/geonetwork/WEB-INF/config-oai-prefixes.xml`` describes the schemas (known as prefixes in OAI speak) that can be produced by an XSLT.
 A simple example of the content of this file is shown below:
 
 ::
@@ -1369,6 +1369,6 @@ A simple example of the content of this file is shown below:
             schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc.xsd"/>
   </schemas> 
 
-In the case of the prefix oai_dc shown above, if an XSLT called oai_dc.xsl exists in the convert directory of a GeoNetwork schema, then records that belong to this schema will be transformed and included in OAIPMH requests for the oai_dc prefix.
+In the case of the prefix oai_dc shown above, if a schema converter with prefix *oai_dc* exists in the ``schema-conversions.xml`` file of a GeoNetwork schema, then records that belong to this schema will be transformed and included in OAIPMH requests for the *oai_dc* prefix. See :ref:`schema_conversions` for more info.
 
-To add oai_dc support for the MCP, the easiest method is to copy oai_dc.xsl from the convert directory of the iso19139 schema and modify it to cope with the different namespaces and additional elements of the MCP.
+To add oai_dc support for the MCP, the easiest method is to copy oai_dc.xsl from the convert directory of the iso19139 schema, modify it to cope with the different namespaces and additional elements of the MCP and add it to the ``schema-conversions.xml`` file for the MCP.

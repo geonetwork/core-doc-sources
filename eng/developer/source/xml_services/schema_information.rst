@@ -6,7 +6,12 @@ Schema information
 Introduction
 ------------
 
-Metadata schemas can be plugged into GeoNetwork - see :ref:`schemaPlugins`. Any application that needs to know which schemas are plugged into GeoNetwork or information about the schema elements and codelists can use the services in this section to obtain that information.
+Metadata schemas can be plugged into GeoNetwork - see :ref:`schemaPlugins`. Any application that needs to know:
+
+- which schemas are plugged into GeoNetwork 
+- information about the schema elements and codelists 
+
+can use the services in this section to obtain that information.
 
 xml.schema.list
 ---------------

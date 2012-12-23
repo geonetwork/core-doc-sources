@@ -661,10 +661,10 @@ Errors
   violates foreign key 'operationallowed_groupid_fkey »**, if a
   group identifier provided is not valid
 
-Massive update privilegies (metadata.massive.update.privileges)
-```````````````````````````````````````````````````````````````
+Batch update privilegies (metadata.batch.update.privileges)
+```````````````````````````````````````````````````````````
 
-The **metadata.massive.update.privileges** service updates the operations allowed for a selected metadata with the list of operations allowed send in the parameters, **deleting all the operations allowed assigned previously**.
+The **metadata.batch.update.privileges** service updates the operations allowed for a selected metadata with the list of operations allowed send in the parameters, **deleting all the operations allowed assigned previously**.
 
 This service requires a previous call to **metadata.select** service to select the metadata records to update.
 
@@ -734,8 +734,8 @@ Response select metadata example::
     <Selected>10</Selected>
   </request>
 
-Request to metadata.massive.update.privileges
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Request to metadata.batch.update.privileges
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Parameters:
 
@@ -752,12 +752,12 @@ Operation identifiers:
 - 4: dynamic
 - 5: featured
 
-Request metadata massive update privilegies example:
+Request metadata batch update privilegies example:
 
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.massive.update.privileges
+  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.privileges
 
   Mime-type:
   application/xml
@@ -772,10 +772,10 @@ Request metadata massive update privilegies example:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.massive.update.privileges?_1_2&_1_1
+  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.privileges?_1_2&_1_1
 
-Response to metadata.massive.update.privileges
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Response to metadata.batch.update.privileges
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If request is executed succesfully HTTP 200 status code is
 returned. If request fails an HTTP status code error is returned and
@@ -810,10 +810,10 @@ records to another user. Only users with
 **Administrator** and **UserAdmin**
 profiles can execute these services.
 
-Massive new owner (metadata.massive.newowner)
-`````````````````````````````````````````````
+Batch new owner (metadata.batch.newowner)
+`````````````````````````````````````````
 
-The **metadata.massive.newowner** service
+The **metadata.batch.newowner** service
 allows to change the owner of a group of metadata. This service
 requires a previous call to **metadata.select**
 service to select the metadata records to update.
@@ -855,11 +855,11 @@ Select metadata response example::
     <Selected>10</Selected>
   </request>
 
-Request to metadata.massive.newowner
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Request to metadata.batch.newowner
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Once the metadata records have been selected can be
-**metadata.massive.newowner** invoked with the next
+**metadata.batch.newowner** invoked with the next
 parameters:
 
 - **user**: (mandatory) New owner user identifier
@@ -868,7 +868,7 @@ parameters:
 Transfer ownership request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.massive.newowner
+  http://localhost:8080/geonetwork/srv/en/metadata.batch.newowner
 
   Mime-type:
   application/xml
@@ -880,8 +880,8 @@ Transfer ownership request example::
     <group>2</group>
   </request>
 
-Response to metadata.massive.newowner
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Response to metadata.batch.newowner
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If request is executed succesfully HTTP 200 status code is
 returned. If request fails an HTTP status code error is returned and

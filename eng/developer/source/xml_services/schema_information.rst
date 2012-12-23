@@ -6,27 +6,57 @@ Schema information
 Introduction
 ------------
 
-GeoNetwork is able to handle several metadata schema formats. Up to now, the
-supported schemas are:
+Metadata schemas can be plugged into GeoNetwork - see :ref:`schemaPlugins`. Any application that needs to know which schemas are plugged into GeoNetwork or information about the schema elements and codelists can use the services in this section to obtain that information.
 
-- **ISO-19115 (iso19115)**: GeoNetwork implements an old version of the
-  draft, which uses short names for elements. This is not so standard so
-  this schema is obsolete and will be removed in future releases.
+xml.schema.list
+---------------
 
-- **ISO-19139 (iso19139)**: This is the XML encoding of the ISO 19115:2007 metadata and ISO 19119
-  service metadata specifications.
+This service returns information about the schemas that are currently plugged into GeoNetwork.
 
-- **Dublin core (dublin-core)**: This is a simple metadata schema based on
-  a set of elements capable of describing any metadata.
+Request
+```````
 
-- **FGDC (fgdc-std)**: It stands for Federal Geographic Data Committee and
-  it is a metadata schema used in North America.
+No parameters are required.
 
-In parenthesis is indicated the name used by GeoNetwork to refer to that
-schema. These schemas are handled through their XML schema files (XSD), which
-GeoNetwork loads and interprets to allow the editor to add and remove elements.
-Beside its internal use, GeoNetwork provides some useful XML services to find
-out some element properties, like label, description and so on.
+Response
+````````
+
+The response will have information for each schema in a schema element. A typical response with one schema (the others have been removed for brevity) looks something like the following:
+
+::
+ 
+ <response>
+  <schema>
+    <name>iso19139</name>
+    <id>3f95190a-dde4-11df-8626-001c2346de4c</id>
+    <version>1.0</version>
+    <namespaces>xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gml="http://www.opengis.net/gml" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink"</namespaces>
+    <convertDirectory>/usr/local/src/git/geonetwork-2.8.x/web/src/main/webapp/WEB-INF/data/config/schema_plugins/iso19139/convert/</convertDirectory>
+    <edit>true</edit>
+    <conversions>
+      <converter name="xml_iso19139" nsUri="http://www.isotc211.org/2005/gmd" schemaLocation="www.isotc211.org/2005/gmd/gmd.xsd" xslt="" />
+      <converter name="xml_iso19139Tooai_dc" nsUri="http://www.openarchives.org/OAI/2.0/" schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc.xsd" xslt="oai_dc.xsl" />
+    </conversions>
+  </schema> 
+  ...
+ </response>
+
+
+Descriptions of the children of the schema element and their contents:
+
+- **name** - the name of the schema - this is the name by which the schema is known to GeoNetwork. It is also the name of the directory in ``GEONETWORK_DATA_DIR/config/schema_plugins`` under which the schema can be found.
+- **id** - A unique identifier assigned to the schema in the ``schema-ident.xml`` file.
+- **version** - a version string
+- **namespaces** - namespaces used by the metadata schema and records that belong to that schema. This is a string suitable for use as a namespace definition in an XML file.
+- **edit** - if true then records that use this schema can be edited by GeoNetwork, if false then they can't.
+- **conversions** - information about the GeoNetwork services that can be called to convert metadata that use this schema into other XML formats. If there are valid conversions registered for this schema then this element will have a **converter** child for each one of these conversions. Each **converter** child has the following attributes which are intended to be used when searching for a particular format that may be produced by a conversion:
+
+  - **name** - the name of the GeoNetwork service that invokes the converter
+  - **nsUri** - the namespace URI of the XML produced by the conversion
+  - **schemaLocation** - the schema location (URL) of the namespace URI
+  - **xslt** - the name of the XSLT in the plugin schema convert subdirectory that is invoked by the GeoNetwork service to carry out the conversion.
+
+Looking at the example schema (iso19139) above, there are two converters. The first is invoked by calling the GeoNetwork service ``xml_iso19139`` (eg. ``http://somehost/geonetwork/srv/eng/xml_iso19139?uuid=<uuid of metadata>``). It produces an XML format with namespace URI ``http://www.isotc211.org/gmd`` with schemaLocation ``http://www.isotc211.org/2005/gmd/gmd.xsd`` and xslt name ``xml_iso19139`` because the xslt attribute is set to the empty string.
 
 xml.schema.info
 ---------------

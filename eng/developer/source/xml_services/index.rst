@@ -10,7 +10,10 @@ XML Services
     login_xml_services.rst
     group_xml_services.rst
     user_xml_services.rst
-    metadata_xml_services.rst
+    metadata_xml_privileges.rst
+    metadata_xml_ownership.rst
+    metadata_xml_search_retrieve.rst
+    metadata_xml_insert_update_delete.rst
     system_configuration.rst
     services_general.rst
     services_download.rst

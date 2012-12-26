@@ -7,6 +7,8 @@ These services allow retrieval and management of metadata ownership where the 'o
 Only users with **Administrator** and **UserAdmin**
 profiles can execute these services.
 
+.. _metadata.batch.newowner:
+
 Batch new owner (metadata.batch.newowner)
 -----------------------------------------
 
@@ -17,40 +19,7 @@ metadata records.
 
 Requires authentication: Yes
 
-Request to metadata.select service
-``````````````````````````````````
-
-Parameters:
-
-- **id**: Identifier of metadata to select (can be multiple elements)
-
-- **selected**: Selection state. Values: add, add-all, remove, remove-all
-
-Select metadata request example::
-
-  Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.select
-
-  Mime-type:
-  application/xml
-
-  Post request:
-  <?xml version="1.0" encoding="UTF-8"?>
-  <request>
-    <selected>add-all</selected>
-  </request>
-
-Response from metadata.select service
-`````````````````````````````````````
-
-The response contains the number of metadata records selected.
-
-Select metadata response example::
-
-  <?xml version="1.0" encoding="UTF-8"?>
-  <request>
-    <Selected>10</Selected>
-  </request>
+.. include:: metadata_xml_select_include.rst
 
 Request to metadata.batch.newowner
 ``````````````````````````````````

@@ -16,6 +16,8 @@ XML Services
     metadata_xml_privileges.rst
     metadata_xml_ownership.rst
     metadata_xml_status.rst
+    metadata_xml_categories.rst
+    metadata_xml_versioning.rst
     system_configuration.rst
     services_general.rst
     services_download.rst

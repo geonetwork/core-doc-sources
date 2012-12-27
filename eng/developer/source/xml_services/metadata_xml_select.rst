@@ -4,6 +4,6 @@
 Metadata Select Services
 ========================
 
-These services are for creating and managing a set of selected metadata records. The selected set is normally used by the metadata.batch services eg. :ref:`metadata.batch.update.privileges`, :ref:`metadata.batch.newowner`.
+These services are for creating and managing a set of selected metadata records. The selected set is normally used by the metadata.batch services eg. :ref:`metadata.batch.update.privileges`, :ref:`metadata.batch.newowner`, :ref:`metadata.batch.update.status`, :ref:`metadata.batch.update.categories`.
 
 .. include:: metadata_xml_select_include.rst

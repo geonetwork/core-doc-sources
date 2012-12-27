@@ -18,6 +18,8 @@ xml.schema.list
 
 This service returns information about the schemas that are currently plugged into GeoNetwork.
 
+.. note:: This service will very likely move into xml.info in the next version of GeoNetwork. See :ref:`xml.info`.
+
 Request
 ```````
 

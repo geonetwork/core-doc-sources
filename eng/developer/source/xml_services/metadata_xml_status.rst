@@ -14,14 +14,14 @@ as parameters.
 
 Requires authentication: Yes
 
-Request to metadata.update service
+Request to metadata.status service
 ``````````````````````````````````
 
 Parameters:
 
-- **id**: Identifier of metadata to update
+- **id** or **uuid**: Identifier of metadata to update
 
-- **status**: One of the status identifiers take from the database table ``statusvalues``. Status identifiers are:
+- **status**: One of the status identifiers take from the database table ``statusvalues``. Status identifiers (see :ref:`xml.metadata.status.values.list`) are:
 
  - 0: unknown
  - 1: draft
@@ -102,7 +102,7 @@ Request to metadata.batch.update.status
 
 Parameters:
 
-- **status**: One of the status identifiers take from the database table ``statusvalues``. Status identifiers:
+- **status**: One of the status identifiers take from the database table ``statusvalues``. Status identifiers (see :ref:`xml.metadata.status.values.list`):
 
  - 0: unknown
  - 1: draft
@@ -141,26 +141,7 @@ Response from metadata.batch.update.status
 ``````````````````````````````````````````
 
 If the request executed successfully a HTTP 200 status code is
-returned and some XML summarizing what has changed. An example is shown below:
-
-::
-
- <response>
-   <done>7</done>
-   <notOwner>0</notOwner>
-   <notFound>0</notFound>
-   <noChange>7</noChange>
- </response>
-
-Description of elements in response:
-
-- **response** - container for response
- - **done** - number of selected metadata records processed
- - **notOwner** - number of selected records skipped because user running service was not owner
- - **notFound** - number of selected records that were not found when retrieved (eg. may have been deleted)
- - **noChange** - number of selected records that were unchanged by the batch operation.
-
-If the request fails an HTTP status code error is returned and
+returned. If the request fails an HTTP status code error is returned and
 the response contains the XML document with the exception.
 
 Errors
@@ -171,8 +152,103 @@ Errors
   authenticated or their profile has no rights to execute the
   service. Returns 401 HTTP code
 
-- **Metadata not found (error id: metadata-not-found)** if the 
-  metadata record with the identifier provided does not exist
+.. _xml.metadata.status.values.list:
+
+Get status values (xml.metadata.status.values.list)
+---------------------------------------------------
+
+This service gets the status values and identifiers defined in the status table in the GeoNetwork database. It is intended to be used when building a request to update the status of a metadata record.
+
+.. note:: This service will very likely move into xml.info in the next version of GeoNetwork. See :ref:`xml.info`.
+
+Requires authentication: No
+
+Request
+```````
+
+Parameters: **None**
+
+Example:
+
+**POST**::
+
+  Url:
+  http://localhost:8080/geonetwork/srv/en/xml.metadata.status.values.list
+
+  Mime-type:
+  application/xml
+
+  Post request:
+  <?xml version="1.0" encoding="UTF-8"?>
+  <request/>
+
+**GET**::
+
+  Url:
+  http://localhost:8080/geonetwork/srv/en/xml.metadata.status.values.list
+
+Response
+````````
+
+If the request executed successfully a HTTP 200 status code is
+returned and the XML with status values and identifiers. An example follows::
+
+ <response>
+   <record>
+     <id>0</id>
+     <name>unknown</name>
+     <reserved>y</reserved>
+     <label>
+       <eng>Unknown</eng>
+     </label>
+   </record>
+   <record>
+     <id>1</id>
+     <name>draft</name>
+     <reserved>y</reserved>
+     <label>
+       <eng>Draft</eng>
+     </label>
+   </record>
+   ...
+ </response>
+
+Get status of a metadata record (xml.metadata.status.get)
+---------------------------------------------------------
+
+This service gets the status of a particular metadata record specified by id or uuid as a parameter. 
+
+Requires authentication: No.
+
+Request
+```````
+
+Parameters:
+
+- **id** or **uuid**: Identifier of metadata to obtain status of.
+
+Response
+````````
+
+If the request executed successfully a HTTP 200 status code is
+returned and the XML with status values for the metadata record (note: all changesin status are present) is returned. An example follows::
+
+ <response>
+   <record>
+    <statusid>5</statusid>
+    <userid>4</userid>
+    <changedate>2012-12-27T14:58:04</changedate>
+    <changemessage>Do it all again</changemessage>
+    <name>rejected</name>
+   </record>
+   <record>
+    <statusid>4</statusid>
+    <userid>6</userid>
+    <changedate>2012-12-27T14:32:10</changedate>
+    <changemessage>Ready for review</changemessage>
+    <name>submitted</name>
+   </record>
+  </response> 
 
 Defining status actions
 -----------------------

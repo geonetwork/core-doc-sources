@@ -9,50 +9,45 @@ xml.info
 --------
 
 The xml.info service can be used to query the site about its configuration,
-services, status and so on. For example, it is used by the harvesting web
-interface to retrieve information about a remote node.
+services, status, schemas, users, groups and so on. 
 
 Request
 ```````
 
-The XML request should contain at least one type element to indicates the
-kind of information to retrieve. More type elements can be specified to
-obtain more information at once. The set of allowed values are:
+The XML request should contain at least one type parameter to indicate the
+kind of information to retrieve. Multiple type parameters can be specified.
+The set of allowed values is:
 
-#.  **site**: Returns general information about the site like its name, id, etc...
+- **site**: Returns general information about the site like its name, id, etc...
 
-#.  **categories**: Returns all site’s categories
+- **categories**: Returns all site’s categories
 
-#.  **groups**: Returns all site’s groups visible to the requesting user. If the user does not authenticate
-    himself, only the Intranet and the all groups are visible.
+- **groups**: Returns all site’s groups visible to the requesting user. If the user does not authenticate himself, only the Intranet and the all groups are visible.
 
-#.  **operations**: Returns all possible operations on metadata
+- **users**: Depending upon the profile of the user making the call, information about users of the site will be returned. The rules are:
+ 
+ - Administrators can see all users
+ - User administrators can see all users they administer and
+   all other user administrators in the same group set. The group set
+   is defined by all groups visible to the user administrator (except for
+   the All and Intranet groups).
+ - An authenticated user can only see their own information.
+ - A guest cannot see any user information at all.
 
-#.  **regions**: Returns all geographical regions usable for queries
+- **operations**: Returns all possible operations on metadata
 
-#.  **sources**: Returns all GeoNetwork sources that the remote site knows.
+- **regions**: Returns all geographical regions usable for queries
 
-The result will contain:
+- **sources**: Returns all GeoNetwork sources (remote sites) that are known about at the site. This will include:
 
-- The remote node’s name and siteId
+ - Node name and siteId
+ - All source UUIDs and site names that have been discovered through harvesting
+ - All source UUIDs and site names from MEF files imported by the site
 
-- All source UUIDs and names that have been discovered through
-  harvesting.
+- **schemas**: All registered metadata schemas for the site
 
-- All source UUIDs and names of metadata that have been imported
-  into the remote node through the MEF format.
+- **status**: All possible status values for metadata records
 
-- Administrators can see all users into the system (normal, other
-  administrators, etc...)
-
-- User administrators can see all users they can administrate and
-  all other user administrators in the same group set. The group set
-  is defined by all groups visible to the user administration, beside
-  the All and the Intranet groups.
-
-- An authenticated user can see only himself.
-
-- A guest cannot see any user.
 
 Request example::
 
@@ -64,8 +59,7 @@ Request example::
 Response
 ````````
 
-Each type element produces an XML subtree so the response to the previous
-request is like this::
+Each type parameter produces an XML subtree in an info container element. An example response to a request for three types of information might look like the following::
 
     <info>
         <site>...</site>
@@ -74,7 +68,10 @@ request is like this::
         ...
     </info>
 
-Here follows the structure of each subtree:
+The structure of each possible subtree is as follows:
+
+Site
+^^^^
 
 - **site**: This is the container
 
@@ -102,6 +99,9 @@ Example site information::
           </platform>
       </site>
 
+Categories
+^^^^^^^^^^
+
 - **categories**: This is the container for categories.
 
   - **category \[0..n]**: A single GeoNetwork’s category. This
@@ -124,6 +124,9 @@ Example response for categories::
               </label>
           </category>
       </categories>
+
+Groups
+^^^^^^
 
 - **groups**: This is the container for groups
 
@@ -152,6 +155,9 @@ Example response for groups::
           </group>
       </groups>
 
+Operations
+^^^^^^^^^^
+
 - **operations**: This is the container for the operations
 
   - **operation \[0..n]**: This is a possible operation on
@@ -176,6 +182,9 @@ Example response for operations::
               </label>
           </operation>
       </operations>
+
+Regions
+^^^^^^^
 
 - **regions**: This is the container for geographical regions
 
@@ -205,6 +214,9 @@ Example response for regions::
           </region>
       </regions>
 
+Sources
+^^^^^^^
+
 - **sources**: This is the container.
 
   - **source \[0..n]**: A source known to the remote node.
@@ -220,6 +232,9 @@ Example response for a source::
               <UUID>0619cc50-708b-11da-8202-000d9335906e</uuid>
           </source>
       </sources>
+
+Users
+^^^^^
 
 - **users**: This is the container for user information
 
@@ -258,6 +273,75 @@ Example response for a user::
               <kind>gov</kind>
           </user>
       </users>
+
+Status
+^^^^^^
+
+- **statusvalues**: This is the container for the metadata status value information.
+ 
+  - **status \[0..n]**: A metadata status value. This element has an id attribute
+    which represents the local identifier of the status value.
+
+    - **name**: The status value name
+    - **reserved**: If 'y' then the status value is one of the core status values 
+      which should not be removed. Use 'n' for any status values you add.
+    - **label**: The localised labels used to show the
+      status value in the user interface.
+
+Example response for status::
+
+  <statusvalues>
+    <status id="0">
+      <name>unknown</name>
+      <reserved>y</reserved>
+      <label>
+        <eng>Unknown</eng>
+      </label>
+    </status>
+    ...
+  </statusvalues>
+
+
+Schemas
+^^^^^^^
+
+- **schemas**: This is the container for the schema information
+
+  - **schema \[0..n]**: A metadata schema.
+
+    - **name** - the name of the schema - this is the name by which the schema is known to GeoNetwork. It is also the name of the directory in ``GEONETWORK_DATA_DIR/config/schema_plugins`` under which the schema can be found.
+    - **id** - A unique identifier assigned to the schema in the ``schema-ident.xml`` file.
+    - **version** - a version string assigned to the schema in the ``schema-ident.xml`` file.
+    - **namespaces** - namespaces used by the metadata schema and records that belong to that schema. This is a string suitable for use as a namespace definition in an XML file.
+    - **edit** - if true then records that use this schema can be edited by GeoNetwork, if false then they can't.
+    - **conversions** - information about the GeoNetwork services that can be called to convert metadata that use this schema into other XML formats. If there are valid conversions registered for this schema then this element will have a **converter** child for each one of these conversions. Each **converter** child has the following attributes which are intended to be used when searching for a particular format that may be produced by a conversion:
+
+      - **name** - the name of the GeoNetwork service that invokes the converter
+      - **nsUri** - the namespace URI of the XML produced by the conversion
+      - **schemaLocation** - the schema location (URL) of the namespace URI
+      - **xslt** - the name of the XSLT in the plugin schema convert subdirectory that is invoked by the GeoNetwork service to carry out the conversion.
+
+Example response for schemas:
+
+::
+ 
+ <schemas>
+  <schema>
+    <name>iso19139</name>
+    <id>3f95190a-dde4-11df-8626-001c2346de4c</id>
+    <version>1.0</version>
+    <namespaces>xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gml="http://www.opengis.net/gml" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink"</namespaces>
+    <convertDirectory>/usr/local/src/git/geonetwork-2.8.x/web/src/main/webapp/WEB-INF/data/config/schema_plugins/iso19139/convert/</convertDirectory>
+    <edit>true</edit>
+    <conversions>
+      <converter name="xml_iso19139" nsUri="http://www.isotc211.org/2005/gmd" schemaLocation="www.isotc211.org/2005/gmd/gmd.xsd" xslt="" />
+      <converter name="xml_iso19139Tooai_dc" nsUri="http://www.openarchives.org/OAI/2.0/" schemaLocation="http://www.openarchives.org/OAI/2.0/oai_dc.xsd" xslt="oai_dc.xsl" />
+    </conversions>
+  </schema> 
+  ...
+ </schemas>
+
+Looking at the example schema (iso19139) above, there are two converters. The first is invoked by calling the GeoNetwork service ``xml_iso19139`` (eg. ``http://somehost/geonetwork/srv/eng/xml_iso19139?uuid=<uuid of metadata>``). It produces an XML format with namespace URI ``http://www.isotc211.org/gmd`` with schemaLocation ``http://www.isotc211.org/2005/gmd/gmd.xsd`` and xslt name ``xml_iso19139`` because the xslt attribute is set to the empty string.
 
 Localised entities
 ``````````````````

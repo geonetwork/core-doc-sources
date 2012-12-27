@@ -10,7 +10,7 @@ The **metadata.admin** service updates the
 privileges on a metadata record using a list of groups and privileges sent 
 as parameters. 
 
-.. note:: All previously assigned privileges will be deleted.
+.. note:: All previously assigned privileges will be deleted. If versioning for the metadata record is on, then the previously assigned privileges will be available in the version history.
 
 Requires authentication: Yes
 
@@ -24,16 +24,14 @@ Parameters:
 - **_G_O**: (can be multiple elements)
 
   - **G**: Group identifier
-  - **O**: Privilege (Operation) identifier
+  - **O**: Privilege (Operation) identifier. Privilege identifiers:
 
-Privilege identifiers:
-
-- 0: view
-- 1: download
-- 2: editing
-- 3: notify
-- 4: dynamic
-- 5: featured
+   - 0: view
+   - 1: download
+   - 2: editing
+   - 3: notify
+   - 4: dynamic
+   - 5: featured
 
 Request example:
 
@@ -110,17 +108,16 @@ Request to metadata.batch.update.privileges
 Parameters:
 
 - **_G_O**: (can be multiple elements)
+
   - **G**: Group identifier
-  - **O**: Privilege (Operation) identifier
+  - **O**: Privilege (Operation) identifier. Privilege identifiers:
 
-Privilege identifiers:
-
-- 0: view
-- 1: download
-- 2: editing
-- 3: notify
-- 4: dynamic
-- 5: featured
+   - 0: view
+   - 1: download
+   - 2: editing
+   - 3: notify
+   - 4: dynamic
+   - 5: featured
 
 Example request:
 
@@ -148,7 +145,24 @@ Response from metadata.batch.update.privileges
 ``````````````````````````````````````````````
 
 If the request executed successfully a HTTP 200 status code is
-returned. If the request fails an HTTP status code error is returned and
+returned and some XML summarizing what has changed. An example is shown below:
+
+::
+
+ <response>
+   <done>7</done>
+   <notOwner>0</notOwner>
+   <notFound>0</notFound>
+ </response>
+
+Description of elements in response:
+
+- **response** - container for response
+ - **done** - number of selected metadata records processed
+ - **notOwner** - number of selected records skipped because user running service was not owner
+ - **notFound** - number of selected records that were not found when retrieved (eg. may have been deleted)
+
+If the request fails an HTTP status code error is returned and
 the response contains the XML document with the exception.
 
 Errors
@@ -158,9 +172,6 @@ Errors
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
   service. Returns 401 HTTP code
-
-- **Metadata not found (error id: metadata-not-found)** if the 
-  metadata record with the identifier provided does not exist
 
 - **ERROR: insert or update on table "operationallowed"
   violates foreign key 'operationallowed_operationid_fkey »**, if an

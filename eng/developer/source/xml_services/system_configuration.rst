@@ -6,18 +6,17 @@ System configuration
 Introduction
 ------------
 
-The GeoNetwork’s configuration is made up of a set of parameters that can be
+GeoNetwork’s configuration is made up of a set of parameters that can be
 changed to accommodate any installation need. These parameters are subdivided
-into 2 groups:
+into two groups:
 
-- parameters that can be easily changed through a web interface.
+- parameters that can be changed through the web interface.
 
-- parameters not accessible from a web interface and that must be
-  changed when the system is not running.
+- parameters not accessible from the web interface and that must be
+  changed when the system is not running
 
-The first group of parameters can be queried or changed through 2 services:
-xml.config.get and xml.config.set. The second group of parameters can be
-changed using the GAST tool.
+The first group of parameters can be queried or changed through the two services described in this section:
+``xml.config.get`` and ``xml.config.set``. The second group of parameters must be changed by hand (the GAST tool can be used to configure the database parameters).
 
 xml.config.get
 --------------

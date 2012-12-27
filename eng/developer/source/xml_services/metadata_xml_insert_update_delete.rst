@@ -166,7 +166,7 @@ Request
 
 Parameters:
 
-- **id**: (mandatory) Identifier of the metadata to update
+- **id** or **uuid**: (mandatory) Identifier of the metadata to update
 
 - **version**: (mandatory) This parameter
   is used to check if another user has updated the metadata
@@ -253,7 +253,7 @@ Request
 
 Parameters:
 
-- **id**: (mandatory) Identifier of the metadata to delete
+- **id** or **uuid**: (mandatory) Identifier of the metadata to delete
 
 Delete metadata request example::
 

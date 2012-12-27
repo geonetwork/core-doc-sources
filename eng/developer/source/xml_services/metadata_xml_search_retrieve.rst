@@ -225,7 +225,7 @@ Request
 
 *One* of the following parameters:
 
-- **uuid** : Metadata Universally Unique Identifier (UUID)
+- **uuid** : Metadata Universal Unique Identifier (UUID)
 
 - **id**: Metadata internal identifier
 

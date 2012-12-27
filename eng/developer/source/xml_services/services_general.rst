@@ -3,6 +3,8 @@
 General services
 ================
 
+.. _xml.info:
+
 xml.info
 --------
 

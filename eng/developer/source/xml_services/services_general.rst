@@ -1,15 +1,16 @@
 .. _services_general:
 
-General services
-================
+Site Information and Request Forwarding Services
+================================================
+
+Services in this section provide information about the site (eg. name, users, groups, schemas etc) and access to the site forwarding service which can be used by JavaScript clients.
 
 .. _xml.info:
 
-xml.info
---------
+Site Information (xml.info)
+---------------------------
 
-The xml.info service can be used to query the site about its configuration,
-services, status, schemas, users, groups and so on. 
+This service can be used to retrieve information about a GeoNetwork site. The information that can be requested includes: site name and id, users, groups, metadata schemas as well as lists of privileges, metadata status values, spatial regions, local metadata categories and so on. 
 
 Request
 ```````
@@ -19,10 +20,6 @@ kind of information to retrieve. Multiple type parameters can be specified.
 The set of allowed values is:
 
 - **site**: Returns general information about the site like its name, id, etc...
-
-- **categories**: Returns all site’s categories
-
-- **groups**: Returns all site’s groups visible to the requesting user. If the user does not authenticate himself, only the Intranet and the all groups are visible.
 
 - **users**: Depending upon the profile of the user making the call, information about users of the site will be returned. The rules are:
  
@@ -34,9 +31,7 @@ The set of allowed values is:
  - An authenticated user can only see their own information.
  - A guest cannot see any user information at all.
 
-- **operations**: Returns all possible operations on metadata
-
-- **regions**: Returns all geographical regions usable for queries
+- **groups**: Returns all user groups visible to the requesting user. Note: If the user is not authenticated, only the ``Intranet`` and ``All`` groups will be returned.
 
 - **sources**: Returns all GeoNetwork sources (remote sites) that are known about at the site. This will include:
 
@@ -44,10 +39,15 @@ The set of allowed values is:
  - All source UUIDs and site names that have been discovered through harvesting
  - All source UUIDs and site names from MEF files imported by the site
 
-- **schemas**: All registered metadata schemas for the site
+- **schemas**: Returns all registered metadata schemas for the site
 
-- **status**: All possible status values for metadata records
+- **categories**: Returns the metadata categories for the site
 
+- **operations**: Returns all possible operations on metadata
+
+- **regions**: Returns all geographical regions usable for spatial queries
+
+- **status**: Returns all possible status values for metadata records
 
 Request example::
 
@@ -59,13 +59,12 @@ Request example::
 Response
 ````````
 
-Each type parameter produces an XML subtree in an info container element. An example response to a request for three types of information might look like the following::
+Each type parameter produces an XML subtree in an info container element. An example response to a request for site, categories and groups information would look like the following::
 
     <info>
         <site>...</site>
         <categories>...</categories>
         <groups>...</groups>
-        ...
     </info>
 
 The structure of each possible subtree is as follows:
@@ -73,19 +72,15 @@ The structure of each possible subtree is as follows:
 Site
 ^^^^
 
-- **site**: This is the container
+- **site**: This is the container for site information
 
   - **name**: Human readable site name
-  - **siteId**: Universal unique identifier of the site
-  - **platform**: This is just a container to hold the site’s
-    back end
+  - **siteId**: Universal unique identifier (uuid) of the site
+  - **platform**: Container for GeoNetwork development version information
 
-    - **name**: Platform name. For GeoNetwork installations
-      it must be GeoNetwork.
-    - **version**: Platform version, given in the X.Y.Z
-      format
-    - **subVersion**: Additional version notes, like
-      ’alpha-1’ or ’beta-2’.
+    - **name**: Platform name. Always ``geonetwork``.
+    - **version**: Platform version, given in the X.Y.Z format
+    - **subVersion**: Additional version notes, like ’alpha-1’ or ’beta-2’.
       
 Example site information::
   
@@ -99,140 +94,6 @@ Example site information::
           </platform>
       </site>
 
-Categories
-^^^^^^^^^^
-
-- **categories**: This is the container for categories.
-
-  - **category \[0..n]**: A single GeoNetwork’s category. This
-    element has an id attribute which represents the local
-    identifier for the category. It can be useful to a client
-    to link back to this category.
-
-    - **name**: Category’s name
-    - **label**: The localised labels used to show the
-      category on screen. See :ref:`xml_response_categories`.
-
-Example response for categories::
-  
-      <categories>
-          <category id="1">
-              <name>datasets</name>
-              <label>
-                  <en>Datasets</en>
-                  <fr>Jeux de données</fr>
-              </label>
-          </category>
-      </categories>
-
-Groups
-^^^^^^
-
-- **groups**: This is the container for groups
-
-  - **group \[2..n]**: This is a GeoNetwork group. There are at
-    least the Internet and Intranet groups. This element has an
-    id attribute which represents the local identifier for the
-    group.
-
-    - **name**: Group’s name
-    - **description**: Group’s description
-    - **referrer**: The user responsible for this group
-    - **email**: The email address to notify when a map is
-      downloaded
-    - **label**: The localised labels used to show the
-      group on screen. See :ref:`xml_response_groups`.
-
-Example response for groups::
-  
-      <groups>
-          <group id="1">
-              <name>editors</name>
-              <label>
-                  <en>Editors</en>
-                  <fr>Éditeurs</fr>
-              </label>
-          </group>
-      </groups>
-
-Operations
-^^^^^^^^^^
-
-- **operations**: This is the container for the operations
-
-  - **operation \[0..n]**: This is a possible operation on
-    metadata. This element has an id attribute which represents
-    the local identifier for the operation.
-
-    - **name**: Short name for the operation.
-    - **reserved**: Can be y or n and is used to
-      distinguish between system reserved and user defined
-      operations.
-    - **label**: The localised labels used to show the
-      operation on screen. See :ref:`xml_response_operations`.
-
-Example response for operations::
-  
-      <operations>
-          <operation id="0">
-              <name>view</name>
-              <label>
-                  <en>View</en>
-                  <fr>Voir</fr>
-              </label>
-          </operation>
-      </operations>
-
-Regions
-^^^^^^^
-
-- **regions**: This is the container for geographical regions
-
-  - **region \[0..n]**: This is a region present into the system.
-    This element has an id attribute which represents the local
-    identifier for the operation.
-
-    - **north**: North coordinate of the bounding box.
-    - **south**: South coordinate of the bounding box.
-    - **west**: West coordinate of the bounding box.
-    - **east**: east coordinate of the bounding box.
-    - **label**: The localised labels used to show the
-      region on screen. See :ref:`xml_response_regions`.
-
-Example response for regions::
-  
-      <regions>
-          <region id="303">
-              <north>82.99</north>
-              <south>26.92</south>
-              <west>-37.32</west>
-              <east>39.24</east>
-              <label>
-                  <en>Western Europe</en>
-                  <fr>Western Europe</fr>
-              </label>
-          </region>
-      </regions>
-
-Sources
-^^^^^^^
-
-- **sources**: This is the container.
-
-  - **source \[0..n]**: A source known to the remote node.
-
-    - **name**: Source’s name
-    - **UUID**: Source’s unique identifier
-
-Example response for a source::
-  
-      <sources>
-          <source>
-              <name>My Host</name>
-              <UUID>0619cc50-708b-11da-8202-000d9335906e</uuid>
-          </source>
-      </sources>
-
 Users
 ^^^^^
 
@@ -245,17 +106,16 @@ Users
     - **surname**: The user’s surname. Used for display
       purposes.
     - **name**: The user’s name. Used for display purposes.
-    - **profile**: User’s profile, like Administrator,
-      Editor, UserAdmin etc...
+    - **profile**: User’s profile. eg. Administrator, Editor, UserAdmin etc...
     - **address**: The user’s address.
     - **state**: The user’s state.
-    - **zip**: The user’s address zip code.
+    - **zip**: The user’s address zip/postal code.
     - **country**: The user’s country.
     - **email**: The user’s email address.
     - **organisation**: The user’s organisation.
-    - **kind**:
+    - **kind**: The type of organisation (eg. NGO, Government)
 
-Example response for a user::
+Example response::
   
       <users>
           <user>
@@ -274,33 +134,51 @@ Example response for a user::
           </user>
       </users>
 
-Status
+Groups
 ^^^^^^
 
-- **statusvalues**: This is the container for the metadata status value information.
- 
-  - **status \[0..n]**: A metadata status value. This element has an id attribute
-    which represents the local identifier of the status value.
+- **groups**: This is the container for groups
 
-    - **name**: The status value name
-    - **reserved**: If 'y' then the status value is one of the core status values 
-      which should not be removed. Use 'n' for any status values you add.
-    - **label**: The localised labels used to show the
-      status value in the user interface.
+  - **group \[2..n]**: This is a GeoNetwork group. There will always be at
+    least two groups: the Internet and Intranet groups. This element has an
+    id attribute which represents the local identifier for the group.
 
-Example response for status::
+    - **name**: Group name
+    - **description**: Group description
+    - **referrer**: The user responsible for this group
+    - **email**: The email address to notify when a data file uploaded with the metadata is downloaded
+    - **label**: The localised labels used to show the group in the user interface.
 
-  <statusvalues>
-    <status id="0">
-      <name>unknown</name>
-      <reserved>y</reserved>
-      <label>
-        <eng>Unknown</eng>
-      </label>
-    </status>
-    ...
-  </statusvalues>
+Example response::
+  
+      <groups>
+          <group id="1">
+              <name>editors</name>
+              <label>
+                  <eng>Editors</eng>
+                  <fre>Éditeurs</fre>
+              </label>
+          </group>
+      </groups>
 
+Sources
+^^^^^^^
+
+- **sources**: This is the container for sources.
+
+  - **source \[0..n]**: A source known to the GeoNetwork node.
+
+    - **name**: Source name
+    - **UUID**: Source universal unique identifier
+
+Example response for a source::
+  
+      <sources>
+          <source>
+              <name>My Host</name>
+              <UUID>0619cc50-708b-11da-8202-000d9335906e</uuid>
+          </source>
+      </sources>
 
 Schemas
 ^^^^^^^
@@ -343,33 +221,140 @@ Example response for schemas:
 
 Looking at the example schema (iso19139) above, there are two converters. The first is invoked by calling the GeoNetwork service ``xml_iso19139`` (eg. ``http://somehost/geonetwork/srv/eng/xml_iso19139?uuid=<uuid of metadata>``). It produces an XML format with namespace URI ``http://www.isotc211.org/gmd`` with schemaLocation ``http://www.isotc211.org/2005/gmd/gmd.xsd`` and xslt name ``xml_iso19139`` because the xslt attribute is set to the empty string.
 
+Categories
+^^^^^^^^^^
+
+- **categories**: This is the container for categories.
+
+  - **category \[0..n]**: A single GeoNetwork category. This
+    element has an id attribute which represents the local
+    identifier for the category. 
+
+    - **name**: Category name
+    - **label**: The localised labels used to show the category in the user interface.
+
+Example response::
+  
+      <categories>
+          <category id="1">
+              <name>datasets</name>
+              <label>
+                  <eng>Datasets</eng>
+                  <fre>Jeux de données</fre>
+              </label>
+          </category>
+      </categories>
+
+Operations
+^^^^^^^^^^
+
+- **operations**: This is the container for the operations
+
+  - **operation \[0..n]**: This is a possible operation on
+    a metadata record. This element has an id attribute which represents
+    the local identifier for the operation.
+
+    - **name**: Short name for the operation.
+    - **reserved**: Can be y or n and is used to
+      distinguish between system reserved and user defined
+      operations.
+    - **label**: The localised labels used to show the operation in the user interface.
+
+Example response for operations::
+  
+      <operations>
+          <operation id="0">
+              <name>view</name>
+              <label>
+                  <eng>View</eng>
+                  <fre>Voir</fre>
+              </label>
+          </operation>
+      </operations>
+
+Regions
+^^^^^^^
+
+- **regions**: This is the container for geographical regions
+
+  - **region \[0..n]**: This is a region container element.
+    This element has an id attribute which represents the local
+    identifier for the operation.
+
+    - **north**: North coordinate of the bounding box.
+    - **south**: South coordinate of the bounding box.
+    - **west**: West coordinate of the bounding box.
+    - **east**: east coordinate of the bounding box.
+    - **label**: The localised labels used to show the region in the user interface.
+
+Example response for regions::
+  
+      <regions>
+          <region id="303">
+              <north>82.99</north>
+              <south>26.92</south>
+              <west>-37.32</west>
+              <east>39.24</east>
+              <label>
+                  <eng>Western Europe</eng>
+              </label>
+          </region>
+      </regions>
+
+Status
+^^^^^^
+
+- **statusvalues**: This is the container for the metadata status value information.
+ 
+  - **status \[0..n]**: A metadata status value. This element has an id attribute
+    which represents the local identifier of the status value.
+
+    - **name**: The status value name
+    - **reserved**: Can be y or n and is used to
+      distinguish between system reserved and user defined
+      status values.
+    - **label**: The localised labels used to show the
+      status value in the user interface.
+
+Example response for status::
+
+  <statusvalues>
+    <status id="0">
+      <name>unknown</name>
+      <reserved>y</reserved>
+      <label>
+        <eng>Unknown</eng>
+      </label>
+    </status>
+    ...
+  </statusvalues>
+
+
 Localised entities
 ``````````````````
 
 Localised entities have a general label element which contains the
-localised strings in all supported languages. This element has as many
-children as the supported languages. Each child has a name that reflect the
+localised strings in all supported languages. This element has  a child for each
+supported language. Each child has a name reflecting the
 language code while its content is the localised text. Here is an example of
 such elements::
 
     <label>
-        <en>Editors</en>
-        <fr>Éditeurs</fr>
-        <es>Editores</es>
+        <eng>Editors</eng>
+        <fre>Éditeurs</fre>
+        <esp>Editores</esp>
     </label>
 
-xml.forward
------------
+Site Forwarding (xml.forward)
+-----------------------------
 
-This is just a router service. It is used by JavaScript code to connect to a
-remote host because a JavaScript program cannot access a machine other than its
-server. For example, it is used by the harvesting web interface to query a
-remote host and retrieve the list of site ids.
+This is a request forwarding service. It can be used by JavaScript code to 
+connect to a remote host because a JavaScript program cannot access any machine other than its server (the same origin policy, see http://en.wikipedia.org/wiki/Same_origin_policy). For example, it is used by the harvesting web interface to query a remote host and retrieve the list of site ids.
 
 Request
 ```````
 
-The service’s request::
+The details of the request::
 
     <request>
         <site>
@@ -385,19 +370,13 @@ The service’s request::
 
 Where:
 
-#.  **site**: A container for site information where the request will be forwarded.
-
-#.  **url**: Refers to the remote URL to connect to. Usually it points to a
-    GeoNetwork XML service but it can point to any XML service.
-
-#.  **type**: Its only purpose is to distinguish GeoNetwork nodes which use a different
-    authentication scheme. The value GeoNetwork refers to these nodes. Any other
-    value, or if the element is missing, refers to a generic node.
-
-#.  **account**: This element is optional. If present, the provided credentials will be used to
-    authenticate to the remote site.
-
-#.  **params**: This is just a container for the request that must be executed remotely.
+- **site**: A container for site information where the request will be forwarded.
+- **url**: Refers to the remote URL to connect to. Usually it points to a
+  GeoNetwork XML service but it can point to any XML service.
+- **type**: If set to GeoNetwork then use GeoNetwork authentication schema. 
+  Any other value, or if the element is missing, refers to a generic node.
+- **account**: This element is optional. If present, the provided credentials will be used to authenticate to the remote site.
+- **params**: Container for the request parameters.
 
 Request for info from a remote server::
 
@@ -412,11 +391,10 @@ Request for info from a remote server::
         </params>
     </request>
 
-Please note that this service uses the GeoNetwork’s proxy
-configuration.
+.. note:: This service uses the proxy configuration. See ``System Configuration`` section of the user manual.
 
 Response
 ````````
 
-The response is just the response from the remote service.
+Response from the remote service.
 

@@ -8,7 +8,7 @@ Introduction
 
 Metadata schemas can be plugged into GeoNetwork - see :ref:`schemaPlugins`. Any application that needs to know:
 
-- which schemas are plugged into GeoNetwork should use the :ref:`xml.info` service
+- information (eg. names, versions, namespaces, converters) about metadata schemas that are plugged into GeoNetwork should use the :ref:`xml.info` service
 - information about the schema elements and codelists should use the ``xml.schema.info`` service described in this section of the manual.
 
 xml.schema.info

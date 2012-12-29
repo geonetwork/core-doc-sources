@@ -187,7 +187,7 @@ The **metadata.batch.update.children** service copies metadata elements from the
 
 - This service works only for iso19139 (or profile) child metadata records ie. metadata records whose gmd:parentIdentifier is set to the uuid of a metadata record in the catalog.
 - Any child metadata records that do not have the same metadata schema as the parent metadata record will be skipped.
-- The service actually executes an XSLT in the metadata schema directory of the parent metadata record. The XSLT is called ``update-child-from-parent-info.xsl``. It is run on each child metadata record and is passed parameters from the request as detailed below. This design has been chosen to make customization of the service reasonably straight forward.
+- The service actually executes an XSLT in the metadata schema directory of the parent metadata record. The XSLT is called ``update-child-from-parent-info.xsl``. It is run on each child metadata record and is passed parameters from the request as required. This design has been chosen to make customization of the service reasonably straight forward.
 
 .. note:: If user of this service does not have edit privileges over a child metadata record then that record will be skipped.
 

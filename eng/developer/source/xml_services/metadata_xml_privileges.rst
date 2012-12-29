@@ -97,13 +97,11 @@ Batch update privileges (metadata.batch.update.privileges)
 
 The **metadata.batch.update.privileges** service updates the privileges on a selected set of metadata using the list of groups and privileges sent as parameters.
 
+.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
+
 .. note:: Only those metadata records for which the user running the service has ownership rights on will be updated and all privileges previously assigned will be deleted.
 
-This service requires a previous call to **metadata.select** service to select the metadata records to update.
-
 Requires authentication: Yes
-
-.. include:: metadata_xml_select_include.rst
 
 Request to metadata.batch.update.privileges
 -------------------------------------------

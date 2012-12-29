@@ -13,13 +13,13 @@ Batch new owner (metadata.batch.newowner)
 -----------------------------------------
 
 The **metadata.batch.newowner** service
-allows you to set the owner of a selected set of metadata records. This service
-requires a previous call to **metadata.select** service to select the 
-metadata records.
+allows you to set the owner of a selected set of metadata records. 
+
+.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
+
+.. note:: Only those metadata records for which the user running the service has ownership rights on will be updated. If metadata versioning is on then ownership changes will be recorded in the version history.
 
 Requires authentication: Yes
-
-.. include:: metadata_xml_select_include.rst
 
 Request to metadata.batch.newowner
 ``````````````````````````````````

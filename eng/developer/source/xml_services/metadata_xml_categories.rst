@@ -77,13 +77,11 @@ Batch update categories (metadata.batch.update.categories)
 
 The **metadata.batch.update.categories** service updates the categories of a selected set of metadata using the categories sent as parameters.
 
+.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select the metadata records to update.
+
 .. note:: Only those metadata records for which the user running the service has ownership rights on will be updated and all categories previously assigned will be deleted. If metadata versioning is on then category changes will be recorded in the version history.
 
-This service requires a previous call to **metadata.select** service to select the metadata records to update.
-
 Requires authentication: Yes
-
-.. include:: metadata_xml_select_include.rst
 
 Request to metadata.batch.update.categories
 -------------------------------------------

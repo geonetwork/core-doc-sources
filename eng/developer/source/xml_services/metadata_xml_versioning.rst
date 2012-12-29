@@ -71,13 +71,11 @@ Batch start versioning (metadata.batch.version)
 
 For each metadata record in the selected set, **metadata.batch.version** creates an initial version of the metadata record and its properties (categories, status, privileges) in the subversion repository.
 
+.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
+
 .. note:: Only those metadata records that the user running the service has editing rights over will be versioned. If a metadata record is already versioned then no action is taken.
 
-This service requires a previous call to **metadata.select** service to select the metadata records to version.
-
 Requires authentication: Yes
-
-.. include:: metadata_xml_select_include.rst
 
 Request to metadata.batch.version
 ---------------------------------

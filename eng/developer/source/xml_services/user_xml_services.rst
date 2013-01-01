@@ -3,105 +3,19 @@
 User services
 =============
 
-Users retrieving
-----------------
+User Retrieval Services
+-----------------------
 
-Users list (xml.user.list)
-``````````````````````````
+List of Users (xml.info?type=users)
+```````````````````````````````````
 
-The **xml.user.list** service can be used to retrieve the users defined in GeoNetwork.
-
-Requires authentication: Yes
-
-Request
-^^^^^^^
-
-Parameters:
-
-- **None**
-
-User list request example::
-
-  Url:
-  http://localhost:8080/geonetwork/srv/en/xml.user.list
-
-  Mime-type:
-  application/xml
-
-  Post request:
-  <?xml version="1.0" encoding="UTF-8"?>
-  <request />
-
-Response
-^^^^^^^^
-
-Here follows the structure of the response:
-
-- **record**: This is the container for each user element returned
-- **id**: User identifier
-- **username**: Login name for the user
-- **password**: Password encoded in md5
-- **surname**: User surname
-- **name**: User name
-- **profile**: User profile. The profiles defined in GeoNetwork are: Administrator, User administrator, Content Reviewer, Editor, Registered user
-- **address**: User physical address
-- **city**: User address city
-- **state**: User address state
-- **zip**: User address zip
-- **country**: User address country
-- **email**: User email address
-- **organisation**: User organisation/department
-- **kind**: Kind of organisation
-
-User list response example::
-
-  <?xml version="1.0" encoding="UTF-8"?>
-  <response>
-    <record>
-      <id>1</id>
-      <username>admin</username>
-      <password>d033e22ae348aeb566fc214aec3585c4da997</password>
-      <surname>admin</surname>
-      <name>admin</name>
-      <profile>Administrator</profile>
-      <address />
-      <city />
-      <state />
-      <zip />
-      <country />
-      <email />
-      <organisation />
-      <kind />
-    </record>
-    <record>
-      <id>2</id>
-      <username>editor</username>
-      <password>ab41949825606da179db7c89ddcedcc167b64847</password>
-      <surname>Smith</surname>
-      <name>John</name>
-      <profile>Editor</profile>
-      <address />
-      <city>Amsterdam</city>
-      <state />
-      <zip />
-      <country>nl</country>
-      <email>john.smith@mail.com</email>
-      <organisation />
-      <kind>gov</kind>
-    </record>
-  </response>
-
-Exceptions:
-
-- **Service not allowed (error id: service-not-allowed)**, when the
-  user is not authenticated or his profile has no rights to
-  execute the service
+The **xml.info** service can be used to retrieve the users defined in GeoNetwork. See :ref:`xml.info`.
 
 User groups list (xml.usergroups.list)
 ``````````````````````````````````````
 
 The **xml.usergroups.list** service can be used
-to retrieve the groups assigned to a user.
+to retrieve the list of groups that a user belongs to.
 
 Requires authentication: Yes
 
@@ -110,12 +24,12 @@ Request
 
 Parameters:
 
-- **id:** User identifier (multiple id elements can be espeficied)
+- **id:** User identifier (multiple id elements can be specified)
 
 User groups list request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.usergroups.list
+  http://localhost:8080/geonetwork/srv/eng/xml.usergroups.list
 
   Mime-type:
   application/xml
@@ -129,16 +43,15 @@ User groups list request example::
 Response
 ^^^^^^^^
 
-Here follows the structure of the response:
+If the request executes successfully then HTTP status code 200 is returned with an XML document containing the groups that the user belongs to. The elements in the response are:
 
 - **group:** This is the container for each user group element returned
 - **id**: Group identifier
-- name: Group name
-- description: Group description
+- **name**: Group name
+- **description**: Group description
 
 User groups list response example::
 
-  <?xml version="1.0" encoding="UTF-8"?>
   <groups>
     <group>
       <id>3</id>
@@ -147,24 +60,112 @@ User groups list response example::
     </group>
   </groups>
 
-Exceptions:
+If the request fails then an HTTP 500 status code error is returned
+and the response contains an XML document with the details of the exception/what
+went wrong. An example error response is:::
+ 
+ <error id="missing-parameter">
+   <message>id</message>
+   <class>MissingParameterEx</class>
+   .....
+ </error>
 
-- **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or his profile has no rights to execute the service
+See :ref:`exception_handling` for more details.
 
-- **User XXXX doesn't exist**, if no exists a user with provided **id** value
+Errors
+^^^^^^
 
-User information (user.get)
-```````````````````````````
+- **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or their profile has no rights to execute the service. Returns 500 HTTP code
 
-Retrieves user information. **Non XML response.**
+- **User XXXX doesn't exist**, if a user with provided **id** value does not exist. Returns 500 HTTP code
 
-Users maintenance
------------------
+User information (xml.user.get)
+```````````````````````````````
 
-Create a user (user.update)
-```````````````````````````
+The **xml.user.get** service returns information on a specified user.
 
-The **user.update** service can be used to
+Requires authentication: Yes
+
+Request
+^^^^^^^
+
+Parameters:
+
+- **id**: Identifier of user to retrieve
+
+User get request example::
+
+  Url:
+  http://localhost:8080/geonetwork/srv/eng/xml.user.get
+
+  Mime-type:
+  application/xml
+
+  Post request:
+  <request>
+      <id>2</id>
+  </request>
+
+Response
+^^^^^^^^
+
+If the request executed succesfully then an HTTP 200 status code is
+returned and an XML document containing the user information (including the groups they belong to) is returned. An example response is:::
+ 
+ <response>
+   <record>
+     <id>2</id>
+     <username>bullshot</username>
+     <password>112c535b861a904569285c941277d0c642eea4bb</password>
+     <surname>Shot</surname>
+     <name>Bull</name>
+     <profile>RegisteredUser</profile>
+     <address>41 Shot Street</address>
+     <city>Kunnanurra</city>
+     <state>Western Australia</state>
+     <zip>8988</zip>
+     <country>Australia</country>
+     <email>gan@gan.com</email>
+     <organisation>B7</organisation>
+     <kind>gov</kind>
+   </record>
+   <groups>
+     <id>2</id>
+   </groups>
+ </response>
+
+If the request fails then an HTTP 500 status code error is returned
+and the response contains an XML document with the details of the exception/what
+went wrong. An example error response is:::
+ 
+ <error id="missing-parameter">
+   <message>id</message>
+   <class>MissingParameterEx</class>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
+Errors
+^^^^^^
+
+- **Service not allowed (error id: service-not-allowed)**, when the
+  user is not authenticated or their profile has no rights to
+  execute the service. Returns 500 HTTP code
+
+- **Missing parameter (error id: missing-parameter)**, when mandatory parameters
+  are not provided. Returns 500 HTTP code
+
+- **bad-parameter id**, when **id** parameter is
+  empty/invalid. Returns 500 HTTP code
+
+User Maintenance Services
+-------------------------
+
+Create a user (xml.user.update)
+```````````````````````````````
+
+The **xml.user.update** service can be used to
 create new users, update user information and reset user password,
 depending on the value of the **operation**
 parameter. Only users with profiles **Administrator**
@@ -173,7 +174,7 @@ or **UserAdmin** can create new users.
 Users with profile **Administrator** can create
 users in any group, while users with profile
 **UserAdmin** can create users only in the groups
-where they belong.
+to which they belong.
 
 Requires authentication: Yes
 
@@ -202,14 +203,14 @@ Parameters:
 User create request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/user.update
+  http://localhost:8080/geonetwork/srv/eng/xml.user.update
 
   Mime-type:
   application/xml
 
   Post request:
   <request>
-    <operation>**newuser**</operation>
+    <operation>newuser</operation>
     <username>samantha</username>
     <password>editor2</password>
     <profile>Editor</profile>
@@ -224,49 +225,60 @@ User create request example::
 Response
 ^^^^^^^^
 
-If request it's executed succesfully HTTP 200 status code it's
-returned. If request fails an HTTP status code error it's returned
-and the response contains the XML document with the
-exception.
+If the request executed successfully then HTTP 200 status code is
+returned with an XML document containing an empty response element.
+
+If the request fails, then an HTTP 500 status code error is returned
+with an XML document describing the exception/what went wrong. An example of such a response is:::
+ 
+ <error id="error">
+   <message>User with username samantha already exists</message>
+   <class>IllegalArgumentException</class>
+   <stack>...</stack>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ^^^^^^
 
 - **Service not allowed (error id: service-not-allowed)**, when the
-  user is not authenticated or his profile has no rights to
-  execute the service. Returned 401 HTTP code
+  user is not authenticated or their profile has no rights to
+  execute the service. Returns 500 HTTP code
 
 - **Missing parameter (error id: missing-parameter)**, when mandatory parameters
-  are not provided
+  are not provided. Returns 500 HTTP code
 
-- **bad-parameter**, when a mandatory fields is empty
+- **bad-parameter**, when a mandatory fields is empty. Returns 500 HTTP code
 
-- **Unknow profile XXXX (error id: error)**, when the profile is
-  not valid
+- **User with username XXXX already exists (error id: error)**, when a user 
+  with that username is already present. Returns 500 HTTP code
+
+- **Unknown profile XXXX (error id: error)**, when the profile is
+  not valid. Returns 500 HTTP code
 
 - **ERROR: duplicate key violates unique constraint
   "users_username_key"**, when trying to create a new user using an existing
-  username
+  username. Returns 500 HTTP code
 
 - **ERROR: insert or update on table "usergroups" violates
   foreign key constraint "usergroups_groupid_fkey"**, when group
-  identifier is not an existing group identifier
+  identifier is not an existing group identifier. Returns 500 HTTP code
 
 - **ERROR: tried to add group id XX to user XXXX - not
   allowed because you are not a member of that group**, when the
   authenticated user has profile **UserAdmin** and tries to add the
-  user to a group in which the **UserAdmin** user is not allowed
-  to manage
+  user to a group they do not manage. Returns 500 HTTP code
 
 - **ERROR: you don't have rights to do this**, when the
-  authenticated user has a profile that is not
-  **Administrator** or
-  **UserAdmin**
+  authenticated user has a profile that is not **Administrator** or
+  **UserAdmin**. Returns 500 HTTP code
 
-Update user information (user.update)
-`````````````````````````````````````
+Update user information (xml.user.update)
+`````````````````````````````````````````
 
-The **user.update** service can be used to
+The **xml.user.update** service can be used to
 create new users, update user information and reset user password,
 depending on the value of the **operation**
 parameter. Only users with profiles **Administrator**
@@ -301,12 +313,12 @@ Parameters:
 - **groups**: Group identifier to set for the user, can be multiple **groups** elements
 - **groupid**: Group identifier
 
-**Remarks**: If an optional parameter it's not provided the value it's updated in the database with an empty string.
+.. note:: If an optional parameter is not provided, the value is updated in the database with an empty string.
 
 Update user information request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/user.update
+  http://localhost:8080/geonetwork/srv/eng/xml.user.update
 
   Mime-type:
   application/xml
@@ -314,7 +326,7 @@ Update user information request example::
   Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
-    <operation>**editinfo**</operation>
+    <operation>editinfo</operation>
     <id>5</id>
     <username>samantha</username>
     <password>editor2</password>
@@ -328,51 +340,59 @@ Update user information request example::
 Response
 ^^^^^^^^
 
-If request it's executed succesfully HTTP 200 status code it's
-returned. If request fails an HTTP status code error it's returned
-and the response contains the XML document with the exception.
+If the request executed successfully then HTTP 200 status code is
+returned with an XML document containing an empty response element.
+
+If the request fails, then an HTTP 500 status code error is returned
+with an XML document describing the exception/what went wrong. An example of such a response is:::
+ 
+ <error id="missing-parameter">
+   <message>username</message>
+   <class>MissingParameterEx</class>
+   <stack>...</stack>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
 
 Errors
 ^^^^^^
 
 - **Service not allowed (error id: service-not-allowed)**, when the
-  user is not authenticated or his profile has no rights to
-  execute the service. Returned 401 HTTP code
+  user is not authenticated or their profile has no rights to
+  execute the service. Returns 500 HTTP code
 
-- **Missing parameter (error id: missing-parameter)**, when the mandatory parameters
-  are not provided. Returned 400 HTTP code
+- **Missing parameter (error id: missing-parameter)**, when mandatory parameters
+  are not provided. Returns 500 HTTP code
 
 - **bad-parameter**, when a mandatory field is empty.
-  Returned 400 HTTP code
+  Returns 500 HTTP code
 
-- **Unknow profile XXXX (error id: error)**, when the  profile is
-  not valid. Returned 500 HTTP code
+- **Unknown profile XXXX (error id: error)**, when the profile is
+  not valid. Returns 500 HTTP code
 
 - **ERROR: duplicate key violates unique constraint
   "users_username_key"**, when trying to create a new user using an existing
-  username. Returned 500 HTTP code
+  username. Returns 500 HTTP code
 
 - **ERROR: insert or update on table "usergroups" violates
   foreign key constraint "usergroups_groupid_fkey"**, when the group
-  identifier is not an existing group identifier. Returned 500
+  identifier is not an existing group identifier. Returns 500
   HTTP code
 
 - **ERROR: tried to add group id XX to user XXXX - not
   allowed because you are not a member of that group**, when the
   authenticated user has profile **UserAdmin** and tries to add the
-  user to a group in which the **UserAdmin** user is not allowed
-  to manage. Returned 500 HTTP code
+  user to a group in which they do not manage. Returns 500 HTTP code
 
-- **ERROR: you don't have rights to do this**, when  the
-  authenticated user has a profile that is not
-  **Administrator** or
-  **UserAdmin**. Returned 500 HTTP
-  code****
+- **ERROR: you don't have rights to do this**, when the authenticated user has 
+  a profile that is not **Administrator** or **UserAdmin**. Returns 500 HTTP code
 
-Reset user password (user.update)
-`````````````````````````````````
+Reset user password (xml.user.update)
+`````````````````````````````````````
 
-The **user.update** service can be used to
+The **xml.user.update** service can be used to
 create new users, update user information and reset user password,
 depending on the value of the **operation**
 parameter. Only users with profiles **Administrator**
@@ -399,7 +419,7 @@ Parameters:
 Reset user password request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/user.update
+  http://localhost:8080/geonetwork/srv/eng/xml.user.update
 
   Mime-type:
   application/xml
@@ -407,7 +427,7 @@ Reset user password request example::
   Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
-    <operation>**resetpw**</operation>
+    <operation>resetpw</operation>
     <id>2</id>
     <username>editor</username>
     <password>newpassword</password>
@@ -417,35 +437,45 @@ Reset user password request example::
 Response
 ^^^^^^^^
 
-If request it's executed succesfully HTTP 200 status code it's
-returned. If request fails an HTTP status code error it's returned
-and the response contains the XML document with the exception.
+If the request executed successfully then HTTP 200 status code is
+returned with an XML document containing an empty response element.
+
+If the request fails, then an HTTP 500 status code error is returned
+with an XML document describing the exception/what went wrong. An example of such a response is:::
+ 
+ <error id="missing-parameter">
+   <message>username</message>
+   <class>MissingParameterEx</class>
+   <stack>...</stack>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
 
 Errors
 ^^^^^^
 
 - **Service not allowed (error id: service-not-allowed)**, when the
-  user is not authenticated or his profile has no rights to
-  execute the service. Returned 401 HTTP code
+  user is not authenticated or their profile has no rights to
+  execute the service. Returns 500 HTTP code
 
-- **Missing parameter (error id: missing-parameter)**, when the mandatory parameters
-  are not provided. Returned 400 HTTP code
+- **Missing parameter (error id: missing-parameter)**, when mandatory parameters
+  are not provided. Returns 500 HTTP code
 
 - **bad-parameter**, when a mandatory field is empty.
-  Returned 400 HTTP code
+  Returns 500 HTTP code
 
-- **Unknow profile XXXX (error id: error)**, when the profile is
-  not valid. Returned 500 HTTP code
+- **Unknown profile XXXX (error id: error)**, when the profile is
+  not valid. Returns 500 HTTP code
 
-- **ERROR: you don't have rights to do this**, when the
-  authenticated user has a profile that it's not
-  **Administrator** or
-  **UserAdmin**. Returned 500 HTTP code****
+- **ERROR: you don't have rights to do this**, when the authenticated user is not
+  an **Administrator** or **UserAdmin**. Returns 500 HTTP code
 
-Update current authenticated user information (user.infoupdate)
-```````````````````````````````````````````````````````````````
+Update current authenticated user information (xml.user.infoupdate)
+```````````````````````````````````````````````````````````````````
 
-The **user.infoupdate** service can be used to update the information related to the current authenticated user.
+The **xml.user.infoupdate** service can be used to update the information related to the current authenticated user.
 
 Requires authentication: Yes
 
@@ -465,12 +495,12 @@ Parameters:
 - **org**: User organisation/departament
 - **kind**: Kind of organisation
 
-**Remarks**: If an optional parameter is not provided the value is updated in the database with an empty string.
+.. note:: If an optional parameter is not provided the value is updated in the database with an empty string.
 
 Current user info update request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/user.infoupdate
+  http://localhost:8080/geonetwork/srv/eng/xml.user.infoupdate
 
   Mime-type:
   application/xml
@@ -491,22 +521,37 @@ Current user info update request example::
 Response
 ^^^^^^^^
 
-If request it's executed succesfully HTTP 200 status code it's
-returned. If request fails an HTTP status code error it's returned
-and the response contains the XML document with the
-exception.
+If the request executed successfully then HTTP 200 status code is
+returned with an XML document containing an empty response element.
+
+If the request fails, then an HTTP 500 status code error is returned
+with an XML document describing the exception/what went wrong. An example of such a response is:::
+ 
+ <error id="missing-parameter">
+   <message>surname</message>
+   <class>MissingParameterEx</class>
+   <stack>...</stack>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
 
 Errors
 ^^^^^^
 
 - **Service not allowed (error id: service-not-allowed)**, when the
-  user is not authenticated. Returned 401 HTTP code
+  user is not authenticated. Returns 500 HTTP code
 
-Change current authenticated user password (user.pwupdate)
-``````````````````````````````````````````````````````````
+- **Missing parameter (error id: missing-parameter)**, when mandatory parameters
+  are not provided. Returns 500 HTTP code
 
-The **user.pwupdate** service can be used to
-change the password of the current user authenticated.
+
+Change current authenticated user password (xml.user.pwupdate)
+``````````````````````````````````````````````````````````````
+
+The **xml.user.pwupdate** service can be used to
+change the password of the current authenticated user.
 
 Requires authentication: Yes
 
@@ -529,33 +574,44 @@ Example::
 Response
 ^^^^^^^^
 
-If request it's executed succesfully HTTP 200 status code it's
-returned. If request fails an HTTP status code error it's returned
-and the response contains the XML document with the exception.
+If the request executed successfully then HTTP 200 status code is
+returned with an XML document containing an empty response element.
+
+If the request fails, then an HTTP 500 status code error is returned
+with an XML document describing the exception/what went wrong. An example of such a response is:::
+ 
+ <error id="error">
+   <message>Old password is not correct</message>
+   <class>IllegalArgumentException</class>
+   <stack>...</stack>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ^^^^^^
 
 - **Service not allowed (error id: service-not-allowed)**, when the
-  user is not authenticated. Returned 401 HTTP code
+  user is not authenticated. Returns 500 HTTP code
 
-- **Old password is not correct**. Returned 500 HTTP code
+- **Old password is not correct**. Returns 500 HTTP code
 
 - **Bad parameter (newPassword)**, when an empty password is
-  provided. Returned 400 HTTP code
+  provided. Returns 500 HTTP code
 
-Remove a user (user.remove)
-```````````````````````````
+Remove a user (xml.user.remove)
+```````````````````````````````
 
-The **user.remove** service can be used to
+The **xml.user.remove** service can be used to
 remove an existing user. Only users with profiles
 **Administrator** or **UserAdmin**
 can delete users.
 
 Users with profile **Administrator** can delete
-any user (except himself), while users with profile
+any user (except themselves), while users with profile
 **UserAdmin** can delete users only in the groups
-where they belong (except himself).
+where they belong (except themselves).
 
 Requires authentification: Yes
 
@@ -564,13 +620,12 @@ Request
 
 Parameters:
 
-- **id**: (mandatory) User identifier to
-  delete
+- **id**: (mandatory) Identifier of user to delete
 
 User remove request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/user.remove
+  http://localhost:8080/geonetwork/srv/eng/xml.user.remove
 
   Mime-type:
   application/xml
@@ -583,37 +638,43 @@ User remove request example::
 Response
 ^^^^^^^^
 
-If request it's executed succesfully HTTP 200 status code it's
-returned. If request fails an HTTP status code error it's returned
-and the response contains the XML document with the
-exception.
+If the request executed successfully then HTTP 200 status code is
+returned with an XML document containing an empty response element.
+
+If the request fails, then an HTTP 500 status code error is returned
+with an XML document describing the exception/what went wrong. An example of such a response is:::
+ 
+ <error id="error">
+   <message>You cannot delete yourself from the user database</message>
+   <class>IllegalArgumentException</class>
+   <stack>...</stack>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
 
 Errors
 ^^^^^^
 
 - **Service not allowed (error id: service-not-allowed)**, when the
-  user is not authenticated or his profile has no rights to
-  execute the service. Returned 401 HTTP code
+  user is not authenticated or their profile has no rights to
+  execute the service. Returns 500 HTTP code
 
 - **Missing parameter (error id: missing-parameter)**, when the
-  **id** parameter is not provided. Returned
-  400 HTTP code
+  **id** parameter is not provided. Returns 500 HTTP code
 
 - **You cannot delete yourself from the user database (error
-  id: error)**, when trying to delete the authenticated user himself.
-  Returned 500 HTTP code
+  id: error)**. Returns 500 HTTP code
 
 - **You don't have rights to delete this user (error id:
-  error)**, when trying to delete using an authenticated user that
-  don't belongs to **Administrator** or
-  **User administrator** profiles. Returned 500
-  HTTP code
+  error)**, when authenticated user is not 
+  an **Administrator** or **User administrator**. Returns 500 HTTP code
 
 - **You don't have rights to delete this user because the
   user is not part of your group (error id: error)**, when trying to
-  delete a user that is not in the same group of the
-  authenticated user (belonging the authenticated user to
-  profile **User administrator**). Returned 500
-  HTTP code
+  delete a user that is not in the same group as the
+  authenticated user and the authenticated user is a 
+  **User administrator**. Returns 500 HTTP code
 
 

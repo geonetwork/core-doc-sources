@@ -1,23 +1,23 @@
-.. _group_services:
+.. _category_services:
 
-Group services
-==============
+Category services
+=================
 
-Group List (xml.info&type=groups)
----------------------------------
+Category List (xml.info&type=categories)
+----------------------------------------
 
-The **xml.info** service can be used to retrieve the user groups available in GeoNetwork. See :ref:`xml.info`.
+The **xml.info** service can be used to retrieve the categories available in GeoNetwork. See :ref:`xml.info`.
 
-Group maintenance
------------------
+Category maintenance
+--------------------
 
-Create/update a group (xml.group.create.update)
-```````````````````````````````````````````````
+Create/update a category (xml.category.create.update)
+`````````````````````````````````````````````````````
 
-The **xml.group.create.update** service can be used to
-create a new group and update the information about an existing group.
+The **xml.category.create.update** service can be used to
+create a new category and update the information about an existing category.
 Only users with **Administrator** profile can
-create/update groups.
+create/update categories.
 
 Requires authentication: Yes
 
@@ -26,20 +26,15 @@ Request
 
 Parameters:
 
-- **id**: Group identifier to update. If
-  not provided a new group is created with the name, description
-  and email parameters provided.
+- **id**: Category identifier to update. If
+  not provided a new category is created with name provided.
 
-- **name**: (mandatory) Name of the group
+- **name**: (mandatory) Name of the category
 
-- **description**: Group description
-
-- **email**: email address for group notifications
-
-Group update request example::
+Category update request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/eng/xml.group.create.update
+  http://localhost:8080/geonetwork/srv/eng/xml.category.create.update
 
   Mime-type:
   application/xml
@@ -47,9 +42,7 @@ Group update request example::
   Post request:
   <request>
       <id>2</id>
-      <name>sample</name>
-      <description>Demo group</description>
-      <email>group@mail.net</email>
+      <name>folios</name>
   </request>
 
 Response
@@ -94,15 +87,15 @@ Errors
   empty. Returns 500 HTTP code
 
 - **ERROR: duplicate key violates unique constraint
-  "groups_name_key"**, when trying to create a new group using an existing
-  group name. Returns 500 HTTP code
+  "categories_name_key"**, when trying to create a new category using an existing
+  category name. Returns 500 HTTP code
 
-Update label translations (xml.group.update)
-````````````````````````````````````````````
+Update label translations (xml.category.update)
+```````````````````````````````````````````````
 
-The **xml.group.update** service can be used to
-update translations of a group name. Only users with
-**Administrator** profile can update group name translations.
+The **xml.category.update** service can be used to
+update translations of a category name. Only users with
+**Administrator** profile can update category name translations.
 
 Requires authentication: Yes
 
@@ -111,36 +104,35 @@ Request
 
 Parameters:
 
-- **group**: Container for group information
-- **id**: (mandatory) Group identifier to update
+- **category**: Container for category information
+- **id**: (mandatory) Category identifier to update
 - **label**: (mandatory) This is just
-  a container to hold the group names translated in the
+  a container to hold the category names translated in the
   languages supported by GeoNetwork. Each translated label
   is enclosed in a tag that identifies the language code
 
-Group label update request example::
+Category label update request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.group.update
+  http://localhost:8080/geonetwork/srv/en/xml.category.update
 
   Mime-type:
   application/xml
 
   Post request:  
   <request>
-      <group id="2">
+      <category id="2">
           <label>
-              <es>Grupo de ejemplo</es>
+              <eng>folios</eng>
           </label>
-      </group>
+      </category>
   </request>
 
 Response
 ^^^^^^^^
 
-Group label update response example::
+Category label update response example::
 
-  <?xml version="1.0" encoding="UTF-8"?>
   <ok />
 
 Errors
@@ -153,11 +145,11 @@ Errors
 - **Missing parameter (error id: missing-parameter)**, when mandatory parameters
   are not provided. Returns 500 HTTP code
 
-Get a group (xml.group.get)
-```````````````````````````
+Get a category (xml.category.get)
+`````````````````````````````````
 
-The **xml.group.get** service can be used to
-retrieve information on an existing group.
+The **xml.category.get** service can be used to
+retrieve information on an existing category.
 
 Requires authentification: Yes
 
@@ -166,12 +158,12 @@ Request
 
 Parameters:
 
-- **id**: (mandatory) Group identifier to retrieve
+- **id**: (mandatory) Category identifier to retrieve
 
-Group get request example::
+Category get request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/eng/xml.group.get
+  http://localhost:8080/geonetwork/srv/eng/xml.category.get
 
   Mime-type:
   application/xml
@@ -185,21 +177,16 @@ Response
 ^^^^^^^^
 
 If the request executed succesfully then an HTTP 200 status code is
-returned and an XML document containing the group information is returned. An example response is:::
+returned and an XML document containing the category information is returned. An example response is:::
  
  <response>
    <record>
-     <id>1</id>
-     <name>all</name>
-     <description/>
-     <email/>
-     <referrer/>
+     <id>2</id>
+     <name>datasets</name>
      <label>
-       <ara>All</ara>
-       <cat>All</cat>
-       <chi>All</chi>
-       <dut>Iedereen</dut>
-       <eng>All</eng>
+       <ara>Datasets</ara>
+       <cat>Conjunts de dades</cat>
+       <eng>Datasets</eng>
        .....
      </label>
    </record>
@@ -230,13 +217,12 @@ Errors
 - **bad-parameter id**, when **id** parameter is
   empty/invalid. Returns 500 HTTP code
 
+Remove a category (xml.category.remove)
+```````````````````````````````````````
 
-Remove a group (xml.group.remove)
-`````````````````````````````````
-
-The **xml.group.remove** service can be used to
-remove an existing group. Only users with
-**Administrator** profile can delete groups.
+The **xml.category.remove** service can be used to
+remove an existing category. Only users with
+**Administrator** profile can delete categories.
 
 Requires authentification: Yes
 
@@ -245,12 +231,12 @@ Request
 
 Parameters:
 
-- **id**: (mandatory) Group identifier to delete
+- **id**: (mandatory) Category identifier to delete
 
-Group remove request example::
+Category remove request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/eng/xml.group.remove
+  http://localhost:8080/geonetwork/srv/eng/xml.category.remove
 
   Mime-type:
   application/xml

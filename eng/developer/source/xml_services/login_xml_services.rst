@@ -1,17 +1,19 @@
 .. _login_xml_services:
 
-Login and logout services
+Login and Logout services
 =========================
 
 Login services
 --------------
 
+.. _xml.user.login:
+
 GeoNetwork standard login (xml.user.login)
 ``````````````````````````````````````````
 
 The **xml.user.login** service is used to
-authenticate the user in GeoNetwork, allowing using the Xml services
-that require authentication. For example, the services to maintain
+authenticate the user in GeoNetwork. Authenticated users can use XML services
+that require authentication such as those used to maintain
 group or user information.
 
 Request
@@ -41,40 +43,24 @@ Login request example::
 Response
 ^^^^^^^^
 
-When user authentication is succesful the next response is received::
+When user authentication is successful HTTP status code 200 is returned along with  an XML response as follows::
 
-  OK
-  
-  Date: Mon, 01 Feb 2010 09:29:43 GMT
+ <ok/>
+
+If the response headers are examined, they will look something like the following:::
+
   Expires: Thu, 01 Jan 1970 00:00:00 GMT
   Set-Cookie: JSESSIONID=1xh3kpownhmjh;Path=/geonetwork
   Content-Type: application/xml; charset=UTF-8
   Pragma: no-cache
   Cache-Control: no-cache
-  Expires: -1
   Transfer-Encoding: chunked
-  Server: Jetty(6.1.14)
 
-The authentication process sets **JSESSIONID** cookie with the authentication token
-that should be send in the services that need authentication to be
-invoqued. Otherwise, a **Service not allowed**
-exception will be returned by these services.
+The authentication process sets the **JSESSIONID** cookie with the authentication token. This token should be sent as part of the request to all services that 
+need authentication.
 
-Errors
-^^^^^^
-
-- **Missing parameter (error id: missing-parameter)**, when
-  mandatory parameters are not send. Returned 400 HTTP code
-
-- **bad-parameter XXXX**, when an empty username or password
-  is provided. Returned 400 HTTP code
-
-- **User login failed (error id: user-login)**, when login
-  information is not valid. Returned 400 HTTP code
-
-Example returning **User login failed** exception::
-  
-  <?xml version="1.0" encoding="UTF-8"?>
+If the execution of the login request is not successful then an HTTP 500 status code error is returned along with an XML document that describes the exception/what went wrong. An example of such a response is:::
+ 
   <error id="user-login">
     <message>User login failed</message>
     <class>UserLoginEx</class>
@@ -97,30 +83,19 @@ Example returning **User login failed** exception::
     </request>
   </error>
 
-Shibboleth login (shib.user.login)
-``````````````````````````````````
+See :ref:`exception_handling` for more details. 
 
-The **shib.user.login** service process the creadentials of a Shibboleth login.
+Errors
+^^^^^^
 
-To use this service the user previously should be authenticated to Shibboleth.
-If the authentication is succesful, the HTTP headers will contain the user credentials.
+- **Missing parameter (error id: missing-parameter)**, when
+  mandatory parameters are not send. Returns 500 HTTP code
 
-When calling **shib.user.login** service in GeoNetwork, the Shibboleth credentials
-are then used to find or create (if don't exists) the user account in GeoNetwork.
+- **bad-parameter XXXX**, when an empty username or password
+  is provided. Returns 500 HTTP code
 
-GeoNetwork processes the next HTTP header parameters filled by Shibboleth authentication:
-
-- system/shib/attrib/username
-
-- system/shib/attrib/surname
-
-- system/shib/attrib/firstname
-
-- system/shib/attrib/profile: User profile. Values:
-  Administrator, UserAdmin, Reviewer, Editor and Guest
-
-GeoNetwork checks if exists a user with the specified **username** in the users table, creating
-it if not found.
+- **User login failed (error id: user-login)**, when login
+  information is not valid. Returns 500 HTTP code
 
 Logout service
 --------------
@@ -128,14 +103,14 @@ Logout service
 Logout (xml.user.logout)
 ````````````````````````
 
-The **xml.user.logout** service clears user authentication session, removing the **JSESSIONID** cookie.
+The **xml.user.logout** service clears the user authentication session, removing the **JSESSIONID** cookie.
 
 Request
 ^^^^^^^
 
 Parameters:
 
-- **None**:This request requires no parameters, just it's required sending the **JSESSIONID** cookie value.
+- **None**:This request requires no parameters however the **JSESSIONID** token obtained from ``xml.user.login`` should be included as this is the session that will be cleared..
 
 Logout request example::
 
@@ -154,7 +129,6 @@ Response
 
 Logout response example::
 
-  <?xml version="1.0" encoding="UTF-8"?>
   <ok />
 
 

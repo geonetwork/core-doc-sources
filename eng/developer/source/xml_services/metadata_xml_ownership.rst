@@ -9,32 +9,35 @@ profiles can execute these services.
 
 .. _metadata.batch.newowner:
 
-Batch new owner (metadata.batch.newowner)
------------------------------------------
+Batch new owner (xml.metadata.batch.newowner)
+---------------------------------------------
 
-The **metadata.batch.newowner** service
+The **xml.metadata.batch.newowner** service
 allows you to set the owner of a selected set of metadata records. 
 
-.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
+.. note:: This service requires a previous call to the ``xml.metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
 
 .. note:: Only those metadata records for which the user running the service has ownership rights on will be updated. If metadata versioning is on then ownership changes will be recorded in the version history.
 
 Requires authentication: Yes
 
-Request to metadata.batch.newowner
-``````````````````````````````````
+Request
+```````
 
 Once the metadata records have been selected the 
-**metadata.batch.newowner** service can be invoked with the following
+**xml.metadata.batch.newowner** service can be invoked with the following
 parameters:
 
 - **user**: (mandatory) New owner user identifier
 - **group**: (mandatory) New owner group user identifier
 
-Transfer ownership request example::
+
+Request example:
+
+**POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.newowner
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.newowner
 
   Mime-type:
   application/xml
@@ -46,12 +49,42 @@ Transfer ownership request example::
     <group>2</group>
   </request>
 
-Response from metadata.batch.newowner
-`````````````````````````````````````
+**GET**::
+ 
+ Url:
+ http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.newowner?user=1&group=1
 
-If the request is executed successfully then HTTP 200 status code is
-returned. If the request fails an HTTP status code error is returned and
-the response contains the XML document with the exception.
+Response
+````````
+
+If the request executed successfully then HTTP 200 status code is returned and
+an XML document with a summary of how the metadata records in the selected set 
+have been processed. An example of such a response is shown below:
+
+::
+ 
+ <response>
+   <done>5</done>
+   <notOwner>0</notOwner>
+   <notFound>0</notFound>
+ </response>
+
+The response fields are:
+
+- **done** - number of metadata records successfully updated
+- **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
+- **notFound** - number of metadata records skipped because they were not found (may have been deleted)
+
+If the request fails an HTTP status code error is returned and
+the response is an XML document with the exception. An example of such a response is shown below:
+
+::
+ 
+ <error id="service-not-allowed">
+   Service not allowed
+   <object>xml.metadata.batch.newowner</object>
+ </error>
+
 
 Transfer ownership (xml.ownership.transfer)
 -------------------------------------------

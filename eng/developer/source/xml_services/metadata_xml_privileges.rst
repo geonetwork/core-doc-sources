@@ -3,10 +3,10 @@
 Metadata Privilege services
 ===========================
 
-Update privileges on a metadata record (metadata.admin)
--------------------------------------------------------
+Update privileges on a metadata record (xml.metadata.privileges)
+----------------------------------------------------------------
 
-The **metadata.admin** service updates the
+The **xml.metadata.privileges** service updates the
 privileges on a metadata record using a list of groups and privileges sent 
 as parameters. 
 
@@ -15,8 +15,8 @@ as parameters.
 
 Requires authentication: Yes
 
-Request to metadata.admin service
-`````````````````````````````````
+Request
+```````
 
 Parameters:
 
@@ -41,7 +41,7 @@ Request example:
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.admin
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.privileges
 
   Mime-type:
   application/xml
@@ -57,19 +57,21 @@ Request example:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.admin?id=6&_1_2&_1_1
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.privileges?id=6&_1_2&_1_1
 
-Response from metadata.admin service
-````````````````````````````````````
+Response
+````````
 
-The response contains the identifier of the metadata whose privileges have been updated.
+If the request executed successfully then the XML response contains the identifier of the metadata whose privileges have been updated.
 
 Example::
 
   <?xml version="1.0" encoding="UTF-8"?>
-  <request>
+  <response>
     <id>6</id>
-  </request>
+  </response>
+
+If the request was unsuccessful then the XML response contains details of the error returned.
 
 Errors
 ``````
@@ -92,19 +94,19 @@ Errors
 
 .. _metadata.batch.update.privileges:
 
-Batch update privileges (metadata.batch.update.privileges)
-----------------------------------------------------------
+Batch update privileges (xml.metadata.batch.update.privileges)
+--------------------------------------------------------------
 
-The **metadata.batch.update.privileges** service updates the privileges on a selected set of metadata using the list of groups and privileges sent as parameters.
+The **xml.metadata.batch.update.privileges** service updates the privileges on a selected set of metadata using the list of groups and privileges sent as parameters.
 
-.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
+.. note:: This service requires a previous call to the ``xml.metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
 
 .. note:: Only those metadata records for which the user running the service has ownership rights on will be updated and all privileges previously assigned will be deleted.
 
 Requires authentication: Yes
 
-Request to metadata.batch.update.privileges
--------------------------------------------
+Request
+```````
 
 Parameters:
 
@@ -127,7 +129,7 @@ Example request:
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.privileges
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.update.privileges
 
   Mime-type:
   application/xml
@@ -142,14 +144,39 @@ Example request:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.privileges?_1_2&_1_1
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.update.privileges?_1_2&_1_1
 
-Response from metadata.batch.update.privileges
-``````````````````````````````````````````````
+Response
+````````
 
-If the request executed successfully a HTTP 200 status code is
-returned. If the request fails an HTTP status code error is returned and
-the response is an XML document with the exception.
+If the request executed successfully then HTTP 200 status code is returned and
+an XML document with a summary of how the metadata records in the selected set 
+have been processed. An example of such a response is shown below:
+
+::
+ 
+ <response>
+   <done>5</done>
+   <notOwner>0</notOwner>
+   <notFound>0</notFound>
+ </response>
+
+The response fields are:
+
+- **done** - number of metadata records successfully updated
+- **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
+- **notFound** - number of metadata records skipped because they were not found (may have been deleted)
+
+If the request fails an HTTP status code error is returned and
+the response is an XML document with the exception. An example of such a response is shown below:
+
+::
+ 
+ <error id="service-not-allowed">
+   Service not allowed
+   <object>xml.metadata.batch.update.privileges</object>
+ </error>
+
 
 Errors
 ``````

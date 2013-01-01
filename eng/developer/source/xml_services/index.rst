@@ -19,12 +19,13 @@ XML Services
     metadata_xml_categories.rst
     metadata_xml_versioning.rst
     metadata_xml_processing.rst
+    metadata_xml_relations.rst
+    metadata_xml_validation.rst
     system_configuration.rst
     services_general.rst
     services_download.rst
     services_harvesting.rst
     schema_information.rst
-    relations.rst
     services_mef.rst
     csw_services.rst
     java_xml_services.rst

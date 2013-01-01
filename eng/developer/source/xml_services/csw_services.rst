@@ -1,12 +1,9 @@
 .. _csw_services:
-
+ 
 CSW service
 ===========
 
-Introduction
-------------
-
-GeoNetwork opensource catalog publishes metadata using CSW (Catalog Services for the Web) protocol supporting HTTP binding to invoke the operations.
+GeoNetwork opensource catalog publishes metadata using the OGC CSW (Catalog Services for the Web) protocol supporting HTTP binding to invoke the operations.
 
 The protocol operations are described in the document **OpenGIS® Catalogue Services Specification**:
 
@@ -156,7 +153,7 @@ GetRecordById
 
 **GetRecordById** request retrieves the default representation of catalogue metadata records using their identifier.
 
-To retrieve non public metadata a previous**xml.user.login** service invocation is required. See :ref:`login service <xml.user.login>`.
+To retrieve non public metadata a previous **xml.user.login** service invocation is required. See :ref:`login service <xml.user.login>`.
 
 Request examples
 ^^^^^^^^^^^^^^^^
@@ -206,7 +203,7 @@ GetRecords
 
 GetRecords request allows to query the catalogue metadata records specifying a query in OCG Filter or CQL languages.
 
-To retrieve non public metadata a previous**xml.user.login** service invocation is required. See :ref:`login service <xml.user.login>`.
+To retrieve non public metadata a previous **xml.user.login** service invocation is required. See :ref:`login service <xml.user.login>`.
 
 Request examples
 ^^^^^^^^^^^^^^^^
@@ -274,7 +271,7 @@ The GeoNetwork opensource catalog CSW Publication service operations are accessi
 .. _Harvest:
 
 Harvest
-```````````
+```````
 
 The **Harvest** operation defines an interface for indirectly creating, modifying and deleting catalogue records by invoking
 a CSW client harvesting run from the server to a specified target. It can be run in either synchronous or asynchronous mode

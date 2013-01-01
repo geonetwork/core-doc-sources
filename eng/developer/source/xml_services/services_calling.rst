@@ -6,56 +6,49 @@ Calling specifications
 Calling XML services
 --------------------
 
-GeoNetwork provides access to several internal structures through the use of
-XML services. These are much like HTML addresses but return XML instead. As an
-example, consider the xml.info service: you can use this service to get some
-system’s information without fancy styles and graphics. In GeoNetwork, XML
-services have usually the xml. prefix in their address.
+GeoNetwork provides access to its functions through the use of XML services. 
+These services are much like HTML addresses but return XML instead of HTML. 
+The advantage of using XML, is that XML services can be used in 
+machine-to-machine interfaces. As an
+example, consider the ``xml.info`` service - :ref:`xml.info`: you might have
+an application which can use this service to get information about GeoNetwork 
+users and metadata schemas in XML. The user information returned
+by this service could then be used by your application to decide how to 
+authenticate with GeoNetwork so that 
+metadata records from a particular metadata schema could be retrieved from other 
+GeoNetwork XML services and processed by your application.
+
+As a general rule, XML services provided by GeoNetwork usually have a ``xml.`` 
+prefix in their address. To keep things simple and uniform, 
+GeoNetwork XML services accept XML documents (or convert parameters to XML documents) and return information, status and errors as XML documents (except for a few services that relate to file download and must return binary data).
 
 Request
 ```````
 
-Each service accepts a set of parameters, which must be embedded into the
+Each service accepts a set of parameters, which must be embedded in the
 request. A service can be called using different HTTP methods, depending on
 the structure of its request:
 
-GET The parameters are sent using the URL address. On the server side,
-these parameters are grouped into a flat XML document with one root and
-several simple children. A service can be called this way only if the
-parameters it accepts are not structured. :ref:`xml_request`
-shows an example of such request and the parameters encoded in XML. POST
-There are 3 variants of this method:
+- **GET** The parameters are sent as part of the URL address. On the server side, these parameters are grouped into a flat XML document with one root and several simple children. A service can be called this way only if the parameters it accepts are not structured. An example of such a request and the parameters encoded in XML is:
 
-**ENCODED** The request has one of the following content types:
-application/x-www-form-urlencoded or
-multipart/form-data. The first case is very common
-when sending web forms while the second one is used to send binary data
-(usually files) to the server. In these cases, the parameters are not
-structured so the rules of the GET method applies. Even if the second case
-could be used to send XML documents, this possibility is not considered on
-the server side.
+:: 
 
-**XML** The content type is application/xml.
-This is the common case when the client is not a browser but a specialised
-client. The request is a pure XML document in string form, encoded using the
-encoding specified into the prologue of the XML document. Using this form,
-any type of request can be made (structured or not) so any service can be
-called.
+    Url Request:
+    http://localhost:8080/geonetwork/srv/eng/main.search?hitsPerPage=10&any=
 
-**SOAP** The content type is application/soap+xml.
-SOAP is a simple protocol used to access objects and services using XML.
-Clients that use this protocol can embed XML requests into a SOAP structure.
-On the server side, GeoNetwork will remove the SOAP structure and feed the
-content to the service. Its response will be embedded again into a SOAP
-structure and sent back to the caller. It makes sense to use this protocol
-if it is the only protocol understood by the client.
-
-**A GET request to a XML service and its request encoding**::
-
+    Encoding:
     <request>
         <hitsPerPage>10</hitsPerPage>
         <any />
     </request>
+
+
+- **POST**
+There are 3 variants of this method:
+
+  #. **ENCODED** The request has one of the following content types: application/x-www-form-urlencoded or multipart/form-data. The first case is very common when sending web forms while the second one is used to send binary data (usually files) to the server. In these cases, the parameters are not structured so the rules of the GET method applies. Even if the second case could be used to send XML documents, this possibility is not considered on the server side.
+  #. **XML** The content type is application/xml.  This is the common case when the client is not a browser but a specialised client. The request is a pure XML document in string form, encoded using the encoding specified into the prologue of the XML document. Using this form, any type of request can be made (structured or not) so any service can be called.
+  #. **SOAP** The content type is application/soap+xml.  SOAP is a simple protocol used to access objects and services using XML.  Clients that use this protocol can embed XML requests into a SOAP structure.  On the server side, GeoNetwork will remove the SOAP structure and feed the content to the service. Its response will be embedded again into a SOAP structure and sent back to the caller. It makes sense to use this protocol if it is the only protocol understood by the client.
 
 Response
 ````````

@@ -1,4 +1,4 @@
-.. _services_general:
+.. _services_site_info_forwarding:
 
 Site Information and Request Forwarding Services
 ================================================
@@ -345,8 +345,8 @@ such elements::
         <esp>Editores</esp>
     </label>
 
-Site Forwarding (xml.forward)
------------------------------
+Request Forwarding (xml.forward)
+--------------------------------
 
 This is a request forwarding service. It can be used by JavaScript code to 
 connect to a remote host because a JavaScript program cannot access any machine other than its server (the same origin policy, see http://en.wikipedia.org/wiki/Same_origin_policy). For example, it is used by the harvesting web interface to query a remote host and retrieve the list of site ids.

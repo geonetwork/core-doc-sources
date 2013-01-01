@@ -67,7 +67,7 @@ Search parameters (all values are optional):
 Request to search for all metadata example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.search
+  http://localhost:8080/geonetwork/srv/eng/xml.search
 
   Mime-type:
   application/xml
@@ -79,7 +79,7 @@ Request to search for all metadata example::
 Request with free text search example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.search
+  http://localhost:8080/geonetwork/srv/eng/xml.search
 
   Mime-type:
   application/xml
@@ -93,7 +93,7 @@ Request with free text search example::
 Request with a geographic search example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.search
+  http://localhost:8080/geonetwork/srv/eng/xml.search
 
   Mime-type:
   application/xml
@@ -114,7 +114,7 @@ Request with a geographic search example::
 Request to search using dates and keywords example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.search
+  http://localhost:8080/geonetwork/srv/eng/xml.search
 
   Mime-type:
   application/xml
@@ -313,6 +313,66 @@ Errors
 - **Operation not allowed (error id:
   operation-not-allowed)**, when the user is not allowed
   to view the metadata record. Returned 403 HTTP code
+
+Get user metadata (xml.user.metadata)
+-------------------------------------
+
+The **xml.user.metadata** service can be used to retrieve a metadata records according to the user profile of the authenticated user running the service:
+
+- *Administrator* profile: return all metadata records
+- *Reviewer* or *User Administrator* profile: return all metadata records with 
+  groupOwner in the set of groups the user belongs to
+- *Editor* profile: return all metadata records owned by the user
+
+Requires authentication: Yes
+
+Request
+```````
+
+- **sortBySelect** : (optional) parameter specifying sort order of metadata records returned.
+
+Get metadata request example::
+
+  Url:
+  http://localhost:8080/geonetwork/srv/eng/xml.user.metadata
+
+  Mime-type:
+  application/xml
+
+  Post request:
+  <?xml version="1.0" encoding="UTF-8"?>
+  <request/>
+
+Response
+````````
+
+Successful response is an XML document with a response container and the user metadata records as children of that container. Each child has a **geonet:info** element which gives GeoNetwork specific metadata about the metadata record. An example response (with some content removed for brevity) is as follows::
+ 
+
+ <response>
+   <!-- metadata record 1 -->
+ 	 <gmd:MD_Metadata ....> 
+   </gmd:MD_Metadata>
+   <!-- metadata record 2 -->
+ 	 <gmd:MD_Metadata ....>
+   </gmd:MD_Metadata>
+ </response>
+
+Error response is an XML document with error container and the details of the error. Example::
+ 
+ <error id="service-not-allowed">Service not allowed
+   <object>xml.user.metadata</object>
+ </error>
+
+Errors
+``````
+
+- **Service not allowed (error id: service-not-allowed)**, user isn't allowed to 
+  run this service. Returned 500 HTTP code.
+
+- **Unauthorized user attempted to list editable metadata (error id:
+  operation-not-allowed)**, when the user is not allowed
+  to list metadata records. Returned 403 HTTP code
 
 RSS Search: Search metadata and retrieve in RSS format (rss.search)
 -------------------------------------------------------------------

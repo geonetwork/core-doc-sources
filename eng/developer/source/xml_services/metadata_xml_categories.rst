@@ -50,7 +50,7 @@ Request example:
 Response
 ````````
 
-The response contains the identifier of the metadata whose categories have been updated.
+Successful response (HTTP code 200) contains the identifier of the metadata whose categories have been updated.
 
 Example::
 
@@ -59,16 +59,34 @@ Example::
     <id>6</id>
   </request>
 
+Unsuccessful response (HTTP code 500) is an XML document with details of the exception/problem that occurred:
+
+Example::
+ 
+ <error id="metadata-not-found">
+   <message>Metadata not found</message>
+   <class>MetadataNotFoundEx</class>
+   .....
+   <object>Metadata not found --> 6</object>
+   <request>
+      <language>eng</language>
+      <service>xml.metadata.category</service>
+   </request>
+ </error>
+
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code.
 
 - **Metadata not found (error id: metadata-not-found)** if 
-  a metadata record with the identifier provided does not exist
+  a metadata record with the identifier provided does not exist.
+  Returns 500 HTTP code.
 
 .. _metadata.batch.update.categories:
 
@@ -142,10 +160,13 @@ the response is an XML document with the exception. An example of such a respons
 ::
  
  <error id="service-not-allowed">
-   Service not allowed
+   <message>Service not allowed</message>
+   .....
    <object>xml.metadata.batch.update.categories</object>
+   .....
  </error>
 
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -153,4 +174,4 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code

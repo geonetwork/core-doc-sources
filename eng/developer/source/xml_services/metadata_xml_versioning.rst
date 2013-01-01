@@ -41,7 +41,7 @@ Request example:
 Response
 ````````
 
-The response contains the identifier of the metadata for which versioning has been enabled.
+Successful response (HTTP status code 200) contains the identifier of the metadata for which versioning has been enabled.
 
 Example::
 
@@ -50,18 +50,36 @@ Example::
     <id>6</id>
   </request>
 
+If the service was not completed successfully, then HTTP status code 500 is returned with an XML document containing details of the exception/problem. An example of such a document is as follows:::
+ 
+ <error id="metadata-not-found">
+   <message>Metadata not found</message>
+   <class>MetadataNotFoundEx</class>
+   .....
+   <object>Metadata not found --> 6</object>
+   <request>
+     <language>eng</language>
+     <service>xml.metadata.version</service>
+   </request>
+ </error>
+
+See :ref:`exception_handling` for more details.
+
+
 Errors
 ``````
 
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code
 
 - **Metadata not found (error id: metadata-not-found)** if 
-  a metadata record with the identifier provided does not exist
+  a metadata record with the identifier provided does not exist. Returns 500 HTTP
+  code
 
-- **Operation Not Allowed**, if the user does not have editing rights over the metadata record.
+- **Operation Not Allowed**, if the user does not have editing rights over the 
+  metadata record. Returns 500 HTTP code
 
 .. _metadata.batch.version:
 
@@ -123,15 +141,19 @@ The response fields are:
 - **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
 - **notFound** - number of metadata records skipped because they were not found (may have been deleted)
 
-If the request fails an HTTP status code error is returned and
+If the request fails an HTTP 500 status code error is returned and
 the response is an XML document with the exception. An example of such a response is shown below:
 
 ::
  
  <error id="service-not-allowed">
-   Service not allowed
+   <message>Service not allowed</message>
+   .....
    <object>xml.metadata.batch.update.version</object>
+   .....
  </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -139,4 +161,4 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code

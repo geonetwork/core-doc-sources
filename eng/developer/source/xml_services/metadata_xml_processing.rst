@@ -101,9 +101,13 @@ If the processing specified in the request failed, an XML error response is retu
 ::
  
  <error id="bad-parameter">
-   Processing failed
+   <message>Processing failed</message>
+   .....
    <object>Not found:0, Not owner:0, No process found:1.</object>
+   .....
  </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -111,12 +115,12 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code
 
 - **Bad Parameter (error id:
   bad-parameter)**, when the processing (XSLT transform) returns
   an empty metadata record (explanation is returned in XML - see example response
-  above).
+  above). Returns 500 HTTP code
 
 
 .. _metadata.batch.processing:
@@ -126,7 +130,7 @@ Batch process metadata records with an XSLT (xml.metadata.batch.processing)
 
 The **xml.metadata.batch.processing** service applies an XSLT to each metadata record in a selected set of metadata records. 
 
-.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
+.. note:: This service requires a previous call to the ``xml.metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
 
 .. note:: This service is only available to users with UserAdmin or Administrator profile.
 
@@ -168,8 +172,6 @@ Example request for the anonymizer process XSLT:
   Url:
   http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.processing?&save=0&process=anonymizer&email=john.p.bead%40bonce.com
 
-.. note:: URL encoding of email parameter.
-
 Response
 ````````
 
@@ -193,15 +195,19 @@ The response fields are:
 - **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
 - **notFound** - number of metadata records skipped because they were not found (may have been deleted)
 
-If the request fails an HTTP status code error is returned and
+If the request fails an HTTP 500 status code error is returned and
 the response is an XML document with the exception. An example of such a response is shown below:
 
 ::
  
  <error id="service-not-allowed">
-   Service not allowed
+   <message>Service not allowed</message>
+   .....
    <object>xml.metadata.batch.processing</object>
+   .....
  </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -209,7 +215,7 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code
 
 Batch update child records (xml.metadata.batch.update.children)
 ---------------------------------------------------------------
@@ -278,8 +284,18 @@ response is:
  
  <response>1 child/children updated for metadata da165110-88fd-11da-a88f-000d939bc5d8.</response>
 
-If the request fails an HTTP status code error is returned and
-the response contains an XML document with the exception.
+If the request fails an HTTP 500 status code error is returned and
+the response contains an XML document with details of the exception. An example of such a response is::
+ 
+ <error id="metadata-not-found">
+   <message>Metadata not found</message>
+   <class>MetadataNotFoundEx</class>
+   .....
+   <object>Could not find metadata parent record --> 1</object>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -287,4 +303,8 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code
+
+- **Metadata not found (error id:
+  metadata-not-found)**, when the parent metadata record doesn't
+  exist. Returns 500 HTTP code

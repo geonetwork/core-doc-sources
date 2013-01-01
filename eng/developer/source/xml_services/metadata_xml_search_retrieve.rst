@@ -246,7 +246,7 @@ Get metadata request example::
 Response
 ````````
 
-The response is the metadata record with additional **geonet:info** section. The principal fields for **geonet:info** are:
+Successful response (HTTP status code 200) is the XML metadata record with additional **geonet:info** section. The principal fields for **geonet:info** are:
 
 - **schema**: Metadata schema
 
@@ -305,14 +305,25 @@ Get metadata response example::
     </geonet:info>
   </Metadata>
 
+Error response (HTTP 500 status code) is an XML document with the details of what
+went wrong. An example of such a response is as follows::
+ 
+ <error id="operation-not-allowed">
+   <message>Operation not allowed</message>
+   <class>OperationNotAllowedEx</class> 
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
-- **Request must contain a UUID or an ID**, if a uuid or id parameter was not provided
+- **Request must contain a UUID or an ID**, if a uuid or id parameter was not provided. Returns 500 HTTP code
 
 - **Operation not allowed (error id:
   operation-not-allowed)**, when the user is not allowed
-  to view the metadata record. Returned 403 HTTP code
+  to view the metadata record. Returns 500 HTTP code
 
 Get user metadata (xml.user.metadata)
 -------------------------------------
@@ -351,18 +362,26 @@ Successful response is an XML document with a response container and the user me
 
  <response>
    <!-- metadata record 1 -->
- 	 <gmd:MD_Metadata ....> 
+   <gmd:MD_Metadata ....> 
    </gmd:MD_Metadata>
    <!-- metadata record 2 -->
- 	 <gmd:MD_Metadata ....>
+   <gmd:MD_Metadata ....>
    </gmd:MD_Metadata>
  </response>
 
 Error response is an XML document with error container and the details of the error. Example::
  
- <error id="service-not-allowed">Service not allowed
+ <error id="service-not-allowed">
+ 	 <message>Service not allowed</message>
+   ....
    <object>xml.user.metadata</object>
+   <request>
+     <language>eng</language>
+     <service>xml.user.metadata</service>
+   </request>
  </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -372,7 +391,7 @@ Errors
 
 - **Unauthorized user attempted to list editable metadata (error id:
   operation-not-allowed)**, when the user is not allowed
-  to list metadata records. Returned 403 HTTP code
+  to list metadata records. Returned 500 HTTP code
 
 RSS Search: Search metadata and retrieve in RSS format (rss.search)
 -------------------------------------------------------------------

@@ -68,7 +68,7 @@ Clear metadata selection example::
 Response
 ````````
 
-The response *always* contains the number of metadata records selected.
+The XML response from this service *always* contains the number of metadata records selected after applying the select operation.
 
 Example::
 

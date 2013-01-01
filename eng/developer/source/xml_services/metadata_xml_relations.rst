@@ -3,9 +3,6 @@
 Metadata Relation services
 ==========================
 
-Introduction
-------------
-
 This section describes the services used to get, set and delete relations between
 metadata records in GeoNetwork. The relations are stored in the Relations
 table as follows:
@@ -49,7 +46,7 @@ Here is an example of POST/XML request::
 Response
 ````````
 
-The response has a response root element with several metadata children
+If the request executed successfully then HTTP status code 200 is returned along with an XML document containing a response root element and metadata children
 depending on the relations found. Example::
 
     <response>
@@ -109,4 +106,10 @@ Example of a metadata record::
             <featured>false</featured>
         </geonet:info>
     </metadata>
+
+If the response did not execute successfully then an HTTP error code 500 is returned along with an XML document describing the exception/what went wrong. An example of such an error response is:::
+ 
+  
+
+See :ref:`exception_handling` for more details.
 

@@ -75,16 +75,22 @@ The response fields are:
 - **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
 - **notFound** - number of metadata records skipped because they were not found (may have been deleted)
 
-If the request fails an HTTP status code error is returned and
+If the request fails an HTTP 500 status code error is returned and
 the response is an XML document with the exception. An example of such a response is shown below:
 
 ::
  
  <error id="service-not-allowed">
-   Service not allowed
-   <object>xml.metadata.batch.newowner</object>
+   <message>Service not allowed</message>
+   <class>ServiceNotAllowedEx</class>
+   .....
  </error>
 
+See :ref:`exception_handling` for more details.
+
+Errors
+``````
+- **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or their profile has no rights to execute the service. Returns 500 HTTP code
 
 Transfer ownership (xml.ownership.transfer)
 -------------------------------------------
@@ -119,7 +125,7 @@ group RWS (id=5) to user Samantha(id=7) in group NLR (id=6)
 Transfer ownership request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.ownership.transfer
+  http://localhost:8080/geonetwork/srv/eng/xml.ownership.transfer
 
   Mime-type:
   application/xml
@@ -151,14 +157,16 @@ Transfer ownership response example::
     <metadata>2</metadata>
   </response>
 
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
-- **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or his profile has no rights to execute the service. Returned 401 HTTP code
+- **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or his profile has no rights to execute the service. Returns 500 HTTP code
 
-- **Missing parameter (error id: missing-parameter)**, when mandatory parameters are not provided
+- **Missing parameter (error id: missing-parameter)**, when mandatory parameters are not provided. Returns 500 HTTP code
 
-- **bad-parameter XXXX**, when a mandatory parameter is empty
+- **bad-parameter XXXX**, when a mandatory parameter is empty or invalid. Returns 500 HTTP code
 
 .. _xml.ownership.editors:
 
@@ -179,7 +187,7 @@ Parameters:
 Retrieve metadata owners request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.ownership.editors
+  http://localhost:8080/geonetwork/srv/eng/xml.ownership.editors
 
   Mime-type:
   application/xml
@@ -191,7 +199,7 @@ Retrieve metadata owners request example::
 Response
 ````````
 
-This is the structure of the response:
+Successful execution returns HTTP status code 200 and an XML document with the results. The elements of the response are as follows: 
 
 - **root**: This is the container for the response
 
@@ -203,7 +211,7 @@ This is the structure of the response:
     - **surname**: User surname
     - **profile**: User profile
 
-Retrieve metadata editors response example::
+Example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <root>
@@ -223,10 +231,20 @@ Retrieve metadata editors response example::
     </editor>
   </root>
 
+Unsuccessful execution returns HTTP 500 status code error and an XML document describing the exception that occurred. An example of such an error response is:::
+ 
+  <error id="service-not-allowed">
+    <message>Service not allowed</message>
+    <class>ServiceNotAllowedEx</class>
+    .....
+  </error>
+
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
-- **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or his profile has no rights to execute the service. Returned 401 HTTP code
+- **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or his profile has no rights to execute the service. Returns 500 HTTP code
 
 .. _xml.ownership.groups:
 
@@ -251,7 +269,7 @@ Parameters:
 Retrieve ownership groups request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/xml.ownership.groups
+  http://localhost:8080/geonetwork/srv/eng/xml.ownership.groups
 
   Mime-type:
   application/xml
@@ -265,7 +283,9 @@ Retrieve ownership groups request example::
 Response
 ````````
 
-The structure of the response is as follows:
+Successful execution returns HTTP status code 200 and an XML document with the results. The elements of the response are as follows: 
+
+- **root**: This is the container for the response
 
 - **response**: This is the container for the response
 
@@ -280,7 +300,7 @@ The structure of the response is as follows:
 
    - **id,surname, name**: Metadata user owner information
 
-Retrieve ownership groups response example::
+Response example::
 
   <?xml version="1.0" encoding="UTF-8"?>
   <response>
@@ -332,11 +352,21 @@ Retrieve ownership groups response example::
     ...
   </response>
 
+Unsuccessful execution returns HTTP 500 status code error and an XML document describing the exception that occurred. An example of such an error response is:::
+ 
+  <error id="service-not-allowed">
+    <message>Service not allowed</message>
+    <class>ServiceNotAllowedEx</class>
+    .....
+  </error>
+
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or his profile has no rights to execute the
-  service. Returned 401 HTTP code
+  service. Returns 500 HTTP code
 

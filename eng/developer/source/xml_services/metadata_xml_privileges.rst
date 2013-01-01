@@ -66,12 +66,24 @@ If the request executed successfully then the XML response contains the identifi
 
 Example::
 
-  <?xml version="1.0" encoding="UTF-8"?>
   <response>
     <id>6</id>
   </response>
 
-If the request was unsuccessful then the XML response contains details of the error returned.
+If the request was unsuccessful then the XML response contains details of the error returned. An example of such a response is::
+ 
+ <error id="metadata-not-found">
+   <message>Metadata not found</message>
+   <class>MetadataNotFoundEx</class> 
+   .....
+   <object>6</object>
+   <request>
+     <language>eng</language>
+     <service>xml.metadata.privileges</service>
+   </request>
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -79,18 +91,19 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code
 
 - **Metadata not found (error id: metadata-not-found)** if 
-  a metadata record with the identifier provided does not exist
+  a metadata record with the identifier provided does not exist. Returns 500 HTTP
+  code
 
 - **ERROR: insert or update on table "operationallowed"
   violates foreign key 'operationallowed_operationid_fkey »**, if an
-  operation identifier provided is not valid
+  operation identifier provided is not valid. Returns 500 HTTP code
 
 - **ERROR: insert or update on table "operationallowed"
   violates foreign key 'operationallowed_groupid_fkey »**, if a
-  group identifier provided is not valid
+  group identifier provided is not valid. Returns 500 HTTP code
 
 .. _metadata.batch.update.privileges:
 
@@ -167,15 +180,19 @@ The response fields are:
 - **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
 - **notFound** - number of metadata records skipped because they were not found (may have been deleted)
 
-If the request fails an HTTP status code error is returned and
+If the request fails an HTTP 500 status code error is returned and
 the response is an XML document with the exception. An example of such a response is shown below:
 
 ::
  
  <error id="service-not-allowed">
-   Service not allowed
+   <message>Service not allowed</message>
+   .....
    <object>xml.metadata.batch.update.privileges</object>
+   .....
  </error>
+
+See :ref:`exception_handling` for more details.
 
 
 Errors
@@ -184,13 +201,13 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code
 
 - **ERROR: insert or update on table "operationallowed"
   violates foreign key 'operationallowed_operationid_fkey »**, if an
-  operation identifier provided is not valid
+  operation identifier provided is not valid. Returns 500 HTTP code
 
 - **ERROR: insert or update on table "operationallowed"
   violates foreign key 'operationallowed_groupid_fkey »**, if a
-  group identifier provided is not valid
+  group identifier provided is not valid. Returns 500 HTTP code
 

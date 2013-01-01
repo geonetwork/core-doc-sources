@@ -3,96 +3,18 @@
 Group services
 ==============
 
-Groups retrieving
+Group List (xml.info&type=groups)
+---------------------------------
+
+The **xml.info** service can be used to retrieve the user groups available in GeoNetwork. See :ref:`xml.info`.
+
+Group maintenance
 -----------------
 
-Groups list (xml.group.list)
-````````````````````````````
+Create/update a group (xml.group.create.update)
+```````````````````````````````````````````````
 
-The **xml.group.list** service can be used to retrieve the user groups avalaible in GeoNetwork.
-
-Requires authentication: No
-
-Request
-^^^^^^^
-
-Parameters:
-
-- **None**
-
-Group list request example::
-
-  Url:
-  http://localhost:8080/geonetwork/srv/en/xml.group.list
-
-  Mime-type:
-  application/xml
-
-  Post request::
-  <?xml version="1.0" encoding="UTF-8"?>
-  <request />
-
-Response
-^^^^^^^^
-
-Here follows the structure of the response:
-
-- **record**: This is the container for each group element returned
-- **id**: Group identifier
-- **name**: Human readable group name
-- **description**: Group description
-- **email**: Group email address
-- **label**: This is just a container
-  to hold the group names translated in the languages
-  supported by GeoNetwork. Each translated label it's enclosed
-  in a tag that identifies the language code
-
-Group list response example::
-
-  <?xml version="1.0" encoding="UTF-8"?>
-  <response>
-    <record>
-      <id>2</id>
-      <name>sample</name>
-      <description />
-      <email />
-      <referrer />
-      <label>
-        <en>Sample group</en>
-        <fr>Sample group</fr>
-        <es>Sample group</es>
-        <de>Beispielgruppe</de>
-        <nl>Voorbeeldgroep</nl>
-      </label>
-    </record>
-    <record>
-      <id>3</id>
-      <name>RWS</name>
-      <description />
-      <email />
-      <referrer />
-      <label>
-        <de>RWS</de>
-        <fr>RWS</fr>
-        <en>RWS</en>
-        <es>RWS</es>
-        <nl>RWS</nl>
-      </label>
-    </record>
-  </response>
-
-Group information (group.get)
-`````````````````````````````
-
-Retrieves group information. **Non XML response.**
-
-Groups maintenance
-------------------
-
-Create/update a group (group.update)
-````````````````````````````````````
-
-The **group.update** service can be used to
+The **xml.group.create.update** service can be used to
 create new groups and update the information of an existing group.
 Only users with **Administrator** profile can
 create/update groups.
@@ -120,7 +42,7 @@ Parameters:
 Group update request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/group.update
+  http://localhost:8080/geonetwork/srv/eng/xml.group.create.update
 
   Mime-type:
   application/xml
@@ -136,27 +58,47 @@ Group update request example::
 Response
 ^^^^^^^^
 
-If request it's executed succesfully HTTP 200 status code it's
-returned. If request fails an HTTP status code error it's returned
-and the response contains the XML document with the
-exception.
+If the request executed successfully, then an HTTP 200 status code is
+returned along with an XML document that confirms the operation that has taken place.  An example of a response to an update request is:::
+ 
+ <response>
+   <operation>updated</operation>
+ </response>
+
+An example of a response to a create request is:::
+ 
+ <response>
+   <operation>added</operation>
+ </response>
+
+If the request fails, then a HTTP 500 status code error is returned
+and the response contains an XML document with the details of the exception/what
+went wrong. An example of such a response is:::
+ 
+ <error id="missing-parameter">
+    <message>name</message>
+    <class>MissingParameterEx</class>
+    .....
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ^^^^^^
 
 - **Service not allowed (error id: service-not-allowed)**, when the
-  user is not authenticated or his profile has no rights to
-  execute the service. Returned 401 HTTP code
+  user is not authenticated or their profile is not permitted to
+  execute the service. Returns 500 HTTP code
 
 - **Missing parameter (error id: missing-parameter)**, when mandatory parameters
-  are not provided. Returned 400 HTTP code
+  are not provided. Returns 500 HTTP code
 
 - **bad-parameter name**, when **name** it's
-  empty. Returned 400 HTTP code
+  empty. Returns 500 HTTP code
 
 - **ERROR: duplicate key violates unique constraint
   "groups_name_key"**, when trying to create a new group using an existing
-  group name. Returned 500 HTTP code
+  group name. Returns 500 HTTP code
 
 Update label translations (xml.group.update)
 ````````````````````````````````````````````
@@ -210,15 +152,15 @@ Errors
 
 - **Service not allowed (error id: service-not-allowed)**, when the
   user is not authenticated or his profile has no rights to
-  execute the service. Returned 401 HTTP code
+  execute the service. Returns 500 HTTP code
 
 - **Missing parameter (error id: missing-parameter)**, when mandatory parameters
-  are not provided. Returned 400 HTTP code
+  are not provided. Returns 500 HTTP code
 
-Remove a group (group.remove)
-`````````````````````````````
+Remove a group (xml.group.remove)
+`````````````````````````````````
 
-The **group.remove** service can be used to
+The **xml.group.remove** service can be used to
 remove an existing group. Only users with
 **Administrator** profile can delete groups.
 
@@ -234,7 +176,7 @@ Parameters:
 Group remove request example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/group.remove
+  http://localhost:8080/geonetwork/srv/eng/xml.group.remove
 
   Mime-type:
   application/xml
@@ -247,22 +189,36 @@ Group remove request example::
 Response
 ^^^^^^^^
 
-If request it's executed succesfully HTTP 200 status code it's
-returned. If request fails an HTTP status code error it's returned
-and the response contains the XML document with the
-exception.
+If the request executed succesfully then an HTTP 200 status code is
+returned and an XML document confirming the remove operation is returned. An example response is:::
+ 
+ <response>
+   <operation>removed</operation>
+ </response>
+
+If the request fails then an HTTP 500 status code error is returned
+and the response contains an XML document with the details of the exception/what
+went wrong. An example error response is:::
+ 
+ <error id="missing-parameter">
+   <message>id</message>
+   <class>MissingParameterEx</class>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ^^^^^^
 
 - **Service not allowed (error id: service-not-allowed)**, when the
   user is not authenticated or his profile has no rights to
-  execute the service. Returned 401 HTTP code
+  execute the service. Returns 500 HTTP code
 
 - **Missing parameter (error id: missing-parameter)**, when mandatory parameters
-  are not provided. Returned 400 HTTP code
+  are not provided. Returns 500 HTTP code
 
-- **bad-parameter id**, when **id** parameter it's
-  empty. Returned 400 HTTP code
+- **bad-parameter id**, when **id** parameter is
+  empty/invalid. Returns 500 HTTP code
 
 

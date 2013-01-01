@@ -82,7 +82,7 @@ Example success response:
    <uuid>9c623013-8d90-4e61-ae61-8e96800f3b08</uuid>
  </response>
 
-If request fails an HTTP status code error is returned and
+If request fails an HTTP status code 500 is returned and
 the response contains an XML document with the exception. 
 Example error response:
 
@@ -94,6 +94,8 @@ Example error response:
    <stack>..</stack>
    <request>...</request>
  </error>
+
+See :ref:`exception_handling` for more details.
 
 If validate parameter is set to "on" and the provided metadata
 is not valid with respect to the XSD and schematrons in use for the metadata 
@@ -161,19 +163,19 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returned 401 HTTP code
+  service. Returns 500 HTTP code
 
 - **Missing parameter (error id:
   missing-parameter)**, when mandatory parameters are
-  not provided. Returns 400 HTTP code
+  not provided. Returns 500 HTTP code
 
 - **bad-parameter XXXX**, when a
-  mandatory parameter is empty. Returns 400 HTTP code
+  mandatory parameter is empty. Returns 500 HTTP code
 
 - **ERROR: duplicate key violates unique
   constraint "metadata_uuid_key"**, if another
   metadata record in catalog has the same uuid of the metadata
-  record being inserted
+  record being inserted. Returns 500 HTTP code
 
 Update metadata (xml.metadata.update)
 -------------------------------------
@@ -192,7 +194,7 @@ Parameters:
 - **version**: (mandatory) This parameter
   is used by the GeoNetwork editor to avoid concurrent updates to the same
   metadata record. This is not accessible to the service user at present so
-	this parameter can be set to any integer value.
+  this parameter can be set to any integer value.
 
 - **isTemplate**: indicates if the
   metadata content is a new template or not. Default value: "n"
@@ -203,7 +205,7 @@ Parameters:
 
 - **minor**: If the metadata update is a minor change (changedate will not be
   updated, notification of change in metadata will not be sent) then this 
-	parameter should be set to "true", "false" otherwise.
+  parameter should be set to "true", "false" otherwise.
 
 - **title**: Metadata title (for templates)
 
@@ -251,7 +253,7 @@ Example success response:
   </response>
 
 
-If request fails an HTTP status code error is returned and
+If request fails an HTTP status code 500 (server error) is returned and
 the response is an XML document with the exception.
 Example error response:
 
@@ -264,26 +266,28 @@ Example error response:
     <request>...</request>
   </error>
 
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or his profile has no rights to execute the
-  service. Returned 401 HTTP code
+  service. Returns 500 HTTP code
 
 - **Missing parameter (error id:
   missing-parameter)**, when mandatory parameters are
-  not provided. Returned 400 HTTP code
+  not provided. Returns 500 HTTP code
 
 - **bad-parameter XXXX**, when a
   mandatory parameter is empty or when the update id doesn't exist. 
-	Returned 400 HTTP code
+  Returns 500 HTTP code
 
 - **Concurrent update (error id:
   client)**, when the version number provided is
   different from the current version number (Metadata record is in use by 
-	another user). Returned 400 HTTP code
+  another user). Returns 500 HTTP code
 
 Delete metadata (xml.metadata.delete)
 -------------------------------------
@@ -328,7 +332,7 @@ Example success response:
    <id>32</id>
  </response>
 
-If request fails an HTTP status code error is returned and
+If request fails an HTTP 500 status code error is returned and
 the response is an XML document with the exception.
 Example error response:
 
@@ -341,17 +345,19 @@ Example error response:
    <request>...</request>
  </error>
 
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returned 401 HTTP code
+  service. Returns 500 HTTP code
 
 - **Metadata not found (error id:
   metadata-not-found)**, if the identifier provided did not correspond
-  to an existing metadata record. Returned 500 HTTP code
+  to an existing metadata record. Returns 500 HTTP code
 
 - **Operation not allowed** **(error id: operation-not-allowed)**, when
   the user is not authorized to edit the metadata. To edit a metadata one of the
@@ -362,6 +368,8 @@ Errors
   - The user has edit rights over the metadata
   - The user is a Reviewer and/or UserAdmin and the
     metadata groupOwner is one of his groups
+	
+  Returns 500 HTTP code.
 
 
 .. _metadata.batch.delete:
@@ -422,7 +430,7 @@ The response fields are:
 - **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
 - **notFound** - number of metadata records skipped because they were not found (may have been deleted)
 
-If the request fails an HTTP status code error is returned and
+If the request fails an HTTP 500 status code error is returned and
 the response is an XML document with the exception. An example of such a response is shown below:
 
 ::
@@ -432,6 +440,8 @@ the response is an XML document with the exception. An example of such a respons
    <object>xml.metadata.batch.delete</object>
  </error>
 
+See :ref:`exception_handling` for more details.
+
 
 Errors
 ``````
@@ -439,4 +449,4 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code

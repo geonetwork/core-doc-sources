@@ -70,6 +70,8 @@ On a GET request, the client can force a SOAP response adding the
 application/soap+xml content type to the Accept
 header parameter.
 
+.. _exception_handling:
+
 Exception handling
 ------------------
 

@@ -53,7 +53,7 @@ Example::
     <schema>iso19139</schema>
   </response>
 
-If the validation was not successful then an HTTP error response code is returned along with an XML document describing the validation problems. An example is::
+If the validation was not successful then an HTTP 500 error response code is returned along with an XML document describing the validation problems. An example is::
  
   <?xml version="1.0" encoding="UTF-8"?>
   <error id="xsd-validation-error">
@@ -197,22 +197,24 @@ Validation may also fail when schematrons are applied to the metadata record. An
 
 .. note:: XML parseable description of the schematron validation problems is in the object container. You should be looking for elements such as svrl:failed-assert.
 
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
 - **bad-parameter XXXX**, when a
-  mandatory parameter is empty. Returns 400 HTTP code
+  mandatory parameter is empty. Returns 500 HTTP code
 
 - **XSD Validation Error (error id:
   xsd-validation-error)**, when validation against XSDs fails.
-  Returned 401 HTTP code
+  Returns 500 HTTP code
 
 - **Schematron Validation Error (error id:
   schematron-validation-error)**, when validation against schematrons fails.
-  Returned 401 HTTP code
+  Returns 500 HTTP code
 
 - **No Schema Matches (error id:
   no-schema-matches)**, when a matching GeoNetwork metadata schema cannot be 
   found for the supplied metadata record.
-  Returned 401 HTTP code
+  Returns 500 HTTP code
 

@@ -60,20 +60,25 @@ Request example:
 Response
 ````````
 
-If the request executes successfully then the response contains the identifier of the metadata whose status has been updated.
+If the request executes successfully then HTTP status code 200 is returned along with an XML document which contains the identifier of the metadata whose status has been updated.
 
 Example::
 
-  <?xml version="1.0" encoding="UTF-8"?>
-  <request>
+  <response>
     <id>6</id>
-  </request>
+  </response>
 
-If an error occurred then the response will be an XML document with details of what happened. An example of such an error response is:
+If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
 
 ::
  
- <error id="metadata-not-found">Metadata not found --> 6</error>
+ <error id="metadata-not-found">
+   <message>Metadata not found</message>
+   <class>MetadataNotFoundEx</class> 
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -154,6 +159,7 @@ have been processed. An example of such a response is shown below:
    <done>5</done>
    <notOwner>0</notOwner>
    <notFound>0</notFound>
+   <noChange>0</noChange>
  </response>
 
 The response fields are:
@@ -161,16 +167,20 @@ The response fields are:
 - **done** - number of metadata records successfully updated
 - **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
 - **notFound** - number of metadata records skipped because they were not found (may have been deleted)
+- **noChange** - number of metadata records whose ownership was unchanged by the operation.
 
-If the request fails an HTTP status code error is returned and
+If the request fails an HTTP 500 status code error is returned and
 the response is an XML document with the exception. An example of such a response is shown below:
 
 ::
  
  <error id="service-not-allowed">
-   Service not allowed
-   <object>xml.metadata.batch.update.status</object>
+   <message>Service not allowed</message>
+   <class>ServiceNotAllowedEx</class>
+   .....
  </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
@@ -178,7 +188,7 @@ Errors
 - **Service not allowed (error id:
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
-  service. Returns 401 HTTP code
+  service. Returns 500 HTTP code
 
 
 Get status of a metadata record (xml.metadata.status.get)
@@ -238,6 +248,29 @@ returned and the XML with status values for the metadata record (note: all chang
     <name>submitted</name>
    </record>
   </response> 
+
+If the request did not execute successfully then HTTP 500 status code error is returned along with an XML document which includes details of the exception/what went wrong. An example of such a request is:::
+ 
+ <error id="metadata-not-found">
+   <message>Metadata not found</message>
+   <class>MetadataNotFoundEx</class>
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
+Errors
+``````
+
+- **Service not allowed (error id:
+  service-not-allowed)**, when the user is not
+  authenticated or their profile has no rights to execute the
+  service. Returns 500 HTTP code
+
+- **Metadata not found (error id:
+  metadata-not-found)**, when the metadata record requested is not
+  found. Returns 500 HTTP code
+
 
 Defining status actions
 -----------------------

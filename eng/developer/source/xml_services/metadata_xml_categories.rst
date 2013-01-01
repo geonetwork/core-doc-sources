@@ -3,18 +3,18 @@
 Metadata Category services
 ==========================
 
-Update Categories of a metadata record (metadata.category)
-----------------------------------------------------------
+Update Categories of a metadata record (xml.metadata.category)
+--------------------------------------------------------------
 
-The **metadata.category** service updates the
+The **xml.metadata.category** service updates the
 categories of a metadata record using the list of categories provided.
 
 .. note:: The previously assigned categories will be removed. If versioning for the metadata record is on, then the previously assigned categories will be available in the version history.
 
 Requires authentication: Yes
 
-Request to metadata.category service
-````````````````````````````````````
+Request
+```````
 
 Parameters:
 
@@ -29,7 +29,7 @@ Request example:
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.category
+  http://localhost:8080/geonetwork/srv/en/xml.metadata.category
 
   Mime-type:
   application/xml
@@ -45,10 +45,10 @@ Request example:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.category?id=6&_1&_2
+  http://localhost:8080/geonetwork/srv/en/xml.metadata.category?id=6&_1&_2
 
-Response from metadata.category service
-```````````````````````````````````````
+Response
+````````
 
 The response contains the identifier of the metadata whose categories have been updated.
 
@@ -72,19 +72,19 @@ Errors
 
 .. _metadata.batch.update.categories:
 
-Batch update categories (metadata.batch.update.categories)
-----------------------------------------------------------
+Batch update categories (xml.metadata.batch.update.categories)
+--------------------------------------------------------------
 
-The **metadata.batch.update.categories** service updates the categories of a selected set of metadata using the categories sent as parameters.
+The **xml.metadata.batch.update.categories** service updates the categories of a selected set of metadata using the categories sent as parameters.
 
-.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select the metadata records to update.
+.. note:: This service requires a previous call to the ``xml.metadata.select`` service (see :ref:`metadata.select`) to select the metadata records to update.
 
 .. note:: Only those metadata records for which the user running the service has ownership rights on will be updated and all categories previously assigned will be deleted. If metadata versioning is on then category changes will be recorded in the version history.
 
 Requires authentication: Yes
 
-Request to metadata.batch.update.categories
--------------------------------------------
+Request
+-------
 
 Parameters:
 
@@ -98,7 +98,7 @@ Example request:
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.categories
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.update.categories
 
   Mime-type:
   application/xml
@@ -113,14 +113,39 @@ Example request:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.categories?_1&_2
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.update.categories?_1&_2
 
-Response from metadata.batch.update.categories
-``````````````````````````````````````````````
+Response
+````````
 
-If the request executed successfully a HTTP 200 status code is returned.
+If the request executed successfully then HTTP 200 status code is returned and 
+an XML document with a summary of how the metadata records in the selected set 
+have been processed. An example of such a response is shown below:
+
+::
+ 
+ <response>
+ 	 <done>5</done>
+   <notOwner>0</notOwner>
+   <notFound>0</notFound>
+ </response>
+
+The response fields are:
+
+- **done** - number of metadata records successfully updated
+- **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
+- **notFound** - number of metadata records skipped because they were not found (may have been deleted)
+
 If the request fails an HTTP status code error is returned and
-the response is an XML document with the exception.
+the response is an XML document with the exception. An example of such a response is shown below:
+
+::
+ 
+ <error id="service-not-allowed">
+   Service not allowed
+   <object>xml.metadata.batch.update.categories</object>
+ </error>
+
 
 Errors
 ``````

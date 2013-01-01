@@ -3,10 +3,10 @@
 Metadata Status services
 ========================
 
-Update Status on a metadata record (metadata.status)
-----------------------------------------------------
+Update Status on a metadata record (xml.metadata.status)
+--------------------------------------------------------
 
-The **metadata.status** service updates the
+The **xml.metadata.status** service updates the
 status on a metadata record using the status and changeMessage provided
 as parameters. 
 
@@ -14,8 +14,8 @@ as parameters.
 
 Requires authentication: Yes
 
-Request to metadata.status service
-``````````````````````````````````
+Request
+```````
 
 Parameters:
 
@@ -37,7 +37,7 @@ Request example:
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.status
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.status
 
   Mime-type:
   application/xml
@@ -53,14 +53,14 @@ Request example:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.status?id=6&status=5&changeMessage=Do%20it%20all%20again%20nitwit
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.status?id=6&status=5&changeMessage=Do%20it%20all%20again%20nitwit
 
 .. note:: URL encoding of changeMessage.
 
-Response from metadata.status service
-`````````````````````````````````````
+Response
+````````
 
-The response contains the identifier of the metadata whose status has been updated.
+If the request executes successfully then the response contains the identifier of the metadata whose status has been updated.
 
 Example::
 
@@ -68,6 +68,12 @@ Example::
   <request>
     <id>6</id>
   </request>
+
+If an error occurred then the response will be an XML document with details of what happened. An example of such an error response is:
+
+::
+ 
+ <error id="metadata-not-found">Metadata not found --> 6</error>
 
 Errors
 ``````
@@ -84,19 +90,19 @@ Errors
 
 .. _metadata.batch.update.status:
 
-Batch update status (metadata.batch.update.status)
---------------------------------------------------
+Batch update status (xml.metadata.batch.update.status)
+------------------------------------------------------
 
-The **metadata.batch.update.status** service updates the status on a selected set of metadata using the status and changeMessage sent as parameters.
+The **xml.metadata.batch.update.status** service updates the status on a selected set of metadata using the status and changeMessage sent as parameters.
 
-.. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
+.. note:: This service requires a previous call to the ``xml.metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
 
 .. note:: Only those metadata records for which the user running the service has ownership rights on will be updated and all status values previously assigned will be deleted. If metadata versioning is on then status changes will be recorded in the version history.
 
 Requires authentication: Yes
 
-Request to metadata.batch.update.status
----------------------------------------
+Request
+```````
 
 Parameters:
 
@@ -116,7 +122,7 @@ Example request:
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.status
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.update.status
 
   Mime-type:
   application/xml
@@ -131,16 +137,40 @@ Example request:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.status?&status=5&changeMessage=Do%20it%20all%20again%20nitwit
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.update.status?&status=5&changeMessage=Do%20it%20all%20again%20nitwit
 
 .. note:: URL encoding of changeMessage.
 
-Response from metadata.batch.update.status
-``````````````````````````````````````````
+Response
+````````
 
-If the request executed successfully a HTTP 200 status code is
-returned. If the request fails an HTTP status code error is returned and
-the response contains the XML document with the exception.
+If the request executed successfully then HTTP 200 status code is returned and
+an XML document with a summary of how the metadata records in the selected set 
+have been processed. An example of such a response is shown below:
+
+::
+ 
+ <response>
+   <done>5</done>
+   <notOwner>0</notOwner>
+   <notFound>0</notFound>
+ </response>
+
+The response fields are:
+
+- **done** - number of metadata records successfully updated
+- **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
+- **notFound** - number of metadata records skipped because they were not found (may have been deleted)
+
+If the request fails an HTTP status code error is returned and
+the response is an XML document with the exception. An example of such a response is shown below:
+
+::
+ 
+ <error id="service-not-allowed">
+   Service not allowed
+   <object>xml.metadata.batch.update.status</object>
+ </error>
 
 Errors
 ``````
@@ -164,6 +194,27 @@ Request
 Parameters:
 
 - **id** or **uuid**: Identifier of metadata to obtain status of.
+
+Example request:
+
+**POST**::
+
+  Url:
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.status.get
+
+  Mime-type:
+  application/xml
+
+  Post request:
+  <?xml version="1.0" encoding="UTF-8"?>
+  <request>
+    <id>5</id>
+  </request>
+
+**GET**::
+
+  Url:
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.status.get?&id=5
 
 Response
 ````````

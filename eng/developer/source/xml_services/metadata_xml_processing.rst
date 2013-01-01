@@ -119,19 +119,24 @@ Errors
   above).
 
 
-Batch process metadata records with an XSLT (metadata.batch.processing)
------------------------------------------------------------------------
+.. _metadata.batch.processing:
 
-The **metadata.batch.processing** service applies an XSLT to each metadata record in a selected set of metadata records. 
+Batch process metadata records with an XSLT (xml.metadata.batch.processing)
+---------------------------------------------------------------------------
+
+The **xml.metadata.batch.processing** service applies an XSLT to each metadata record in a selected set of metadata records. 
 
 .. note:: This service requires a previous call to the ``metadata.select`` service (see :ref:`metadata.select`) to select metadata records.
+
+.. note:: This service is only available to users with UserAdmin or Administrator profile.
 
 .. note:: Only those metadata records for which the user running the service has editing rights on will be processed. If metadata versioning is on then any changes  to the metadata records will be recorded in the version history.
 
 Requires authentication: Yes
 
-Request to metadata.batch.processing
-````````````````````````````````````
+Request
+```````
+
 Parameters:
 
 - **save**: Set to '1' to save the processed metadata (default), '0' will not save the processed metadata.
@@ -145,7 +150,7 @@ Example request for the anonymizer process XSLT:
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.processing
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.processing
 
   Mime-type:
   application/xml
@@ -161,16 +166,42 @@ Example request for the anonymizer process XSLT:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.processing?&save=0&process=anonymizer&email=john.p.bead%40bonce.com
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.processing?&save=0&process=anonymizer&email=john.p.bead%40bonce.com
 
 .. note:: URL encoding of email parameter.
 
-Response from metadata.batch.processing
-```````````````````````````````````````
+Response
+````````
 
-If the request executed successfully a HTTP 200 status code is
-returned. If the request fails an HTTP status code error is returned and
-the response contains the XML document with the exception.
+If the request executed successfully then HTTP 200 status code is returned and
+an XML document with a summary of how the metadata records in the selected set 
+have been processed. An example of such a response is shown below:
+
+::
+ 
+ <response>
+   <done>5</done>
+   <notProcessFound>2</notProcessFound>
+   <notOwner>0</notOwner>
+   <notFound>0</notFound>
+ </response>
+
+The response fields are:
+
+- **done** - number of metadata records successfully updated
+- **notProcessFound** - number of metadata records skipped because the process XSLT was not present in their metadata schema
+- **notOwner** - number of metadata records skipped because the user running this service did not have ownership rights
+- **notFound** - number of metadata records skipped because they were not found (may have been deleted)
+
+If the request fails an HTTP status code error is returned and
+the response is an XML document with the exception. An example of such a response is shown below:
+
+::
+ 
+ <error id="service-not-allowed">
+   Service not allowed
+   <object>xml.metadata.batch.processing</object>
+ </error>
 
 Errors
 ``````
@@ -180,10 +211,10 @@ Errors
   authenticated or their profile has no rights to execute the
   service. Returns 401 HTTP code
 
-Batch update child records  (metadata.batch.update.children)
-------------------------------------------------------------
+Batch update child records (xml.metadata.batch.update.children)
+---------------------------------------------------------------
 
-The **metadata.batch.update.children** service copies metadata elements from the parent metadata record to all child metadata elements. 
+The **xml.metadata.batch.update.children** service copies metadata elements from the parent metadata record to all child metadata elements. 
 
 - This service works only for iso19139 (or profile) child metadata records ie. metadata records whose gmd:parentIdentifier is set to the uuid of a metadata record in the catalog.
 - Any child metadata records that do not have the same metadata schema as the parent metadata record will be skipped.
@@ -194,8 +225,8 @@ The **metadata.batch.update.children** service copies metadata elements from the
 
 Requires authentication: Yes
 
-Request to metadata.batch.update.children
-`````````````````````````````````````````
+Request
+```````
 
 Parameters:
 
@@ -211,7 +242,7 @@ Example request:
 **POST**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.children
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.update.children
 
   Mime-type:
   application/xml
@@ -234,10 +265,10 @@ Example request:
 **GET**::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.batch.update.children?&id=1&parentUuid=da165110-88fd-11da-a88f-000d939bc5d8&childrenIds=4,&schema=iso19139&updateMode=replace&gmd-descriptiveKeywords=true&gmd-contact=true&gmd-extent=true&gmd-pointOfContact=true&gmd-metadataMaintenance=true
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.batch.update.children?&id=1&parentUuid=da165110-88fd-11da-a88f-000d939bc5d8&childrenIds=4,&schema=iso19139&updateMode=replace&gmd-descriptiveKeywords=true&gmd-contact=true&gmd-extent=true&gmd-pointOfContact=true&gmd-metadataMaintenance=true
 
-Response from metadata.batch.update.children
-````````````````````````````````````````````
+Response
+````````
 
 If the request executed successfully a HTTP 200 status code is
 returned and some XML describing what was processed. An example of such an XML

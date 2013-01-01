@@ -1,15 +1,20 @@
 
 .. _metadata_xml_select:
 
-Metadata Select Services
+Metadata Select services
 ========================
 
-These services are for creating and managing a set of selected metadata records. The selected set is normally used by the metadata.batch services eg. :ref:`metadata.batch.update.privileges`, :ref:`metadata.batch.newowner`, :ref:`metadata.batch.update.status`, :ref:`metadata.batch.update.categories`.
+These services are for creating and managing a set of selected metadata records. The selected set is normally used by the metadata.batch services eg. :ref:`metadata.batch.update.privileges`, :ref:`metadata.batch.newowner`, :ref:`metadata.batch.update.status`, :ref:`metadata.batch.update.categories`, :ref:`metadata.batch.version`, :ref:`metadata.batch.processing` and :ref:`metadata.batch.delete`.
 
 .. _metadata.select:
 
-Request to metadata.select service
-``````````````````````````````````
+Select metadata records (xml.metadata.select)
+---------------------------------------------
+
+This service can be used to build and manage a selected set of metadata.
+
+Request
+```````
 
 Parameters:
 
@@ -20,7 +25,7 @@ Parameters:
 Select all metadata example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.select
+  http://localhost:8080/geonetwork/srv/eng/metadata.select
 
   Mime-type:
   application/xml
@@ -34,7 +39,7 @@ Select all metadata example::
 Select a metadata record example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.select
+  http://localhost:8080/geonetwork/srv/eng/metadata.select
 
   Mime-type:
   application/xml
@@ -49,7 +54,7 @@ Select a metadata record example::
 Clear metadata selection example::
 
   Url:
-  http://localhost:8080/geonetwork/srv/en/metadata.select
+  http://localhost:8080/geonetwork/srv/eng/metadata.select
 
   Mime-type:
   application/xml
@@ -60,10 +65,10 @@ Clear metadata selection example::
     <selected>remove-all</selected>
   </request>
 
-Response from metadata.select service
-`````````````````````````````````````
+Response
+````````
 
-The response contains the number of metadata records selected.
+The response *always* contains the number of metadata records selected.
 
 Example::
 

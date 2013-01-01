@@ -1,35 +1,29 @@
-.. _relations:
+.. _metadata_xml_relations:
 
-Relations
-=========
+Metadata Relation services
+==========================
 
 Introduction
 ------------
 
-This chapter describes general services used to get and set relations between
-metadata records inside GeoNetwork. The association is performed by a Relations
-table which stores a metadata id and a metadata relatedId fields.
-
-Structure of table Relations:
+This section describes the services used to get, set and delete relations between
+metadata records in GeoNetwork. The relations are stored in the Relations
+table as follows:
 
 ==========  ============================    ====================================
 Field       Datatype                        Description
 ==========  ============================    ====================================
-id          foreign key to Metadata(id)     Source metadata whose relation is 
-                                            being described.
-relatedId   foreign key to Metadata(id)     Metadata related to the source one
+id          foreign key to Metadata(id)     Source metadata 
+relatedId   foreign key to Metadata(id)     Metadata related to the source
 ==========  ============================    ====================================
 
 xml.relation.get
 ----------------
 
-This service retrieves all relations between metadata.
+This service retrieves all the related records for a source metadata record specified by id in the parameters.
 
 Request
 ```````
-
-The request accepts an id and a relation parameters, whose meaning is
-this:
 
 - **id (integer)**: This is the local GeoNetwork
   identifier of the metadata whose relations are requested.

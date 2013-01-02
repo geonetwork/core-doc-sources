@@ -70,7 +70,7 @@ If tests are passed, proceed with the release. Otherwise:
 	No other commits should happen on a tag, except critical bug fixes. This allows people to commit on the branch while the critical bug is been solved.
 
 Update changes.txt file
-----------------------
+-----------------------
 
 1. Add an entry to ``docs/changes.txt`` describing the changes in this new release, using the following template. 
 

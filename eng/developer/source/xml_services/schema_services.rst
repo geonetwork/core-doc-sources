@@ -239,3 +239,57 @@ went wrong. An example error response is:::
  </error>
   
 See :ref:`exception_handling` for more details.
+
+Delete a metadata schema (xml.metadata.schema.delete)
+-----------------------------------------------------
+
+The **xml.metadata.schema.delete** service can be used to delete a metadata schema in GeoNetwork. A metadata schema can only be deleted if:
+
+- there are no metadata records in the catalog that use it 
+- no other metadata schema is dependent on it
+
+Only **Administrator** users can run this service.
+
+Requires authentification: Yes
+
+Request
+```````
+
+Parameters:
+
+- **schema**: (mandatory) Name of the schema to delete. Must be the name of a currently registered metadata schema in GeoNetwork.
+
+Schema delete request example::
+
+  Url:
+  http://localhost:8080/geonetwork/srv/eng/xml.metadata.schema.delete
+
+  Mime-type:
+  application/xml
+
+  Post request:
+  <request>
+    <schema>iso19139.mcp</schema>
+  </request>
+
+Response
+````````
+
+If the request executed without an exception then an HTTP 200 status code is
+returned and an XML document giving status is returned. An example response is:::
+ 
+ <response status="ok" message="Schema iso19139.mcp has been deleted"/>
+
+Other responses may describe errors, in which case the status is set to "error". An example error response is:::
+ 
+ <response status="error" message="Cannot remove schema iso19139 because there are records that belong to this schema in the catalog"/>
+
+If the request fails due to an exception in the service then an HTTP 500 status code error is returned and the response contains an XML document with the details of the exception/what went wrong. An example error response is:::
+ 
+ <error id="operation-aborted">
+   <message>Schema doesn't exist</message>
+   <class>OperationAbortedEx</class>
+   .....
+ </error>
+  
+See :ref:`exception_handling` for more details.

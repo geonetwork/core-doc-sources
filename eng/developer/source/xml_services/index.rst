@@ -26,7 +26,7 @@ XML Services
     services_site_info_forwarding.rst
     services_download.rst
     services_harvesting.rst
-    schema_information.rst
+    schema_services.rst
     services_mef.rst
     csw_services.rst
     java_xml_services.rst

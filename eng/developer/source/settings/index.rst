@@ -152,42 +152,41 @@ harvesting engine for all harvesters:
        next scheduled harvest (active).
 
    - **privileges** \[0..1]: This is a container for privileges to assign to each
-     imported metadata record
+     harvested metadata record
 
-     - **group** (*integer*) \[0..n]: Indicate a local
-       group. The node’s value is its local identifier. There can be
-       several group nodes each with its set of privileges.
+     - **group** (*integer*) \[0..n]: A local
+       group. The value is the local identifier of the group. There can be
+       several group nodes each with its own set of privileges.
 
        - **operation** (*integer*) \[0..n]:
-         Privilege to assign to the group. The node’s value is the
+         Privilege to assign to the group. The value is the
          numeric id of the operation like 0=view, 1=download, 2=edit
          etc...
 
    - **categories** \[0..1]: This is a container for categories to assign to each
-     imported metadata
+     harvested metadata
 
-     - **category** (*integer*) \[0..n]: Indicate a local
-       category and the node’s value is its local identifier.
+     - **category** (*integer*) \[0..n]: A local
+       category. The value is the local identifier of the category.
 
    - **info**: Container for status information about harvesting from this node.
 
-     - **lastRun** (*string*): If not empty, tells when
-       the harvester harvested from this node. The value is the current
-       time in milliseconds since 1 January, 1970.
+     - **lastRun** (*string*): When
+       the harvester was last run. The value is the current
+       time in milliseconds since 1 January, 1970. If empty then the harvester
+			 has not yet been run.
 
 
 In the following examples, the common harvesting settings described above
 will not be shown. Instead, only the additional information specific to the 
 harvesting type will be described.
 
-Nodes of type GeoNetwork
+Nodes of type geonetwork
 ````````````````````````
 
 This is the native harvesting supported by GeoNetwork 2.1 and above.
 
-- **harvesting**
-
- - **node** \[0..n] (*string*): Type of harvesting node
+ - **node** (*string*): geonetwork
 
    - **site**: Contains host and account information
 
@@ -216,15 +215,13 @@ This is the native harvesting supported by GeoNetwork 2.1 and above.
        groups, policies are: copy, createAndCopy. The Intranet group is
        not considered.
 
-Nodes of type WebDAV
+Nodes of type webdav
 ````````````````````
 
-This harvesting type is capable of connecting to a web server which is WebDAV
+This harvester type is capable of connecting to a web server which is WebDAV
 enabled.
 
-- **harvesting**
-
- - **node** \[0..n] (*string*): Type of harvesting node
+ - **node** (*string*): webdav
 
    - **site**: Contains the URL to connect to and account information
 
@@ -232,8 +229,8 @@ enabled.
        well formed, starting with ``http://``, ``file://`` or a supported
        protocol.
      - **icon** (*string*): This is the icon that
-       will be used as the metadata source’s logo. The image is taken
-       from the images/harvesting folder and copied to the images/logos
+       will be used as the metadata source logo. The image is taken
+       from the ``images/harvesting`` folder and copied to the ``images/logos``
        folder.
 
    - **options**
@@ -244,24 +241,22 @@ enabled.
        harvester will validate the metadata against its schema and the
        metadata will be harvested only if it is valid.
 
-Nodes of type CSW
+Nodes of type csw
 `````````````````
 
-This type of harvesting is capable of querying a Catalogue Services for the
-Web (CSW) server and retrieving all found metadata.
+This harvester type is capable of querying an OGC Catalogue Services for the
+Web (CSW) server and harvesting metadata.
 
-- **harvesting**
-
- - **node** \[0..n] (*string*): Type of harvesting node
+ - **node** (*string*): csw
 
    - **site**
 
      - **capabUrl** (*string*): URL of the
-       capabilities file that will be used to retrieve the operations
-       address.
+       GetCapabilities statement. This will be used to retrieve the operations
+       and server address.
      - **icon** (*string*): This is the icon that
-       will be used as the metadata source’s logo. The image is taken
-       from the images/harvesting folder and copied to the images/logos
+       will be used as the metadata source logo. The image is taken
+       from the ``images/harvesting`` folder and copied to the ``images/logos``
        folder.
 
    - **search** \[0..n]: Contains search parameters. If this element is

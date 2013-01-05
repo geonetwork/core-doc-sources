@@ -120,6 +120,8 @@ Some examples of system configuration settings nodes are:
     - **password** (*string*)
     - **profile** (*string*)
 
+.. _harvesting_nodes:
+
 Harvesting nodes
 ----------------
 
@@ -128,7 +130,9 @@ harvesting engine for all harvesters:
 
 - **harvesting**
 
- - **node** \[0..n] (*string*): Type of harvesting node
+ - **node** \[0..n] (*geonetwork|csw|arcsde|filesystem|geonetwork20|oaipmh|*
+   *ogcwxs|thredds|webdav|wfsfeatures|z3950|z3950Config*): Type of 
+   harvesting node 
 
    - **site**: A container for site information.
 
@@ -150,6 +154,14 @@ harvesting engine for all harvesters:
      - **status** (*active|inactive*): Indicates if the harvesting from this
        node is stopped (inactive) or if the harvester is waiting for the
        next scheduled harvest (active).
+
+   - **content**:
+
+     - **importxslt** (*string*): Name of XSLT to apply to metadata records
+		   before being stored and indexed in GeoNetwork
+     - **validate** (*boolean*): If true, the harvester
+       will validate the metadata record against the matching metadata schema
+       in GeoNetwork. 
 
    - **privileges** \[0..1]: This is a container for privileges to assign to each
      harvested metadata record
@@ -174,15 +186,15 @@ harvesting engine for all harvesters:
      - **lastRun** (*string*): When
        the harvester was last run. The value is the current
        time in milliseconds since 1 January, 1970. If empty then the harvester
-			 has not yet been run.
+       has not yet been run.
 
 
-In the following examples, the common harvesting settings described above
-will not be shown. Instead, only the additional information specific to the 
-harvesting type will be described.
+Settings for each of the different harvesters that show the additional elements specific to those harvesters are in the following sections.
 
-Nodes of type geonetwork
-````````````````````````
+.. _geonetwork_harvesting:
+
+Harvesting node type geonetwork
+```````````````````````````````
 
 This is the native harvesting supported by GeoNetwork 2.1 and above.
 
@@ -190,20 +202,21 @@ This is the native harvesting supported by GeoNetwork 2.1 and above.
 
    - **site**: Contains host and account information
 
-     - **host** (*string*)
-     - **port** (*integer*)
-     - **servlet** (*string*)
+     - **host** (*string*) eg. http://localhost:8080/geonetwork
+     - **createRemoteCategory** (*boolean*) True: If local category exists with same name as the remote category, then assign harvested metadata to that category. False: Ignore categories.
+     - **mefFormatFull** (*boolean*) True: harvest remote metadata as a **full** MEF file. ie. metadata plus thumbnails and data files uploaded with metadata.
 
    - **search** \[0..n]: Contains the search parameters. If this element is
      missing, an unconstrained search will be performed.
 
-     - **freeText** (*string*)
-     - **title** (*string*)
-     - **abstract** (*string*)
-     - **keywords** (*string*)
-     - **digital** (*boolean*)
-     - **hardcopy** (*boolean*)
-     - **source** (*string*)
+     - **freeText** (*string*) - free text search on remote instance
+     - **title** (*string*) - search title on remote instance
+     - **abstract** (*string*) - search abstract on remote instance
+     - **keywords** (*string*) - search keywords on remote instance
+     - **digital** (*boolean*) - search for records marked 'digital' on remote instance
+     - **hardcopy** (*boolean*) - search for records marked 'hardcopy' on remote instance
+     - **sourceUuid** (*string*) - search for records that come from source with this uuid on the remote instance
+     - **sourceName** (*string*) - search for records that come from source with this name on the remote instance
 
    - **groupsCopyPolicy** \[0..n]: Represents a copy policy for a remote group.
      It is used to maintain remote privileges on harvested metadata.
@@ -215,11 +228,63 @@ This is the native harvesting supported by GeoNetwork 2.1 and above.
        groups, policies are: copy, createAndCopy. The Intranet group is
        not considered.
 
-Nodes of type webdav
-````````````````````
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
+*Example of GeoNetwork harvester settings in XML:*::
+ 
+ <node id="954" type="geonetwork">
+  <site>
+    <name>test</name>
+    <uuid>683bfc02-73e2-4100-a601-369936b6f82a</uuid>
+    <account>
+      <use>true</use>
+      <username>admin</username>
+      <password>admin</password>
+    </account>
+    <host>http://localhost:8080/geonetwork</host>
+    <createRemoteCategory>true</createRemoteCategory>
+    <mefFormatFull>true</mefFormatFull>
+    <xslfilter />
+  </site>
+  <content>
+    <validate>true</validate>
+    <importxslt>none</importxslt>
+  </content>
+  <options>
+    <every>0 0 0/3 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+  </options>
+  <searches>
+    <search>
+      <freeText>Maps</freeText>
+      <title></title>
+      <abstract></abstract>
+      <keywords></keywords>
+      <digital>false</digital>
+      <hardcopy>true</hardcopy>
+      <source>
+        <uuid>b7ce20f2-888a-4139-8802-916730c4be06</uuid>
+        <name>My GeoNetwork catalogue</name>
+      </source>
+    </search>
+  </searches>
+  <categories>
+    <category id="5" />
+  </categories>
+  <groupsCopyPolicy />
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info> 
+ </node>
+
+.. _webdav_harvesting:
+
+Harvesting node type webdav
+```````````````````````````
 
 This harvester type is capable of connecting to a web server which is WebDAV
-enabled.
+enabled (WebDAV is WEB Distributed Authoring and Versioning) or WAF (Web Accessible Folder) enabled.
 
  - **node** (*string*): webdav
 
@@ -240,9 +305,54 @@ enabled.
      - **validate** (*boolean*): If set, the
        harvester will validate the metadata against its schema and the
        metadata will be harvested only if it is valid.
+     - **subtype** (*waf|webdav*): Indicates the type of server being harvested
+       
 
-Nodes of type csw
-`````````````````
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
+*Example of WEBDAV/WAF harvester settings in XML:*::
+ 
+ <node id="1039" type="webdav">
+  <site>
+    <name>burbble</name>
+    <uuid>b64e006a-a26c-4268-85ec-0bf0450be966</uuid>
+    <account>
+      <use>true</use>
+      <username>apples</username>
+      <password>oranges</password>
+    </account>
+    <url>http://davtest.com/webdav</url>
+    <icon>webdav.gif</icon>
+  </site>
+  <content>
+    <validate>true</validate>
+    <importxslt>none</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+    <validate>true</validate>
+    <recurse>true</recurse>
+    <subtype>webdav</subtype>
+  </options>
+  <privileges>
+    <group id="1">
+      <operation name="view" />
+    </group>
+  </privileges>
+  <categories>
+    <category id="2" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info>
+ </node> 
+ 
+.. _csw_harvesting:
+
+Harvesting node type csw
+````````````````````````
 
 This harvester type is capable of querying an OGC Catalogue Services for the
 Web (CSW) server and harvesting metadata.
@@ -266,5 +376,202 @@ Web (CSW) server and harvesting metadata.
      - **title** (*string*)
      - **abstract** (*string*)
      - **subject** (*string*)
+     - **minscale** (*integer*) - minimum scale denominator
+     - **maxscale** (*integer*) - maximum scale denominator
+
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
+*Example of CSW harvester settings in XML:*::
+ 
+ <node id="1122" type="csw">
+  <site>
+    <name>blonks</name>
+    <uuid>723953dc-1308-4905-abc0-9869f18af132</uuid>
+    <account>
+      <use>true</use>
+      <username>frogmouth</username>
+      <password>tawny</password>
+    </account>
+    <capabilitiesUrl>http://cswserver.com/services/csw?request=GetCapabilities&amp;service=CSW</capabilitiesUrl>
+    <icon>csw.gif</icon>
+  </site>
+  <content>
+    <validate>false</validate>
+    <importxslt>none</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+  </options>
+  <searches>
+    <search>
+      <freeText>cobblers</freeText>
+      <title />
+      <abstract />
+      <subject />
+      <minscale>25000</minscale>
+      <maxscale>400000</maxscale>
+    </search>
+  </searches>
+  <privileges>
+    <group id="1">
+      <operation name="view" />
+    </group>
+  </privileges>
+  <categories>
+    <category id="2" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info>
+ </node> 
+
+.. _z3950_harvesting:
+
+Harvesting node type z3950
+``````````````````````````
+
+This harvester type is capable of querying one or more Z3950 servers 
+harvesting metadata.
+
+ - **node** (*string*): z3950
+
+   - **site**
+
+     - **query** (*string*): Z3950 query in Prefix Query Notation
+     - **icon** (*string*): This is the icon that
+       will be used as the metadata source logo. The image is taken
+       from the ``images/harvesting`` folder and copied to the ``images/logos``
+       folder.
+     - **repositories**
+
+       - **repository** \[0..n]: Contains the Z3950 repository ids that will 
+         be harvested. Z3950 repository ids in GeoNetwork can be obtained
+         through the :ref:`xml.info` service.
+
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
+*Example of Z3950 harvester settings in XML:*::
+ 
+ <node id="1090" type="z3950">
+  <site>
+    <name>testz3950</name>
+    <uuid>8554ec2b-2b80-4f9e-9d9d-028e2407ee89</uuid>
+    <account>
+      <use>true</use>
+      <username />
+      <password />
+    </account>
+    <query>@attrset geo @attr 1=1016 @attr 4=6 @attr 2=3 "water"</query>
+    <icon>Z3950.gif</icon>
+    <repositories>
+      <repository id="act" />
+      <repository id="geonetwork-auscope" />
+      <repository id="product" />
+      <repository id="publication" />
+      <repository id="source" />
+      <repository id="geonetwork-aims" />
+    </repositories>
+  </site>
+  <content>
+    <validate>false</validate>
+    <importxslt>none</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+  </options>
+  <privileges>
+    <group id="1">
+      <operation name="view" />
+      <operation name="dynamic" />
+      <operation name="featured" />
+    </group>
+  </privileges>
+  <categories>
+    <category id="2" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info>
+ </node> 
+
+.. _oaipmh_harvesting:
+
+Harvesting node type oaipmh
+```````````````````````````
+
+This harvester type is capable of querying an OAIPMH (Open Archives Initiative Protocol for Metadata Harvesting) server and harvesting metadata.
+
+ - **node** (*string*): oaipmh
+
+   - **site**
+
+     - **url** (*string*): OAIPMH server URL
+     - **icon** (*string*): This is the icon that
+       will be used as the metadata source logo. The image is taken
+       from the ``images/harvesting`` folder and copied to the ``images/logos``
+       folder.
+
+   - **search** \[0..n]: Contains search parameters which for oaipmh are 
+     curiously constrained to a date range, prefix and metadata set name. 
+     If this element is missing, an unconstrained search will be performed.
+
+     - **from** (*string*) from date search
+     - **until** (*string*) to date search
+     - **set** (*string*) metadata set name on OAIPMH server (possible values
+       can be retrieved using http://your_oaipmhservername?verb=ListSets)
+     - **prefix** (*string*) metadata prefix name on OAIPMH server (possible
+       values can be retrieved using 
+       http://your_oaipmhservername?verb=ListMetadataFormats)
 
 
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
+*Example of OAIPMH harvester settings in XML:*::
+
+ <node id="1152" type="oaipmh">
+  <site>
+    <name>oaitest</name>
+    <uuid>0a3e4a4a-4c4c-4f82-860f-551b6cf12341</uuid>
+    <account>
+      <use>true</use>
+      <username />
+      <password />
+    </account>
+    <url>http://localhost:6060/joai</url>
+    <icon>oai-mhp.gif</icon>
+  </site>
+  <content>
+    <validate>false</validate>
+    <importxslt>{IMPORTXSLT}</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+    <validate>false</validate>
+  </options>
+  <searches>
+    <search>
+      <from>2013-01-08</from>
+      <until>2013-01-30</until>
+      <set>iso19139</set>
+      <prefix>gmd</prefix>
+      <stylesheet />
+    </search>
+  </searches>
+  <privileges>
+    <group id="1">
+      <operation name="view" />
+    </group>
+  </privileges>
+  <categories>
+    <category id="2" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info>
+ </node>  

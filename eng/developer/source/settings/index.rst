@@ -27,10 +27,11 @@ In the following sections:
 
 - square brackets indicate cardinality. If they are missing, a cardinality of \[1..1] should be inferred.
 
-The system hierarchy
---------------------
+System Node
+-----------
 
-Some examples of system configuration settings nodes are:
+Some examples of system configuration settings nodes contained in the system
+node are shown in the hierarchy below.
 
 - **system**: information on system configuration settings
 
@@ -125,8 +126,9 @@ Some examples of system configuration settings nodes are:
 Harvesting nodes
 ----------------
 
-All harvesters share a common set of containers, which are retrieved by the 
-harvesting engine for all harvesters:
+All harvesters share a common set of nodes, which are retrieved by the 
+harvesting engine for all harvesters. These common nodes are described in the
+hierarchy below.
 
 - **harvesting**
 

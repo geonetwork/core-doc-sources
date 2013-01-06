@@ -27,7 +27,7 @@ In the following sections:
 
 - square brackets indicate cardinality. If they are missing, a cardinality of \[1..1] should be inferred.
 
-System Node
+System node
 -----------
 
 Some examples of system configuration settings nodes contained in the system
@@ -157,16 +157,21 @@ hierarchy below.
        node is stopped (inactive) or if the harvester is waiting for the
        next scheduled harvest (active).
 
-   - **content**:
+   - **content**: A container for options relating to processing content after
+     harvesting but before storage in the GeoNetwork database
 
      - **importxslt** (*string*): Name of XSLT to apply to metadata records
-		   before being stored and indexed in GeoNetwork
+       before being stored and indexed in GeoNetwork (**note:** not every 
+       harvester supports this option - see notes section for each 
+       harvester in the harvester settings descriptions below)
      - **validate** (*boolean*): If true, the harvester
        will validate the metadata record against the matching metadata schema
-       in GeoNetwork. 
+       in GeoNetwork. (**note:** not every 
+       harvester supports this option - see notes section for each harvester 
+       in the harvester settings descriptions below) 
 
-   - **privileges** \[0..1]: This is a container for privileges to assign to each
-     harvested metadata record
+   - **privileges** \[0..1]: This is a container for privileges to assign to 
+     each harvested metadata record.
 
      - **group** (*integer*) \[0..n]: A local
        group. The value is the local identifier of the group. There can be
@@ -177,8 +182,8 @@ hierarchy below.
          numeric id of the operation like 0=view, 1=download, 2=edit
          etc...
 
-   - **categories** \[0..1]: This is a container for categories to assign to each
-     harvested metadata
+   - **categories** \[0..1]: This is a container for categories to assign to 
+     each harvested metadata record.
 
      - **category** (*integer*) \[0..n]: A local
        category. The value is the local identifier of the category.
@@ -207,6 +212,7 @@ This is the native harvesting supported by GeoNetwork 2.1 and above.
      - **host** (*string*) eg. http://localhost:8080/geonetwork
      - **createRemoteCategory** (*boolean*) True: If local category exists with same name as the remote category, then assign harvested metadata to that category. False: Ignore categories.
      - **mefFormatFull** (*boolean*) True: harvest remote metadata as a **full** MEF file. ie. metadata plus thumbnails and data files uploaded with metadata.
+     - **importXslt** (*string*) Name and parameters of a metadata processing XSLT - see :ref:`metadata_xml_processing` for more details. 
 
    - **search** \[0..n]: Contains the search parameters. If this element is
      missing, an unconstrained search will be performed.
@@ -230,7 +236,11 @@ This is the native harvesting supported by GeoNetwork 2.1 and above.
        groups, policies are: copy, createAndCopy. The Intranet group is
        not considered.
 
+XML Example
+^^^^^^^^^^^
+
 Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
+
 *Example of GeoNetwork harvester settings in XML:*::
  
  <node id="954" type="geonetwork">
@@ -280,6 +290,11 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
   </info> 
  </node>
 
+Notes
+^^^^^
+
+ - this harvester does not use the content/importXslt setting - instead a more sophisticated approach using the metadata processing services can be applied through the **importXslt** setting - for more details and an example see :ref:`metadata_xml_processing` for more details.
+
 .. _webdav_harvesting:
 
 Harvesting node type webdav
@@ -310,7 +325,11 @@ enabled (WebDAV is WEB Distributed Authoring and Versioning) or WAF (Web Accessi
      - **subtype** (*waf|webdav*): Indicates the type of server being harvested
        
 
+XML Example
+^^^^^^^^^^^
+
 Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
+
 *Example of WEBDAV/WAF harvester settings in XML:*::
  
  <node id="1039" type="webdav">
@@ -351,6 +370,11 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
   </info>
  </node> 
  
+Notes
+^^^^^
+
+ - this harvester does not use the content/importXslt setting
+
 .. _csw_harvesting:
 
 Harvesting node type csw
@@ -380,6 +404,9 @@ Web (CSW) server and harvesting metadata.
      - **subject** (*string*)
      - **minscale** (*integer*) - minimum scale denominator
      - **maxscale** (*integer*) - maximum scale denominator
+
+XML Example
+^^^^^^^^^^^
 
 Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
 *Example of CSW harvester settings in XML:*::
@@ -429,6 +456,11 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
   </info>
  </node> 
 
+Notes
+^^^^^
+
+ - this harvester does not use the content/importXslt setting
+
 .. _z3950_harvesting:
 
 Harvesting node type z3950
@@ -441,7 +473,7 @@ harvesting metadata.
 
    - **site**
 
-     - **query** (*string*): Z3950 query in Prefix Query Notation
+     - **query** (*string*): Z3950 query in Prefix Query Notation (mandatory)
      - **icon** (*string*): This is the icon that
        will be used as the metadata source logo. The image is taken
        from the ``images/harvesting`` folder and copied to the ``images/logos``
@@ -451,6 +483,9 @@ harvesting metadata.
        - **repository** \[0..n]: Contains the Z3950 repository ids that will 
          be harvested. Z3950 repository ids in GeoNetwork can be obtained
          through the :ref:`xml.info` service.
+
+XML Example
+^^^^^^^^^^^
 
 Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
 *Example of Z3950 harvester settings in XML:*::
@@ -517,7 +552,13 @@ This harvester type is capable of querying an OAIPMH (Open Archives Initiative P
        from the ``images/harvesting`` folder and copied to the ``images/logos``
        folder.
 
-   - **search** \[0..n]: Contains search parameters which for oaipmh are 
+   - **options**
+
+     - **validate** (*boolean*): Validate metadata before saving to database.
+       This option will be deprecated in favour of content/validate.
+
+   - **search** \[0..n]: Contains search parameters which because they are 
+     constrained to follow the OAIPMH version 2.0 standard, are 
      curiously constrained to a date range, prefix and metadata set name. 
      If this element is missing, an unconstrained search will be performed.
 
@@ -529,6 +570,9 @@ This harvester type is capable of querying an OAIPMH (Open Archives Initiative P
        values can be retrieved using 
        http://your_oaipmhservername?verb=ListMetadataFormats)
 
+
+XML Example
+^^^^^^^^^^^
 
 Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
 *Example of OAIPMH harvester settings in XML:*::
@@ -577,3 +621,213 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
     <running>false</running>
   </info>
  </node>  
+
+Notes
+^^^^^
+
+ - this harvester does not use the content/importXslt setting
+ - this harvester does not use the content/validate setting - this will change
+
+.. _thredds_harvesting:
+
+Harvesting node type thredds
+````````````````````````````
+
+This harvester type is capable of harvesting metadata from a THREDDS (Thematic Real-time Environmental Data Directory Service). The metadata fragments are:
+
+- transformed into ISO19115/19139 (or profile) metadata fragments 
+- copied or linked into an ISO19115/19139 (or profile) template
+
+The harvester supports metadata fragments following the Unidata Data Discovery Conventions (http://www.unidata.ucar.edu/software/netcdf-java/formats/DataDiscoveryAttConvention.html) from two types of THREDDS datasets:
+
+- collections: essentially datasets that contain other datasets (like directories in a filesystem tree)
+- atomics: datasets that do not contain other datasets (like files in a filesystem tree)
+
+The options for a THREDDS harvester type are:
+
+ - **node** (*string*): thredds
+
+   - **site**
+
+     - **url** (*string*): THREDDS catalog server URL - should always be the URL of an XML THREDDS catalog eg. http://motherlode.ucar.edu:8080/thredds/catalog/satellite/3.9/WEST-CONUS_4km/catalog.xml - HTML URLs will **not** work!
+     - **icon** (*string*): This is the icon that will be used as the metadata source logo. The image is taken from the ``images/harvesting`` folder and copied to the ``images/logos`` folder.
+
+   - **options**
+
+     - **lang** (*string*) - three letter language code describing language of metadata being harvested (almost always **eng**) - this value is used to set the metadata language in the records harvested from THREDDS
+     - **topic** (*string*) - ISO topic category describing the harvested metadata
+     - **createThumbnails** (*boolean*) - If true and the THREDDS catalog delivers WMS images for a dataset whose metadata is being harvested then a thumbnail will be created from the WMS for the harvested metadata
+     - **createServiceMd** (*boolean*) - If true then a skeleton ISO19119 service metadata record will be created for the services specified in the THREDDS catalog.
+     - **createCollectionDatasetMd** (*boolean*) - If true then metadata records will be created using harvested metadata fragments from collection datasets in the THREDDS catalog.
+     - **collectionGeneration** (*fragments|default*) - Use *fragments*. *default* refers to DIF metadata extraction which will be deprecated.
+     - **outputSchemaOnCollectionsFragments** (*string*) Metadata schema of ISO records that will be created from THREDDS catalog collection metadata. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=schemas to get a list of schemas that can be used for this setting.
+     - **collectionMetadataTemplate** (*integer*) Template record that harvested fragments will copied or linked into to create metadata records. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=templates to get a list of template metadata record ids that can be used for this setting.
+     - **createCollectionSubtemplates** (*boolean*) - If true then subtemplates are created from the metadata fragments harvested from the THREDDS catalog datasets. The subtemplates are stored in the GeoNetwork database and linked into the **collectionMetadataTemplate** template record to create the harvested metadata records. If false, then subtemplates are not created, instead the harvested fragments are copied into the **collectionMetadataTemplate** record to create normal metadata records.
+     - **collectionFragmentStylesheet** (*string*) Stylesheet that turns collection metadata fragments in the THREDDS catalog into ISO metadata fragments. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=threddsFragmentStylesheets&schema=iso19139 to get a list of the stylesheets for the chosen schema
+     - **createAtomicDatasetMd** (*boolean*) - If true then metadata records will be created using harvested metadata fragments from atom datasets in the THREDDS catalog.
+     - **atomicGeneration** (*fragments|default*) - Use *fragments*. *default* refers to DIF metadata extraction which will be deprecated.
+     - **outputSchemaOnAtomicFragments** (*string*) Metadata schema of ISO records that will be created from THREDDS catalog atomic metadata. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=schemas to get a list of schemas that can be used for this setting.
+     - **atomicMetadataTemplate** (*integer*) Template record that harvested fragments will copied or linked into to create metadata records. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=templates to get a list of template metadata record ids that can be used for this setting.
+     - **createAtomicSubtemplates** (*boolean*) - If true then subtemplates are created from the metadata fragments harvested from the THREDDS catalog atoms. The subtemplates are stored in the GeoNetwork database and linked into the **atomicMetadataTemplate** template record to create the harvested metadata records. If false, then subtemplates are not created, instead the harvested fragments are copied into the **atomicMetadataTemplate** record to create normal metadata records.
+     - **atomicFragmentStylesheet** (*string*) Stylesheet that turns atom metadata fragments in the THREDDS catalog into ISO metadata fragments. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=threddsFragmentStylesheets&schema=iso19139 to get a list of the stylesheets for the chosen schema
+
+XML Example
+^^^^^^^^^^^
+
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`.
+
+::
+ 
+ <node id="977" type="thredds">
+  <site>
+    <name>test thredds with motherlode</name>
+    <uuid>b3307257-6b2a-48e7-80f5-74acadeff66f</uuid>
+    <account>
+      <use>true</use>
+      <username />
+      <password />
+    </account>
+    <url>http://motherlode.ucar.edu:8080/thredds/catalog/satellite/3.9/WEST-CONUS_4km/catalog.xml</url>
+    <icon>thredds.gif</icon>
+  </site>
+  <content>
+    <validate>false</validate>
+    <importxslt>{IMPORTXSLT}</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+    <lang>eng</lang>
+    <topic>environment</topic>
+    <createThumbnails>true</createThumbnails>
+    <createServiceMd>true</createServiceMd>
+    <createCollectionDatasetMd>true</createCollectionDatasetMd>
+    <createAtomicDatasetMd>true</createAtomicDatasetMd>
+    <ignoreHarvestOnAtomics>true</ignoreHarvestOnAtomics>
+    <atomicGeneration>fragments</atomicGeneration>
+    <modifiedOnly>true</modifiedOnly>
+    <atomicFragmentStylesheet>thredds-metadata.xsl</atomicFragmentStylesheet>
+    <atomicMetadataTemplate>7</atomicMetadataTemplate>
+    <createAtomicSubtemplates>true</createAtomicSubtemplates>
+    <outputSchemaOnAtomicsDIF />
+    <outputSchemaOnAtomicsFragments>iso19139</outputSchemaOnAtomicsFragments>
+    <ignoreHarvestOnCollections>true</ignoreHarvestOnCollections>
+    <collectionGeneration>fragments</collectionGeneration>
+    <collectionFragmentStylesheet>thredds-metadata.xsl</collectionFragmentStylesheet>
+    <collectionMetadataTemplate>7</collectionMetadataTemplate>
+    <createCollectionSubtemplates>true</createCollectionSubtemplates>
+    <outputSchemaOnCollectionsDIF />
+    <outputSchemaOnCollectionsFragments>iso19139</outputSchemaOnCollectionsFragments>
+    <datasetCategory>2</datasetCategory>
+  </options>
+  <privileges>
+    <group id="1">
+      <operation name="view" />
+    </group>
+  </privileges>
+  <categories>
+    <category id="3" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info>
+ </node> 
+
+Notes
+^^^^^
+
+ - this harvester does not use the content/importXslt setting
+ - this harvester does not use the content/validate setting
+
+.. _wfsfeatures_harvesting:
+
+Harvesting node type wfsfeatures
+````````````````````````````````
+
+This harvester type is capable of querying and harvesting metadata from the GetFature response from an OGC Web Feature Service (WFS). The metadata fragments are:
+
+- transformed into ISO19115/19139 (or profile) metadata fragments 
+- copied or linked into an ISO19115/19139 (or profile) template
+
+The options for a WFS Features harvester type are:
+
+ - **node** (*string*): wfsfeatures
+
+   - **site**
+
+     - **url** (*string*): OGC WFS service URL. eg. http://localhost:7070/deegree/services - the harvester adds the necessary parameters to call the GetFeature service with the query provided from the **options**.
+     - **icon** (*string*): This is the icon that will be used as the metadata source logo. The image is taken from the ``images/harvesting`` folder and copied to the ``images/logos`` folder.
+
+   - **options**
+
+     - **lang** (*string*) - three letter language code describing language of metadata being harvested (almost always **eng**) - this value is used to set the metadata language in the records harvested from THREDDS
+     - **query** (*string*) - An OGC WFS GetFeature query
+     - **outputSchema** (*string*) Metadata schema of ISO records that will be created from WFS GetFeature harvester. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=schemas to get a list of schemas that can be used for this setting.
+     - **stylesheet** (*string*) Stylesheet that turns WFS Features into ISO metadata fragments. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=wfsFragmentStylesheets&schema=iso19139 to get a list of the stylesheets for the chosen schema
+     - **streamFeatures** (*boolean*) - If true then responses will be saved to disk and features will be extracted using the streaming XML parser. Use for large WFS GetFeatures responses.
+     - **createSubtemplates** (*boolean*) - If true then subtemplates are created from the metadata fragments harvested from the WFS GetFeatures response. The subtemplates are stored in the GeoNetwork database and linked into the **templateId** template record to create the harvested metadata records. If false, then subtemplates are not created, instead the harvested fragments are copied into the **templateId** record to create normal metadata records.
+     - **templateId** (*integer*) Template record that harvested fragments will copied or linked into to create metadata records. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=templates to get a list of template metadata record ids that can be used for this setting.
+     - **recordsCategory** (*integer*) Category id of GeoNetwork category that will be assigned to the metadata records created by the harvester.
+
+XML Example
+^^^^^^^^^^^
+
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`.
+
+::
+ 
+ <node id="1201" type="wfsfeatures">
+  <site>
+    <name>test wfs</name>
+    <uuid>588ea4fa-a105-40fd-9697-8082d23cc967</uuid>
+    <account>
+      <use>true</use>
+      <username />
+      <password />
+    </account>
+    <url>http://localhost:6060/deegree/services</url>
+    <icon>wfs.gif</icon>
+  </site>
+  <content>
+    <validate>false</validate>
+    <importxslt>{IMPORTXSLT}</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+    <lang>eng</lang>
+    <query>&lt;wfs:GetFeature service="WFS" version="1.1.0"
+        xmlns:wfs="http://www.opengis.net/wfs"&gt;
+     &lt;wfs:Query typeName="gboundaries"/&gt;&lt;/wfs:GetFeature&gt;</query>
+    <outputSchema>iso19139</outputSchema>
+    <stylesheet>geoserver_boundary_fragments.xsl</stylesheet>
+    <streamFeatures>false</streamFeatures>
+    <createSubtemplates>true</createSubtemplates>
+    <templateId>2</templateId>
+    <recordsCategory>2</recordsCategory>
+  </options>
+  <privileges>
+    <group id="1">
+      <operation name="view" />
+      <operation name="dynamic" />
+      <operation name="featured" />
+    </group>
+  </privileges>
+  <categories>
+    <category id="2" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info>
+ </node>
+ 
+Notes
+^^^^^
+
+ - this harvester does not use the content/importXslt setting
+ - this harvester does not use the content/validate setting
+

@@ -157,6 +157,8 @@ The service requires an XML tree with all information about the harvesting node 
 - :ref:`csw_harvesting`
 - :ref:`z3950_harvesting`
 - :ref:`oaipmh_harvesting`
+- :ref:`thredds_harvesting`
+- :ref:`wfsfeatures_harvesting`
 
 Summary of features of the supported harvesting types
 .....................................................

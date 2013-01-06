@@ -3,7 +3,7 @@
 GeoNetwork Harvesting
 ---------------------
 
-This is the standard and most powerful harvesting protocol used in GeoNetwork. It is able to log in into the remote node, to perform a standard search using the common query fields and to import all matching metadata. Furthermore, the protocol will try to keep both remote privileges and categories of the harvested metadata if they exist locally. 
+This is the standard and most powerful harvesting protocol used in GeoNetwork. It is able to log in into the remote site, to perform a standard search using the common query fields and to import all matching metadata. Furthermore, the protocol will try to keep both remote privileges and categories of the harvested metadata if they exist locally. 
 
 
 Adding a GeoNetwork harvester
@@ -15,13 +15,13 @@ Adding a GeoNetwork harvester
 
 A description of the options follows:
 
-- **Site** - Information about the GeoNetwork site you wish to harvest from. The url should have the format: ``http[s]://server[:port]/geonetwork``. If you want to search privileged metadata you have to specify account credentials that are valid on the remote GeoNetwork site. The name parameter is just a short description that will be used as the name for this instance of the GeoNetwork harvester.
+- **Site** - Information about the GeoNetwork site you wish to harvest from. The **URL** should have the format: ``http[s]://server[:port]/geonetwork``. If you want to search privileged metadata you have to specify account credentials that are valid on the remote GeoNetwork site. The **Name** parameter is a short description of the remote site that will be used as the name for this instance of the GeoNetwork harvester.
 
   - **Set categories if exist locally** - This option allows to maintain category assignments. If the metadata belongs to a category on the remote site and a category with the same name is present on the local site, then the harvested metadata will be assigned to that category if this option is checked on.
 
   - **Use full MEF format** - If checked, then the remote site will include any thumbnails and data files with the metadata record they are attached too. The option refers to the fact that the MEF file type used to in this case will be the **full** export type.
 
-  - **XSL filter name** - This option will apply a custom XSL filter before the record is inserted in local node. A common use case is to anoymize metadata records using the anonymizer process which remove or rename contact personal information (See the :ref:`processing` section for more information).
+  - **XSL filter name** - This option will apply a custom XSL filter to the metadata record before it is inserted into the local database. A common use case is to anoymize metadata records using the anonymizer process which remove or rename contact personal information (See the :ref:`processing` section for more information).
 
 
 - **Search criteria** - In this section you can specify search parameters to select metadata records for harvesting. The parameters are the same or similar to those found on the GeoNetwork search form.
@@ -67,8 +67,8 @@ Notes
 `````
 
 - This harvester will not work if the remote site has a version prior to GeoNetwork 2.1 eg. GeoNetwork 2.0.2.
-- During harvesting, site icons are harvested and local copies updated. Icons are propagated to new nodes as soon as these nodes harvest from this one.
-- The metadata UUID is taken from the info.xml file of the MEF bundle. Any UUID stored inside the metadata will be given this UUID.
+- During harvesting, site icons are harvested and local copies are updated. Icons are propagated to new sites as soon as those sites harvest from this one.
+- The metadata record uuid is taken from the info.xml file of the MEF bundle.
 
 .. include:: ../common_notes.rst
 

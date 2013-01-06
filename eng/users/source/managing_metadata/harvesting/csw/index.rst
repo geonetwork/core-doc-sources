@@ -3,12 +3,10 @@
 CSW Harvesting
 --------------
 
-Adding a CSW node
-`````````````````
+This harvester will connect to a remote CSW server and retrieve metadata records that match the query parameters specified.
 
-This type of harvesting is capable of connecting to a remote CSW server and
-retrieving all matching metadata. Please, note that in order to be harvested
-metadata must have one of the schema format handled by GeoNetwork.
+Adding a CSW harvester
+``````````````````````
 
 .. figure:: web-harvesting-csw.png
 
@@ -16,13 +14,32 @@ metadata must have one of the schema format handled by GeoNetwork.
 
 The figure above shows the options available:
 
-- **Site** - Here you have to specify the connection parameters which are similar to the web DAV harvesting. In this case the URL points to the capabilities document of the CSW server. This document is used to discover the location of the services to call to query and retrieve metadata. 
-- **Search criteria** - Using the Add button, you can add several search criteria. You can query only the fields recognised by the CSW protocol. 
-- **Options** - General harvesting options:
+- **Site** - Options about the remote site.
 
-    - *Run at* - This is the harvesting start time. 
-    - *Will run again every* - This option allows to select the schedule interval (each X hours from start time) and days to schedule the harvester.
-    - *One run only* - If this option is checked, the harvesting will do only one run after which it will become inactive. 
-    
-- **Privileges** - Same as for WebDAV harvesting.
-- **Categories** - Same as for WebDAV harvesting.
+    - *Name* - This is a short description of the remote site. It will be shown in the harvesting main page as the name for this instance of the CSW harvester.
+    - *Service URL* - The URL of the capabilities document of the CSW server to be harvested. eg. http://geonetwork-site.com/srv/eng/csw?service=CSW&request=GetCabilities&version=2.0.2. This document is used to discover the location of the services to call to query and retrieve metadata. 
+    - *Icon* - An icon to assign to harvested metadata. The icon will be used when showing harvested metadata records in the search results. 
+    - *Use account* - Account credentials for basic HTTP authentication on the CSW server.
+
+- **Search criteria** - Using the Add button, you can add several search criteria. You can query only the fields recognised by the CSW protocol. 
+
+- **Options** - Scheduling options.
+
+.. include:: ../common_options.rst
+
+- **Options** - Specific harvesting options for this harvester.
+
+    - *Validate* - If checked, the metadata will be validated after retrieval. If the validation does not pass, the metadata will be skipped. 
+
+- **Privileges** - Assign privileges to harvested metadata. 
+
+.. include:: ../common_privileges.rst
+
+- **Categories** 
+
+.. include:: ../common_categories.rst
+
+Notes
+`````
+
+.. include:: ../common_notes.rst

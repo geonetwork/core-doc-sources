@@ -5,44 +5,55 @@ OAIPMH Harvesting
 
 This is a harvesting protocol that is widely used among libraries. GeoNetwork implements version 2.0 of the protocol.
         
-*Notes:*
 
-#.  The id of the remote server must be a UUID. If not, metadata can be
-    harvested but during hierarchical propagation id clashes could corrupt
-    harvested metadata.
-#.  During harvesting, GeoNetwork will try to auto detect the schema of
-    each metadata. If the schema is not supported the metadata is
-    skipped.
-
-Adding an OAI-PMH node
-``````````````````````
+Adding an OAI-PMH harvester
+```````````````````````````
 
 An OAI-PMH server implements a harvesting protocol that GeoNetwork, acting as
-a client, can use to harvest metadata. If you are requesting the oai_dc output
-format, GeoNetwork will convert it into its Dublin Core format. Other formats
-can be harvested only if GeoNetwork supports them and is able to autodetect the
-schema from the metadata.
+a client, can use to harvest metadata. 
 
 .. figure:: web-harvesting-oaipmh.png
 
-    *Adding an OAI-PMH harvesting node*
+    *Adding an OAI-PMH harvesting harvester*
 
 Configuration options:
 
-- **Site** - All options are the same as WebDAV harvesting. The only difference is that the URL parameter here points to an OAI-PMH server. This is the entry point that GeoNetwork will use to issue all PMH commands. 
-- **Search criteria** - This part allows you to restrict the harvesting to specific metadata subsets. You can specify several searches: GeoNetwork will execute them sequentially and results will be merged to avoid the harvesting of the same metadata. Several searches allow you to specify different search criteria. In each search, you can specify the following parameters:
+- **Site** - Options describing the remote site. 
 
-    - *From* - You can provide a start date here. All metadata whose last change date is equal to or greater than this date will be harvested. You cannot simply edit this field but you have to use the icon to popup a calendar and choose the date. This field is optional so if you don’t provide it the start date constraint is dropped. Use the icon to clear the field. 
-    - *Until* - Works exactly as the from parameter but adds an end constraint to the last change date. The until date is included in the date range, the check is: less than or equal to. 
-    - *Set* - An OAI-PMH server classifies its metadata into hierarchical sets. You can request to return metadata that belong to only one set (and its subsets). This narrows the search result. Initially the drop down shows only a blank option that indicate *no set*. After specifying the connection URL, you can press the **Retrieve Info** button, whose purpose is to connect to the remote node, retrieve all supported sets and prefixes and fill the search drop downs. After you have pressed this button, you can select a remote set from the drop down. 
-    - *Prefix* - Here prefix means metadata format. The oai_dc prefix is mandatory for any OAI-PMH compliant server, so this entry is always present into the prefix drop down. To have this drop down filled with all prefixes supported by the remote server, you have to enter a valid URL and press the Retrieve Info button.
-    - You can use the Add button to add one more search to the list. A search can be removed clicking the icon on its left. 
+  - *Name* - This is a short description of the remote site. It will be shown in the harvesting main page as the name for this instance of the OAIPMH harvester.
+  - *URL* - The URL of the OAI-PMH server from which metadata will be harvested.
+  - *Icon* - An icon to assign to harvested metadata. The icon will be used when showing search results.
+  - *Use account* - Account credentials for basic HTTP authentication on the OAIPMH server.
+
+- **Search criteria** - This allows you to select metadata records for harvest based on certain criteria: 
+
+    - *From* - You can provide a start date here. Any metadata whose last change date is equal to or greater than this date will be harvested. To add or edit a value for this field you need to use the icon alongside the text box. This field is optional so if you don't provide a start date the constraint is dropped. Use the icon to clear the field. 
+    - *Until* - Functions in the same way as the *From* parameter but adds an end constraint to the last change date search. Any metadata whose last change data is less than or equal to this data will be harvested.
+    - *Set* - An OAI-PMH server classifies metadata into sets (like categories in GeoNetwork). You can request all metadata records that belong to a set (and any of its subsets) by specifying the name of that set here.
+    - *Prefix* - 'Prefix' means metadata format. The oai_dc prefix must be supported by all OAI-PMH compliant servers. 
+    You can use the Add button to add more than one Search Criteria set. Search Criteria sets can be removed by clicking on the small cross at the top left of the set.
+
+.. note:: the 'OAI provider sets' drop down next to the *Set* text box and the 'OAI provider prefixes' drop down next to the *Prefix* textbox are initially blank. After specifying the connection URL, you can press the **Retrieve Info** button, which will connect to the remote OAI-PMH server, retrieve all supported sets and prefixes and fill the drop downs with these values. Selecting a value from either of these drop downs will fill the appropriate text box with the selected value. 
+
     
-- **Options** - Most options are equivalent to WebDAV harvesting. 
+- **Options** - Scheduling Options. 
 
-    - *Validate* - The validate option, when checked, will validate each harvested metadata against GeoNetwork’s schemas. Only valid metadata will be harvested. Invalid one will be skipped. 
+.. include:: ../common_options.rst
     
-- **Privileges** - Same as for WebDAV harvesting. 
-- **Categories** - Same as for WebDAV harvesting.
+- **Privileges**
 
-Please note that when you edit a previously created node, both the *set* and *prefix* drop down lists will be empty. They will contain only the previously selected entries, plus the default ones if they were not selected. Furthermore, the set name will not be localised but the internal code string will be displayed. You have to press the retrieve info button again to connect to the remote server and retrieve the localised name and all set and prefix information.
+.. include:: ../common_privileges.rst
+
+- **Categories**
+
+.. include:: ../common_categories.rst
+
+
+Notes
+`````
+
+- if you request the oai_dc output format, GeoNetwork will convert it to Dublin Core format. 
+- when you edit a previously created OAIPMH harvester instance, both the *set* and *prefix* drop down lists will be empty. You have to press the retrieve info button again to connect to the remote server and retrieve set and prefix information.
+- the id of the remote server must be a UUID. If not, metadata can be harvested but during hierarchical propagation id clashes could corrupt harvested metadata.
+
+.. include:: ../common_notes.rst

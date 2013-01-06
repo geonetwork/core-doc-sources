@@ -467,13 +467,13 @@ Harvesting node type z3950
 ``````````````````````````
 
 This harvester type is capable of querying one or more Z3950 servers 
-harvesting metadata.
+and harvesting metadata.
 
  - **node** (*string*): z3950
 
    - **site**
 
-     - **query** (*string*): Z3950 query in Prefix Query Notation (mandatory)
+     - **query** (*string*): Z3950 query in Prefix Query Format (mandatory). See the discussion on PQF in the Z3950 Harvester section of the Users Manual and/or http://www.indexdata.com/yaz/doc/tools.html#PQF.
      - **icon** (*string*): This is the icon that
        will be used as the metadata source logo. The image is taken
        from the ``images/harvesting`` folder and copied to the ``images/logos``
@@ -540,7 +540,7 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
 Harvesting node type oaipmh
 ```````````````````````````
 
-This harvester type is capable of querying an OAIPMH (Open Archives Initiative Protocol for Metadata Harvesting) server and harvesting metadata.
+This harvester type is capable of querying an OAIPMH (Open Archives Initiative Protocol for Metadata Harvesting version 2.0) server and harvesting metadata.
 
  - **node** (*string*): oaipmh
 
@@ -559,7 +559,7 @@ This harvester type is capable of querying an OAIPMH (Open Archives Initiative P
 
    - **search** \[0..n]: Contains search parameters which because they are 
      constrained to follow the OAIPMH version 2.0 standard, are 
-     curiously constrained to a date range, prefix and metadata set name. 
+     curiously limited to a date range, prefix and metadata set name. 
      If this element is missing, an unconstrained search will be performed.
 
      - **from** (*string*) from date search
@@ -643,7 +643,7 @@ The harvester supports metadata fragments following the Unidata Data Discovery C
 - collections: essentially datasets that contain other datasets (like directories in a filesystem tree)
 - atomics: datasets that do not contain other datasets (like files in a filesystem tree)
 
-The options for a THREDDS harvester type are:
+The settings for a THREDDS harvester type are:
 
  - **node** (*string*): thredds
 
@@ -675,6 +675,7 @@ XML Example
 ^^^^^^^^^^^
 
 Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`.
+*Example of THREDDS harvester settings in XML:*
 
 ::
  
@@ -751,7 +752,7 @@ This harvester type is capable of querying and harvesting metadata from the GetF
 - transformed into ISO19115/19139 (or profile) metadata fragments 
 - copied or linked into an ISO19115/19139 (or profile) template
 
-The options for a WFS Features harvester type are:
+The settings for a WFS Features harvester type are:
 
  - **node** (*string*): wfsfeatures
 
@@ -769,12 +770,13 @@ The options for a WFS Features harvester type are:
      - **streamFeatures** (*boolean*) - If true then responses will be saved to disk and features will be extracted using the streaming XML parser. Use for large WFS GetFeatures responses.
      - **createSubtemplates** (*boolean*) - If true then subtemplates are created from the metadata fragments harvested from the WFS GetFeatures response. The subtemplates are stored in the GeoNetwork database and linked into the **templateId** template record to create the harvested metadata records. If false, then subtemplates are not created, instead the harvested fragments are copied into the **templateId** record to create normal metadata records.
      - **templateId** (*integer*) Template record that harvested fragments will copied or linked into to create metadata records. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=templates to get a list of template metadata record ids that can be used for this setting.
-     - **recordsCategory** (*integer*) Category id of GeoNetwork category that will be assigned to the metadata records created by the harvester.
+     - **recordsCategory** (*integer*) Category id of GeoNetwork category that will be assigned to the metadata records created by the harvester. Use http://your_geonetwork/geonetwork/srv/eng/xml.info?type=categories to get a list of category ids that can be used for this setting.
 
 XML Example
 ^^^^^^^^^^^
 
 Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`.
+*Example of WFS Features harvester settings in XML:*
 
 ::
  
@@ -831,3 +833,141 @@ Notes
  - this harvester does not use the content/importXslt setting
  - this harvester does not use the content/validate setting
 
+.. _filesystem_harvesting:
+
+Harvesting node type filesystem
+````````````````````````````````
+
+This harvester type is capable of querying and harvesting metadata (filename \*.xml) from a directory tree on a filesystem accessible to the GeoNetwork server.
+
+The settings for the filesystem harvester type are:
+
+ - **node** (*string*): filesystem
+
+   - **site**
+
+     - **directory** (*string*): This is the filesystem directory (on the server) from which metadata files (\*.xml) will be harvested.
+     - **recurse** (*boolean*): If true, then any directories in the fileystem directory will be checked for \*.xml files (and any directories in those directories etc etc).
+     - **nodelete** (*boolean*): If true, then metadata from previous executions of the filesystem harvester will be left in the catalog (ie. they will not be deleted)
+     - **icon** (*string*): This is the icon that will be used as the metadata source logo. The image is taken from the ``images/harvesting`` folder and copied to the ``images/logos`` folder.
+
+XML Example
+^^^^^^^^^^^
+
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`.
+*Example of Filesystem harvester settings in XML:*
+
+::
+ 
+ <node id="1234" type="filesystem">
+  <site>
+    <name>/Users filesystem harvester</name>
+    <uuid>c7b7660a-337a-4aa1-843b-648280ad8d86</uuid>
+    <account>
+      <use>false</use>
+      <username />
+      <password />
+    </account>
+    <directory>/Users</directory>
+    <recurse>true</recurse>
+    <nodelete>true</nodelete>
+    <icon>filesystem.gif</icon>
+  </site>
+  <content>
+    <validate>true</validate>
+    <importxslt>DIF-to-ISO19139.xsl</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+  </options>
+  <searches />
+  <privileges>
+    <group id="1">
+      <operation name="view" />
+    </group>
+  </privileges>
+  <categories>
+    <category id="2" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info>
+ </node>
+
+.. _arcsde_harvesting:
+
+Harvesting node type arcsde
+```````````````````````````
+
+This harvester type is capable of harvesting metadata from an arcsde server.
+
+The settings for the arcsde harvester type are:
+
+ - **node** (*string*): arcsde
+
+   - **site**
+
+     - **server** (*string*): This is the name of the arcde server.
+     - **port** (*integer*): Port number of arcsde server.
+     - **username** (*string*): arcsde username
+     - **password** (*string*): arcsde password
+     - **database** (*string*): Name of arcsde database
+     - **icon** (*string*): This is the icon that will be used as the metadata source logo. The image is taken from the ``images/harvesting`` folder and copied to the ``images/logos`` folder.
+
+
+XML Example
+^^^^^^^^^^^
+
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`.
+*Example of arcsde harvester settings in XML:*
+
+::
+ 
+ <node id="1259" type="arcsde">
+  <site>
+    <name>test arcsde harvester</name>
+    <uuid>5b5070d3-464a-484e-941a-e56812e46431</uuid>
+    <account>
+      <use>false</use>
+      <username />
+      <password />
+    </account>
+    <server>arcsde_server.esri.com</server>
+    <port>5151</port>
+    <username>sde_user</username>
+    <password>sde_password</password>
+    <database>esri_sde</database>
+    <icon>esri.gif</icon>
+  </site>
+  <content>
+    <validate>true</validate>
+    <importxslt>none</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>false</oneRunOnly>
+    <status>inactive</status>
+  </options>
+  <searches />
+  <categories>
+    <category id="4" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+  </info>
+ </node>
+
+Notes
+^^^^^
+
+ - this harvester does not use the content/importXslt setting
+ - ArcSDE java API libraries need to be installed by the user in GeoNetwork (folder ``INSTALL_DIR/web/geonetwork/WEB-INF/lib``), as these are proprietary libraries not distributed with GeoNetwork. The following jars are required:
+
+  - jpe_sdk.jar
+  - jsde_sdk.jar
+
+.. note :: dummy-api-XXX.jar must be removed from ``INSTALL_DIR/web/geonetwork/WEB-INF/lib``

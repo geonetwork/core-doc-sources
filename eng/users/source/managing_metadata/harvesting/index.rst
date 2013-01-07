@@ -3,15 +3,9 @@
 Harvesting
 ==========
 
-Introduction
-------------
+There has always been a need to share metadata between GeoNetwork nodes and bring metadata into GeoNetwork from other sources eg. self-describing web services that deliver data and metadata or databases with organisational metadata etc.
 
-Since the beginning of the project, there has been the need to share metadata
-among several GeoNetwork nodes. Usually, each node takes care of a region of
-interest so it is important to be able to perform a search over all these nodes at
-the same time. This is called distributed search and exploits the Internet connectivity. In our cases, this distributed search can be heavy to perform if there are many maps with associated thumbnails. Furthermore, GeoNetwork is usually employed in areas (like Africa, Asia) where the connectivity can be limited, making the use of distributed search not feasible.
-
-Harvesting is the process of collecting remote metadata and storing them locally for a faster access. This is a periodic process to do, for example, once a week. Harvesting is not a simple import: local and remote metadata are kept aligned. Using some *magic*, one GeoNetwork node is capable of discovering metadata that have been added, removed or updated in the remote node.
+Harvesting is the process of collecting metadata from a remote source and storing it locally in GeoNetwork for fast searching via Lucene. This is a periodic process to do, for example, once a week. Harvesting is not a simple import: local and remote metadata are kept aligned. 
 
 GeoNetwork is able to harvest from the following sources (for more details see below):
 
@@ -29,71 +23,59 @@ GeoNetwork is able to harvest from the following sources (for more details see b
 Mechanism overview
 ------------------
 
-The harvesting mechanism is based on the concept of a *universally unique identifier (UUID)*.
-This is a special id because it is not only
-unique locally to the node that generated it but it is unique across all the world.
-It is a combination of the network interface’s MAC address, the current date/time
-and a random number. Every time you create a new metadata in GeoNetwork, a new UUID
-is generated and assigned to it.
+The harvesting mechanism relies on the concept of a *universally unique identifier (UUID)*.  This is a special id because it is not only unique locally to the node that generated it but it is globally unique.  It is a combination of the network interface MAC address, the current date/time and a random number. Every time you create a new metadata record in GeoNetwork, a new UUID is generated and assigned to it.
 
 Another important concept behind the harvesting is the *last change date*.
-Every time you change a metadata, its last change date is
+Every time you change a metadata record, the last change date is
 updated. Just storing this parameter and comparing it with a new one allows any
-system to find out if the metadata has been modified since last update.
+system to find out if the metadata record has been modified since last update.
 
-These two concepts allow GeoNetwork to fetch a remote metadata, check if it has
+These two concepts allow GeoNetwork to fetch remote metadata, check if it has
 been updated and remove it locally if it has been removed remotely. Furthermore,
-thanks to UUIDs, a hierarchy of harvesting nodes can be built where B harvests from
-C and A harvests from B. Even loops can be created because harvested metadata cannot
-be modified.
+thanks to UUIDs, a hierarchy of harvesting nodes can be built where B harvests from C and A harvests from B.
 
 Harvesting life cycle
 ---------------------
 
-When a harvesting node is set, there is no harvested metadata. During the first
-run, all remote matching metadata are retrieved and stored locally. After the first
-run, only changed metadata are retrieved. Harvested metadata are not editable for
-the following reasons:
+When a harvester is first set up, there is no harvested metadata. During the first run, all remote matching metadata are retrieved and stored locally. For some harvesters, after the first run, only metadata that has changed will be retrieved. 
+
+Harvested metadata are (by default) not editable for the following reasons:
 
 #. The harvesting is periodic so any local change to harvested metadata will be lost during the next run.
-#. The change date is used to keep track of changes so if it gets changed outside the originator site, the harvesting mechanism is compromised.
+#. The change date may be used to keep track of changes so if the metadata gets changed, the harvesting mechanism may be compromised.
 
-Beside the metadata itself, this implies that users cannot change all other metadata properties (like categories, privileges etc...).
+Metadata properties (like categories, privileges etc...) on harvested metadata records cannot be changed.
+
+.. note:: if you really want to edit harvested metadata records and aren't worried by the possible issues described above, there is now a configuration setting which will permit this. See :ref:`editing_harvested_records` for more details.
 
 The harvesting process goes on until one of the following situations arises:
 
-#. An administrator stops (deactivates) the node.
-#. An exception arises. In this case the node is automatically stopped.
+#. An administrator stops (deactivates) the harvester.
+#. An exception arises. In this case the harvester is automatically stopped.
 
-When a harvesting node is removed, all harvest metadata are removed too.
+When a harvester is removed, all metadata records associated with that harvester are removed.
+
 
 Multiple harvesting and hierarchies
 -----------------------------------
 
-Catalogues that provide UUIDs for metadata (for example GeoNetwork and a CSW
-server) can be harvested several times without having to take care about metadata
-overlap. This allows the possibility to perform a thematic search and a metadata
-belonging to multiple searches is harvested only once and not duplicated.
+Catalogues that use UUIDs to identify metadata records (eg. GeoNetwork) can be harvested several times without having to take care about metadata overlap. 
 
-This mechanism allows the GeoNetwork harvesting type to be combined with other
-GeoNetwork nodes to perform hierarchical harvesting. This way a metadata can be
-harvested from several nodes. For example, consider this scenario:
+As an example, consider the GeoNetwork harvesting type which allows one GeoNetwork node to harvest metadata records from another GeoNetwork node and the following scenario:
 
 #. Node (A) has created metadata (a)
 #. Node (B) harvests (a) from (A)
 #. Node (C) harvests (a) from (B)
 #. Node (D) harvests from both (A), (B) and (C)
 
-In this scenario, Node (D) will get the same metadata (a) from all 3 nodes (A),
-(B), (C). The metadata will flow to (D) following 3 different paths but thanks to
-its UUID only one copy will be stored. When (a) will be changed in (A), a new
+In this scenario, Node (D) will get the same metadata (a) from all 3 nodes (A), (B), (C). The metadata will flow to (D) following 3 different paths but thanks to its UUID only one copy will be stored. When (a) is changed in (A), a new
 version will flow to (D) but, thanks to the change date, the copy in (D) will be
 updated with the most recent version.
 
 .. _harvesting_fragments:
 
 Harvesting Fragments of Metadata to support re-use
-``````````````````````````````````````````````````
+--------------------------------------------------
 
 All the harvesters except for the THREDDS and OGC WFS GetFeature harvester create a complete metadata record that is inserted into or replaces an existing record in the catalog. However, it's often the case that:
 
@@ -115,9 +97,9 @@ As shown above, an example of a metadata fragment is the gmd:contactInfo element
 
 
 HTTPS support
-`````````````
+-------------
 
-Harvesters support https protocol. If the server to harvest has a trusted certificate available in JVM keystore, configuring the https url in the harvester should be fine.
+The GeoNetwork harvester supports the https protocol in URLs if the GeoNetwork server being harvested has a trusted certificate available in a JVM keystore.
 
 For self-signed/untrusted certificates, the harvester issues an exception like this::
 
@@ -133,9 +115,9 @@ For self-signed/untrusted certificates, the harvester issues an exception like t
     Caused by: sun.security.provider.certpath.SunCertPathBuilderException: 
        unable to find valid certification path to requested target
 
-This indicates that the server certificate requires to be imported in the JVM keystore with `keytool <http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html>`_ to be trusted.
+This indicates that the server certificate for the GeoNetwork server being harvested needs to be added to the JVM keystore with `keytool <http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html>`_ in order to be trusted.
 
-An alternative way to import the certificate is to use a script like::
+An alternative way to add the certificate is to use a script like::
 
     ## JAVA SSL Certificate import script
     ## Based on original MacOs script by LouiSe@louise.hu : http://louise.hu
@@ -155,16 +137,15 @@ An alternative way to import the certificate is to use a script like::
     #sudo cp jssecacerts /Library/Java/Home/lib/security/
 
 
-To use the script, it's required to have installed Java compiler and to download this file `InstallCert.java <http://code.google.com/p/java-use-examples/source/browse/trunk/src/com/aw/ad/util/InstallCert.java>`_, copying it in same path of script.
+To use the script, the Java compiler must be installed and the file `InstallCert.java <http://code.google.com/p/java-use-examples/source/browse/trunk/src/com/aw/ad/util/InstallCert.java>`_, must be downloaded and placed in the same directory as the script.
 
-
-The script allow to import the certificate in the JVM keystore, providing the https server host and port and follow instructions::
+The script will add the certificate in the JVM keystore, if you provide the https server host and port and run it as follows:::
 
     $ ./ssl_key_import.sh https_server_name 443
 
-.. note :: Use previous script on your own risk. Before installing a certificate in the JVM keystore to be trusted, make sure you understand the security implications. 
+.. note :: Use this script at your own risk! Before installing a certificate in the JVM keystore as trusted, make sure you understand the security implications. 
 
-.. note :: After importing the certificate it is required to restart GeoNetwork.
+.. note :: After importing the certificate you will need to restart GeoNetwork.
 
 
 
@@ -178,56 +159,58 @@ From the administration page, click the link shown below with a red rectangle.
 
     *How to access the harvesting main page*
 
-The figure above shows the harvesting main page. The page shows a list of harvesting nodes that have been created so far. On the bottom side there is a set of buttons to manage these nodes. The meaning of each column is as follows:
+The figure above shows the harvesting main page. The page shows a list of harvesters that have been created. On the bottom side there is a set of buttons to manage these harvesters. The meaning of each column is as follows:
 
-#. *Select* This is just a check box to select one or more nodes. The selected nodes will be affected by the first row of buttons (start, stop, run, remove). For example, if you select 3 nodes and press the Remove button, these 3 nodes will be removed.
-#. *Name* This is the node’s name provided by the administrator.
-#. *Type* The node’s harvesting type chosen when the node was created (GeoNetwork, web folder etc...).
-#. *Status* This is an icon that reflects the node’s current status. See :ref:`admin_harvesting_status` for all different icons and status description.
+#. *Select* This is just a check box to select one or more harvesters. The selected harvesters will be affected by the first row of buttons (activate, deactivate, run, remove, history). For example, if you select three harvesters and press the Remove button, they will all be removed.
+#. *Name* This is the harvester name provided by the administrator.
+#. *Type* The harvester type (eg. GeoNetwork, WebDAV etc...).
+#. *Status* This is an icon that shows the current status. See :ref:`admin_harvesting_status` for all different icons and status description.
 #. *Errors* This column reflects the status of the last harvesting run, which could have succeeded or not. The result is reflected on this icon and a tool tip will show detailed information.
-#. *Every* The time (in days, hours, minutes) between two consecutive harvesting from this node.
+#. *Run at* Scheduling of harvester runs. Essentially the time of the day + how many hours between repeats and on which days the harvester will run.
+#. *Every* Not used.
 #. *Last run* The date, in ISO 8601 format, of the most recent harvesting run.
-#. *Operation* A list of buttons for all possible operations on a node.
-#. Selecting *Edit* will allow you to change the parameters for a node.
+#. *Operation* A list of buttons for all possible operations on a harvester.
+
+ - Selecting *Edit* will allow you to change the parameters for a harvester.
+ - Selecting *History* will allow you to view/change the harvesting history - see :ref:`harvest_history`.
+ - Selecting *Clone* will allow you to create a clone of this harvester and start editing the details of the clone.
 
 .. figure:: web-harvesting-list.png
 
     *The harvesting main page*
 
 The bottom side of the page contains two rows of buttons. The first row contains buttons
-that can operate on a set of nodes. You can select the nodes using the check box on the first
-column and then press the proper button. When the button finishes its action, the check boxes
+that can operate on a set of harvesters. You can select the harvesters you want to operate on using the check box on the first
+column and then press one of these buttons. When the button finishes its action, the check boxes
 are cleared. Here is the meaning of each button:
 
-#.  *Activate* When a new harvesting node is created, it’s status is
+#.  *Activate* When a new harvester is created, the status is
     *inactive*. Use this button to make it
-    *active* and thus to start harvesting from the remote node.
+    *active* and start the harvester(s) according to the schedule it has/they have been configured to use.
 
-#.  *Deactivate* Stops harvesting from a node. Please notice that this does not mean that
-    a currently running harvesting will be stopped but it means that this node will be
-    ignored during future harvesting.
+#.  *Deactivate* Stops the harvester(s). Note: this does not mean that
+    currently running harvest(s) will be stopped. Instead, it means that the harvester(s) will not be scheduled to run again.
 
-#.  *Run* This button simply tells the harvesting
-    engine to start harvesting immediately. This is useful for testing during the
-    harvesting setup.
+#.  *Run* Start the selected harvesters immediately.  This is useful for testing harvester setups.
 
-#.  *Remove* Remove all currently selected nodes. A dialogue will ask the
+#.  *Remove* Remove all currently selected harvesters. A dialogue will ask the
     user to confirm the action.
+
+#.  *History* Show the harvesting history of all selected harvesters. See :ref:`harvest_history` for more details.
 
 The second row contains general purpose buttons. Here is the meaning of each button:
 
 #.  *Back* Simply returns to the main administration page.
 
-#.  *Add* This button allows to create new harvesting nodes.
+#.  *Add* This button creates a new harvester.
 
-#.  *Refresh* Refreshes the current list of nodes querying the server. This
-    can be useful to see if the harvesting list has been altered by someone else or if
-    any harvesting process started.
+#.  *Refresh* Refreshes the current list of harvesters from the server. This
+    can be useful to see if the harvesting list has been altered by someone else or to get the status of any running harvesters.
 
 .. _admin_harvesting_status:
 
 Harvesting Status and Error Icons
-`````````````````````````````````
+---------------------------------
 
 .. |fcl| image:: icons/fileclose.png
 .. |clo| image:: icons/clock.png
@@ -237,13 +220,13 @@ Harvesting Status and Error Icons
 =====    ========    =======================================================
 Icon     Status      Description
 =====    ========    =======================================================
-|fcl|    Inactive    The harvesting from this node is stopped.
-|clo|    Active      The harvesting engine is waiting for the timeout 
-                     specified for this node. When the timeout is reached, 
-                     the harvesting starts.
+|fcl|    Inactive    The harvester is stopped.
+|clo|    Active      The harvesting engine is waiting for the next scheduled
+                     run time of the harvester. 
 |exe|    Running     The harvesting engine is currently running, fetching 
-                     metadata from remote nodes. When the process will be 
-                     finished, the status will be switched to active.
+                     metadata. When the process is 
+                     finished, the result of the harvest will be available 
+										 as an icon in the *Errors* column
 =====    ========    =======================================================
 
 *Possible status icons*
@@ -265,12 +248,10 @@ Icon     Description
 *Possible error icons*
 
 Harvesting result tips
-``````````````````````
+----------------------
 
-If the harvesting succeeds, a tool tip will show detailed information about the
-harvesting process. This way you can check if the harvester worked as expected
-or if there is something to fix to the harvesting parameters or somewhere else.
-The result tip is like a table, with rows labelled as follows:
+When a harvester runs and completes, a tool tip showing detailed information about the harvesting process is shown in the **Errors** column for the harvester. If the harvester succeeded then hovering the cursor over the tool tip will show 
+a table, with some rows labelled as follows:
 
 - **Total** - This is the total number of metadata found remotely. Metadata with the same id are considered as one. 
 - **Added** -  Number of metadata added to the system because they were not present locally. 
@@ -326,14 +307,14 @@ Could not insert                                                          |ok|  
 
 *Result information supported by harvesting types*
 
-Adding new nodes
-----------------
+Adding new harvesters 
+---------------------
 
-The Add button in the main page allows you to add new harvesting nodes. A drop down list is then shown with all the available harvester protocols. 
+The Add button in the main page allows you to add new harvesters. A drop down list is then shown with all the available harvester protocols. 
 
 .. figure:: web-harvesting-add.png
 
-    *Adding a new harvesting node*
+    *Adding a new harvester*
 
 You can choose the type of harvest you intend to perform and press *Add* to begin the process of adding the harvester. The supported harvesters and details of what to do next are in the following sections:
 

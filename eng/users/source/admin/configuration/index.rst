@@ -214,6 +214,8 @@ Metadata Privileges
 
 *Only set privileges to user's groups*: If enabled then only the groups that the user belongs to will be displayed in the metadata privileges page (unless the user is an Administrator). At the moment this option cannot be disabled and is likely to be deprecated in the next version of GeoNetwork.
 
+.. _editing_harvested_records:
+
 Harvesting
 ``````````
 

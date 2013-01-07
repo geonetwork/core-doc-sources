@@ -1,12 +1,12 @@
 .. _sde_harvester:
 
 Harvesting an ARCSDE Node
-=========================
+-------------------------
 
 This is a harvesting protocol for metadata stored in an ArcSDE installation.
 
-Adding an ArcSDE server
-```````````````````````
+Adding an ArcSDE harvester
+``````````````````````````
 
 .. note :: Additional installation steps are required to use the ArcSDE harvester because it needs proprietary ESRI java api jars to be installed. See the Developers Manual, Settings for Harvester type arcsde
 

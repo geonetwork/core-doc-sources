@@ -5,20 +5,20 @@ WFS GetFeature Harvesting
 
 Metadata can be present in the tables of a relational databases, which are commonly used by many organisations. Putting an OGC Web Feature Service (WFS) over a relational database will allow metadata to be extracted via standard query mechanisms. This harvesting type allows the user to specify a GetFeature query and map information from the features to fragments of metadata that can be linked or copied into a template to create metadata records.
 
-Adding an OGC Web Feature Service GetFeature response
-`````````````````````````````````````````````````````
+Adding an OGC WFS GetFeature Harvester
+``````````````````````````````````````
 
 An OGC web feature service (WFS) implements a GetFeature query operation that returns data in the form of features (usually rows from related tables in a relational database). GeoNetwork, acting as a client, can read the GetFeature response and apply a user-supplied XSLT stylesheet to produce metadata fragments that can be linked or copied into a user-supplied template to build metadata records.
 
 .. figure:: web-harvesting-features.png
 
-		*Adding a Features from OGC WFS harvester node*
+		*Adding an OGC WFS GetFeature harvester*
 
 The available options are:
 
 - **Site**
 
- - *Name* - This is a short description of the node. It will be shown in the harvesting main page.
+ - *Name* - This is a short description of the harvester. It will be shown in the harvesting main page as the name for this WFS GetFeature harvester.
  - *Service URL* - The bare URL of the WFS service (no OGC params required)
  - *Metadata language* - The language that will be used in the metadata records created by the harvester
  - *OGC WFS GetFeature Query* - The OGC WFS GetFeature query used to extract features from the WFS.
@@ -109,7 +109,7 @@ The procedure to follow is:
 
 .. figure:: web-harvesting-features-boundaries-example.png
 
-		*Adding a Features from OGC WFS harvester node - boundaries example*
+		*Adding an OGC WFS GetFeature harvester - boundaries example*
 
 - *Save* the harvester entry form. 
 - You will be returned to the harvester operations menu where you can *Activate* the harvester and then *Run* it.
@@ -154,7 +154,7 @@ The procedure to follow is:
 
 .. figure:: web-harvesting-features.png
 
-		*Adding a Features from OGC WFS harvester node - philosopher example*
+		*Adding an OGC WFS GetFeature harvester - philosopher example*
 
 - *Save* the harvester entry form. 
 - You will be returned to the harvester operations menu where you can *Activate* the harvester and then *Run* it.

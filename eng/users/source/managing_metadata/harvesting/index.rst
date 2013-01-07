@@ -172,8 +172,8 @@ The figure above shows the harvesting main page. The page shows a list of harves
 #. *Operation* A list of buttons for all possible operations on a harvester.
 
  - Selecting *Edit* will allow you to change the parameters for a harvester.
- - Selecting *History* will allow you to view/change the harvesting history - see :ref:`harvest_history`.
  - Selecting *Clone* will allow you to create a clone of this harvester and start editing the details of the clone.
+ - Selecting *History* will allow you to view/change the harvesting history - see :ref:`harvest_history`.
 
 .. figure:: web-harvesting-list.png
 
@@ -226,7 +226,7 @@ Icon     Status      Description
 |exe|    Running     The harvesting engine is currently running, fetching 
                      metadata. When the process is 
                      finished, the result of the harvest will be available 
-										 as an icon in the *Errors* column
+                     as an icon in the *Errors* column
 =====    ========    =======================================================
 
 *Possible status icons*

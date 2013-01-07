@@ -196,8 +196,6 @@ are cleared. Here is the meaning of each button:
 #.  *Remove* Remove all currently selected harvesters. A dialogue will ask the
     user to confirm the action.
 
-#.  *History* Show the harvesting history of all selected harvesters. See :ref:`harvest_history` for more details.
-
 The second row contains general purpose buttons. Here is the meaning of each button:
 
 #.  *Back* Simply returns to the main administration page.
@@ -206,6 +204,8 @@ The second row contains general purpose buttons. Here is the meaning of each but
 
 #.  *Refresh* Refreshes the current list of harvesters from the server. This
     can be useful to see if the harvesting list has been altered by someone else or to get the status of any running harvesters.
+
+#.  *History* Show the harvesting history of all harvesters. See :ref:`harvest_history` for more details.
 
 .. _admin_harvesting_status:
 

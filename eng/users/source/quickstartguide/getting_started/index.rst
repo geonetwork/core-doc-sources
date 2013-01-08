@@ -12,7 +12,7 @@ and started it, the default URL is http://localhost:8080/geonetwork
 There are many different ways to search the catalogue for maps and other geographic
 data. This guide will introduce you to the most popular search methods: default,
 advanced and by category. Whichever search you choose, remember that you will see
-results based on your privileges and assigned work group (:ref:`privileges`).
+results based on your privileges and assigned work group (:ref:`ownership`).
 
 .. note:: 
 	The term *data* in this application refers to

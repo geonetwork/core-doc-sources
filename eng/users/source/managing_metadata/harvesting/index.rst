@@ -99,9 +99,9 @@ As shown above, an example of a metadata fragment is the gmd:contactInfo element
 HTTPS support
 -------------
 
-The GeoNetwork harvester supports the https protocol in URLs if the GeoNetwork server being harvested has a trusted certificate available in a JVM keystore.
+Harvesting between GeoNetwork nodes may require the HTTPS protocol. If harvesting from an https GeoNetwork URL, the server will need to have a trusted certificate available in a JVM keystore accessible to the GeoNetwork node running the harvest.
 
-For self-signed/untrusted certificates, the harvester issues an exception like this::
+If you don't have a trusted certificate in the JVM keystore being used by GeoNetwork, the harvester may issue an exception like this when you try to harvest from the https GeoNetwork::
 
     javax.net.ssl.SSLHandshakeException: 
        sun.security.validator.ValidatorException: PKIX path building failed: 
@@ -115,7 +115,7 @@ For self-signed/untrusted certificates, the harvester issues an exception like t
     Caused by: sun.security.provider.certpath.SunCertPathBuilderException: 
        unable to find valid certification path to requested target
 
-This indicates that the server certificate for the GeoNetwork server being harvested needs to be added to the JVM keystore with `keytool <http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html>`_ in order to be trusted.
+The server certificate for the GeoNetwork server being harvested needs to be added to the JVM keystore with `keytool <http://docs.oracle.com/javase/6/docs/technotes/tools/solaris/keytool.html>`_ in order to be trusted.
 
 An alternative way to add the certificate is to use a script like::
 
@@ -139,13 +139,13 @@ An alternative way to add the certificate is to use a script like::
 
 To use the script, the Java compiler must be installed and the file `InstallCert.java <http://code.google.com/p/java-use-examples/source/browse/trunk/src/com/aw/ad/util/InstallCert.java>`_, must be downloaded and placed in the same directory as the script.
 
-The script will add the certificate in the JVM keystore, if you provide the https server host and port and run it as follows:::
+The script will add the certificate to the JVM keystore, if you run it as follows:::
 
     $ ./ssl_key_import.sh https_server_name 443
 
 .. note :: Use this script at your own risk! Before installing a certificate in the JVM keystore as trusted, make sure you understand the security implications. 
 
-.. note :: After importing the certificate you will need to restart GeoNetwork.
+.. note :: After adding the certificate you will need to restart GeoNetwork.
 
 
 
@@ -159,37 +159,39 @@ From the administration page, click the link shown below with a red rectangle.
 
     *How to access the harvesting main page*
 
-The figure above shows the harvesting main page. The page shows a list of harvesters that have been created. On the bottom side there is a set of buttons to manage these harvesters. The meaning of each column is as follows:
-
-#. *Select* This is just a check box to select one or more harvesters. The selected harvesters will be affected by the first row of buttons (activate, deactivate, run, remove, history). For example, if you select three harvesters and press the Remove button, they will all be removed.
-#. *Name* This is the harvester name provided by the administrator.
-#. *Type* The harvester type (eg. GeoNetwork, WebDAV etc...).
-#. *Status* This is an icon that shows the current status. See :ref:`admin_harvesting_status` for all different icons and status description.
-#. *Errors* This column reflects the status of the last harvesting run, which could have succeeded or not. The result is reflected on this icon and a tool tip will show detailed information.
-#. *Run at* Scheduling of harvester runs. Essentially the time of the day + how many hours between repeats and on which days the harvester will run.
-#. *Every* Not used.
-#. *Last run* The date, in ISO 8601 format, of the most recent harvesting run.
-#. *Operation* A list of buttons for all possible operations on a harvester.
-
- - Selecting *Edit* will allow you to change the parameters for a harvester.
- - Selecting *Clone* will allow you to create a clone of this harvester and start editing the details of the clone.
- - Selecting *History* will allow you to view/change the harvesting history - see :ref:`harvest_history`.
+The harvesting main page will then be displayed. 
 
 .. figure:: web-harvesting-list.png
 
     *The harvesting main page*
 
-The bottom side of the page contains two rows of buttons. The first row contains buttons
-that can operate on a set of harvesters. You can select the harvesters you want to operate on using the check box on the first
+The page shows a list of the currently defined harvesters and a set of buttons for management functions. The meaning of each column in the list of harvesters is as follows:
+
+#. *Select* Check box to select one or more harvesters. The selected harvesters will be affected by the first row of buttons (activate, deactivate, run, remove). For example, if you select three harvesters and press the Remove button, they will all be removed.
+#. *Name* This is the harvester name provided by the administrator.
+#. *Type* The harvester type (eg. GeoNetwork, WebDAV etc...).
+#. *Status* An icon showing current status. See :ref:`admin_harvesting_status` for the different icons and status descriptions.
+#. *Errors* An icon showing the result of the last harvesting run, which could have succeeded or not. See :ref:`admin_harvesting_status` for the different icons and error descriptions. Hovering the cursor over the icon will show detailed information about the last harvesting run.
+#. *Run at* and *Every*: Scheduling of harvester runs. Essentially the time of the day + how many hours between repeats and on which days the harvester will run.
+#. *Last run* The date, in ISO 8601 format, of the most recent harvesting run.
+#. *Operation* A list of buttons/links to operations on a harvester.
+
+ - Selecting *Edit* will allow you to change the parameters for a harvester.
+ - Selecting *Clone* will allow you to create a clone of this harvester and start editing the details of the clone.
+ - Selecting *History* will allow you to view/change the harvesting history for a harvester - see :ref:`harvest_history`.
+
+At the bottom of the list of harvesters are two rows of buttons. The first row contains buttons that can operate on a selected set of harvesters. You can select the harvesters you want to operate on using the check box in the Select
 column and then press one of these buttons. When the button finishes its action, the check boxes
 are cleared. Here is the meaning of each button:
 
 #.  *Activate* When a new harvester is created, the status is
     *inactive*. Use this button to make it
-    *active* and start the harvester(s) according to the schedule it has/they have been configured to use.
+    *active* and start the harvester(s) according to the schedule it has/they 
+    have been configured to use.
 
 #.  *Deactivate* Stops the harvester(s). Note: this does not mean that
-    currently running harvest(s) will be stopped. Instead, it means that the harvester(s) will not be scheduled to run again.
+    currently running harvest(s) will be stopped. Instead, it means that the 
+    harvester(s) will not be scheduled to run again.
 
 #.  *Run* Start the selected harvesters immediately.  This is useful for testing harvester setups.
 

@@ -3,31 +3,25 @@
 Frequently Asked Questions
 ==========================
 
-This is a list of frequently encountered problems, suggestions that help to find the cause of the 
-problem and possible solutions. The list is by no means exhaustive. Feel free to contribute by 
-submitting new problems and their solutions to the developer mailinglist.
+This is a list of frequently encountered problems, suggestions that help to find the cause of the problem and possible solutions. The list is by no means exhaustive. Feel free to contribute by submitting new problems and their solutions to the developer mailing list.
 
-.. note:: <install directory> is a placeholder for the GeoNetwork installation directory.
-
-  <some file> should be read as some random file name.
+.. note:: <install directory> is a placeholder for the GeoNetwork web application directory (eg. <your_tomcat>/webapps/geonetwork or <your_jetty>/web/geonetwork). <some file> should be read as some random file name.
   
-.. warning:: Be very careful when issuing commands on the terminal! You can easily damage your 
-  operating system with no way back. If you are not familiar with using the terminal: **don't do it, 
-  contact an expert instead!** Make a backup of your data before you make any of the suggested changes below!
+.. warning:: Be very careful when issuing commands on the terminal! You can easily damage your operating system with no way back. If you are not familiar with using the terminal: **don't do it, contact an expert instead!** Make a backup of your data before you make any of the suggested changes below!
 
 HTTP Status 400 Bad request
 ---------------------------
 
 Check the availability and write permissions of the data and tmp directories. 
 
-See :ref:`temp-dir`
+See :ref:`temp-dir` and :ref:`data-dir`.
 
 Metadata insert fails
 ---------------------
 
 Inserting an XML or MEF file through the Metadata insert form fails silently. Verify if the data directory is available and writable.
 
-See :ref:`temp-dir`
+See :ref:`temp-dir` and :ref:`data-dir`.
 
 Thumbnail insert fails
 ----------------------
@@ -38,30 +32,26 @@ Error in your log file looks like::
 
   HTTP Status 400 - Cannot build ServiceRequest Cause : <install directory>/data/tmp/<some file> (No such file or directory) Error : java.io.FileNotFoundException
 
-Then check :ref:`temp-dir`
+Then check :ref:`temp-dir` and :ref:`data-dir`.
 
 .. _temp-dir:
 
-The data and data/tmp directories
----------------------------------
+The data/tmp directory
+----------------------
 
-On Linux or OS X systems verify from a terminal if the data directory is existing and is writable.
+On Linux or OS X systems verify from a terminal if the data/tmp directory exists and is writable.
 
-:command:`ls -la <install directory>/data`
+:command:`ls -la <install directory>/data` 
 
-This should show the permissions on the data directory. For example::
+This should show the permissions on the data directory. For example, if you are running tomcat::
 
   total 0
   drwxr-xr-x   6 tomcat  tomcat  204 19 jan 15:34 .
   drwxr-xr-x   8 tomcat  tomcat  272 23 dec 19:30 ..
-  drwxr-xr-x  10 tomcat  tomcat  340 19 jan 15:47 00000-00099
-  drwxr-xr-x  21 tomcat  tomcat  714 23 dec 19:30 geoserver_data
   drwxr-xr-x   3 tomcat  tomcat  102 23 dec 19:30 removed
   drwxr-xr-x   3 tomcat  tomcat  102 19 jan 15:47 tmp
 
-The above example shows that only the user tomcat has write access on the directories listed. 
-All other users have read (and execute) rights only. 
-See http://en.wikipedia.org/wiki/Filesystem_permissions for more details on file permissions.
+The above example shows that only the user tomcat has write access on the directories listed. All other users have read (and execute) rights only. See http://en.wikipedia.org/wiki/Filesystem_permissions for more details on file permissions.
 
 Make sure your web server is running as user tomcat. Check this with the command:
 
@@ -92,13 +82,45 @@ Your permissions should now look like this::
 
 :command:`chown -R tomcat:tomcat <install directory>/data`
 
+.. _data-dir:
+
+What/Where is the GeoNetwork data directory?
+--------------------------------------------
+
+At GeoNetwork 2.8: 
+
+- metadata data (files uploaded with the metadata and thumbnails)
+- the Lucene index
+- plugin configurations (schema plugins, thesauri etc)
+
+have been moved into a single directory. By default, this directory is ``<install directory>/WEB-INF/data``, but it can be located on any filesystem accessible to the GeoNetwork server. 
+
+Check that the user running your webserver (eg. tomcat) has permissions over this directory.
+
+:command:`ls -la <install directory>/WEB-INF/data`
+
+Your should see something like the following::
+ 
+ total 0
+ drwxr-xr-x   5 tomcat tomcat  170 Jan  8 01:17 .
+ drwxr-xr-x  48 tomcat tomcat 1632 Jan  8 01:17 ..
+ drwxr-xr-x   5 tomcat tomcat  170 Jan  8 01:17 config
+ drwxr-xr-x   5 tomcat tomcat  170 Jan  8 01:17 data
+ drwxr-xr-x   9 tomcat tomcat  306 Jan  8 10:04 index
+
+If all is well, then the tomcat user will have write permissions on all sub directories.
+
+If not then you should ensure that the user running the webserver is the same user that holds write access to the GeoNetwork data directory (in this case tomcat). For this, you can (a) change the user running the process, or (b) change ownership of the directory using the chown command:
+
+:command:`chown -R tomcat:tomcat <install directory>/WEB-INF/data`
+
 The base maps are not visible
 -----------------------------
 
-**GeoServer** may not have started properly. Confirm this by trying to connect to http://<yourdomain>:8080/geoserver (on your local machine this is http:;/localhost:8080/geoserver )
+**GeoServer** may not have started properly. Confirm this by trying to connect to http://<yourdomain>:8080/geoserver (on your local machine this is http://localhost:8080/geoserver )
 
 Native JAI error on Jetty
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Error in output.log::
 
@@ -129,4 +151,4 @@ changing the web app context configuration to look like the following::
     </Ref>
   </Configure>
 
-.. note:: The importing line is the one where the **parentLoaderPriority** property is set to **true**
+.. note:: The important line is the one where the **parentLoaderPriority** property is set to **true**

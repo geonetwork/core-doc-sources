@@ -14,7 +14,7 @@ Metadata Description
 
 The metadata ISO 19139 profile used by GeoNetwork opensource to describe the geographic data and services is based on the ISO standard 19115:2003 and provides information related to the identification, the maintenance and constraints, the spatial and temporal extent, the spatial representation and reference, the quality and distribution of a geographic dataset.
 
-The metadata profile is organised in sections and the most important, illustrated in :ref:`main_sections`, are the: *Identification Section, Distribution Section, Reference System Section, Data Quality Section and Metadata Section*. These sections are described here in details.
+The metadata profile is organised in sections and the most important, illustrated below, are the: *Identification Section, Distribution Section, Reference System Section, Data Quality Section and Metadata Section*. These sections are described here in details.
 
 .. figure:: mainSections.png
 

@@ -141,8 +141,8 @@ Glossary
     
     GAST
         GeoNetwork Administrator Survival Tool. A desktop application
-        that allows administrators of a GeoNetwork catalog to perform a
-        range of admin operations.
+        that allows administrators of a GeoNetwork catalog to perform 
+        simple database configuration using a GUI.
     
     WebDAV
         Web-based Distributed Authoring and Versioning. WebDAV is a set of extensions to the

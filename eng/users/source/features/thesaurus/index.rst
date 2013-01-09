@@ -161,7 +161,7 @@ For each thesaurus the following buttons are available:
 Import an external thesaurus
 ````````````````````````````
 
-GeoNetwork allows thesaurus import in SKOS format. Once uploaded, an external thesaurus cannot be updated. Select the category, browse for the thesaurus file and click upload. The SKOS file will be in 'GEONETWORK_DATA_DIR/config/codelist/external/thesauri/<category>'.
+GeoNetwork allows thesaurus import in SKOS format. Once uploaded, an external thesaurus cannot be updated. Select the category, browse for the thesaurus file and click upload. The SKOS file will be in ``GEONETWORK_DATA_DIR/config/codelist/external/thesauri/<category>``.
 
 .. figure:: thesaurus-upload.png
 

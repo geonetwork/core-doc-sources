@@ -31,6 +31,8 @@ Typically an XSLT used with this service will accept some parameters then filter
 
 - Put the process XSLT into the process directory of the relevant metadata schema plugin. eg. if your process XSLT applies to iso19139 metadata records then it should be in the process directory of the iso19139 schema (``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/process``).
 
+.. index:: xml.metadata.processing
+
 Process a metadata record with an XSLT (xml.metadata.processing)
 ----------------------------------------------------------------
 
@@ -122,6 +124,7 @@ Errors
   an empty metadata record (explanation is returned in XML - see example response
   above). Returns 500 HTTP code
 
+.. index:: xml.metadata.batch.processing
 
 .. _metadata.batch.processing:
 
@@ -216,6 +219,8 @@ Errors
   service-not-allowed)**, when the user is not
   authenticated or their profile has no rights to execute the
   service. Returns 500 HTTP code
+
+.. index:: xml.metadata.batch.update.children
 
 Batch update child records (xml.metadata.batch.update.children)
 ---------------------------------------------------------------

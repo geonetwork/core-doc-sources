@@ -11,6 +11,8 @@ The **xml.info** service can be used to retrieve the categories available in Geo
 Category maintenance
 --------------------
 
+.. index:: xml.category.create.update
+
 Create/update a category (xml.category.create.update)
 `````````````````````````````````````````````````````
 
@@ -90,6 +92,8 @@ Errors
   "categories_name_key"**, when trying to create a new category using an existing
   category name. Returns 500 HTTP code
 
+.. index:: xml.category.update
+
 Update label translations (xml.category.update)
 ```````````````````````````````````````````````
 
@@ -144,6 +148,8 @@ Errors
 
 - **Missing parameter (error id: missing-parameter)**, when mandatory parameters
   are not provided. Returns 500 HTTP code
+
+.. index:: xml.category.get
 
 Get a category (xml.category.get)
 `````````````````````````````````
@@ -216,6 +222,8 @@ Errors
 
 - **bad-parameter id**, when **id** parameter is
   empty/invalid. Returns 500 HTTP code
+
+.. index:: xml.category.remove
 
 Remove a category (xml.category.remove)
 ```````````````````````````````````````

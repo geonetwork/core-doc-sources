@@ -3,6 +3,8 @@
 Metadata Category services
 ==========================
 
+.. index:: xml.metadata.category
+
 Update Categories of a metadata record (xml.metadata.category)
 --------------------------------------------------------------
 
@@ -87,6 +89,8 @@ Errors
 - **Metadata not found (error id: metadata-not-found)** if 
   a metadata record with the identifier provided does not exist.
   Returns 500 HTTP code.
+
+.. index:: xml.metadata.batch.update.categories
 
 .. _metadata.batch.update.categories:
 

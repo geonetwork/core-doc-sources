@@ -317,6 +317,8 @@ or more metadata records:
 
 .. _geonetwork_data_dir:
 
+.. index:: GEONETWORK_DATA_DIR
+
 GeoNetwork data directory
 -------------------------
 

@@ -12,6 +12,8 @@ id          foreign key to Metadata(id)     Source metadata
 relatedId   foreign key to Metadata(id)     Metadata related to the source
 ==========  ============================    ====================================
 
+.. index:: xml.relation
+
 Get all related records for a metadata record (xml.relation)
 ------------------------------------------------------------
 
@@ -106,6 +108,8 @@ Manage Relationships in the Relations table
 
 These services manage relationships between metadata records that are held in the Relations table ie. they are relationships that cannot be held in a metadata record.
 
+.. index:: xml.relation.get
+
 xml.relation.get
 ````````````````
 
@@ -196,6 +200,8 @@ If the response did not execute successfully then an HTTP error code 500 is retu
 
 .. note:: this service returns an empty response if the metadata record specified in the parameters doesn't exist.
 
+.. index:: xml.relation.insert
+
 xml.relation.insert
 ```````````````````
 
@@ -231,6 +237,8 @@ Normally an HTTP status code 200 is returned along with an XML document containi
 .. note:: this service returns this response even if the metadata records specified in the parameters do not exist.
 
 If the response did not execute successfully then an HTTP error code 500 is returned along with an XML document describing the exception/what went wrong. See :ref:`exception_handling` for more details.
+
+.. index:: xml.relation.delete
 
 xml.relation.delete
 ```````````````````

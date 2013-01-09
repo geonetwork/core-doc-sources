@@ -19,6 +19,8 @@ The second group of parameters must be changed manually by editing the ``config-
 
 The GAST tool can be used to help configure the database parameters (see the section on the GAST tool in the user manual).
 
+.. index:: xml.config.get
+
 xml.config.get
 --------------
 
@@ -320,6 +322,8 @@ Example of xml.config.get response::
     <only>prefer_locale</only>
   </requestedLanguage>
  </config>
+
+.. index:: xml.config.set
 
 xml.config.set
 --------------

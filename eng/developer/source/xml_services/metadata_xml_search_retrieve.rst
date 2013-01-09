@@ -3,6 +3,8 @@
 Search and Retrieve Metadata services
 =====================================
 
+.. index:: xml.search
+
 Search metadata (xml.search)
 ----------------------------
 
@@ -213,6 +215,8 @@ Metadata search response example::
     </metadata>
   </response>
 
+.. index:: xml.metadata.get
+
 Get metadata (xml.metadata.get)
 -------------------------------
 
@@ -325,6 +329,8 @@ Errors
   operation-not-allowed)**, when the user is not allowed
   to view the metadata record. Returns 500 HTTP code
 
+.. index:: xml.user.metadata
+
 Get user metadata (xml.user.metadata)
 -------------------------------------
 
@@ -392,6 +398,8 @@ Errors
 - **Unauthorized user attempted to list editable metadata (error id:
   operation-not-allowed)**, when the user is not allowed
   to list metadata records. Returned 500 HTTP code
+
+.. index:: rss.search
 
 RSS Search: Search metadata and retrieve in RSS format (rss.search)
 -------------------------------------------------------------------
@@ -532,6 +540,8 @@ RSS search response example::
         </item>
     </channel>
   </rss>
+
+.. index:: rss.latest
 
 RSS latest: Get latest updated metadata (rss.latest)
 ----------------------------------------------------

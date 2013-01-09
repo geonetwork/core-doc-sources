@@ -10,6 +10,8 @@ This chapter provides a detailed explanation of the GeoNetwork’s harvesting
 services. These services allow a complete control over the harvesting behaviour.
 They are used by the web interface and can be used by any other client.
 
+.. index:: xml.harvesting.get
+
 xml.harvesting.get
 ------------------
 
@@ -139,6 +141,8 @@ Errors
 - ObjectNotFoundEx If the id parameter is provided but the node
   cannot be found.
 
+.. index:: xml.harvesting.add
+
 xml.harvesting.add
 ------------------
 
@@ -172,6 +176,8 @@ GeoNetwork          native              through policies    yes
 WebDAV              HTTP digest         yes                 yes
 CSW                 HTTP Basic          yes                 yes
 ===============     ==============      ================    ============
+
+.. index:: xml.harvesting.update
 
 xml.harvesting.update
 ---------------------
@@ -216,6 +222,11 @@ Response
 
 The response is the same as the xml.harvesting.get called on the updated
 entry.
+
+.. index:: xml.harvesting.remove
+.. index:: xml.harvesting.start
+.. index:: xml.harvesting.stop
+.. index:: xml.harvesting.run
 
 xml.harvesting.remove /start /stop /run
 ---------------------------------------

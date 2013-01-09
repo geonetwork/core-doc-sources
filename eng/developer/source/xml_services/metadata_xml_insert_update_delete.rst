@@ -7,6 +7,8 @@ These services provide insert, update and delete operations for metadata records
 
 This is the Create, Update, Delete part of the metadata CRUD operations in GeoNetwork. For read/retrieve operations (the R in CRUD) see :ref:`metadata_xml_search_retrieve`.
 
+.. index:: xml.metadata.insert
+
 Insert metadata (xml.metadata.insert)
 -------------------------------------
 
@@ -177,6 +179,8 @@ Errors
   metadata record in catalog has the same uuid of the metadata
   record being inserted. Returns 500 HTTP code
 
+.. index:: xml.metadata.update
+
 Update metadata (xml.metadata.update)
 -------------------------------------
 
@@ -289,12 +293,14 @@ Errors
   different from the current version number (Metadata record is in use by 
   another user). Returns 500 HTTP code
 
+.. index:: xml.metadata.delete
+
 Delete metadata (xml.metadata.delete)
 -------------------------------------
 
 The **xml.metadata.delete** service removes a 
 metadata record from the catalog. The metadata record is
-backed up in MEF format in ``INSTALL_DIR/web/geonetwork/WEB-INF/data/removed``. 
+backed up in MEF format in ``GEONETWORK_DATA_DIR/removed``. 
 
 Requires authentication: Yes
 
@@ -371,6 +377,8 @@ Errors
 	
   Returns 500 HTTP code.
 
+
+.. index:: xml.metadata.batch.delete
 
 .. _metadata.batch.delete:
 

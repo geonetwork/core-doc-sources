@@ -6,6 +6,8 @@ Metadata Select services
 
 These services are for creating and managing a set of selected metadata records. The selected set is normally used by the metadata.batch services eg. :ref:`metadata.batch.update.privileges`, :ref:`metadata.batch.newowner`, :ref:`metadata.batch.update.status`, :ref:`metadata.batch.update.categories`, :ref:`metadata.batch.version`, :ref:`metadata.batch.processing` and :ref:`metadata.batch.delete`.
 
+.. index:: xml.metadata.select
+
 .. _metadata.select:
 
 Select metadata records (xml.metadata.select)

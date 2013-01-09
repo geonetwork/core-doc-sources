@@ -11,6 +11,8 @@ The **xml.info** service can be used to retrieve the user groups available in Ge
 Group maintenance
 -----------------
 
+.. index:: xml.group.create.update
+
 Create/update a group (xml.group.create.update)
 ```````````````````````````````````````````````
 
@@ -97,6 +99,8 @@ Errors
   "groups_name_key"**, when trying to create a new group using an existing
   group name. Returns 500 HTTP code
 
+.. index:: xml.group.update
+
 Update label translations (xml.group.update)
 ````````````````````````````````````````````
 
@@ -152,6 +156,8 @@ Errors
 
 - **Missing parameter (error id: missing-parameter)**, when mandatory parameters
   are not provided. Returns 500 HTTP code
+
+.. index:: xml.group.get
 
 Get a group (xml.group.get)
 ```````````````````````````
@@ -230,6 +236,7 @@ Errors
 - **bad-parameter id**, when **id** parameter is
   empty/invalid. Returns 500 HTTP code
 
+.. index:: xml.group.remove
 
 Remove a group (xml.group.remove)
 `````````````````````````````````

@@ -14,6 +14,8 @@ Metadata Schema Information (xml.info?type=schemas)
 
 See :ref:`xml.info` for more details.
 
+.. index:: xml.schema.info
+
 Schema Element and Codelist Information (xml.schema.info)
 ---------------------------------------------------------
 
@@ -128,6 +130,8 @@ unknown-namespace   The namespace of the specified prefix was not found
 not-found           The requested element / codelist was not found
 =================   ============================================================
 
+.. index:: xml.metadata.schema.add
+
 Add a metadata schema (xml.metadata.schema.add)
 -----------------------------------------------
 
@@ -184,6 +188,8 @@ went wrong. An example error response is:::
   
 See :ref:`exception_handling` for more details.
 
+.. index:: xml.metadata.schema.update
+
 Update a metadata schema (xml.metadata.schema.update)
 -----------------------------------------------------
 
@@ -239,6 +245,8 @@ went wrong. An example error response is:::
  </error>
   
 See :ref:`exception_handling` for more details.
+
+.. index:: xml.metadata.schema.delete
 
 Delete a metadata schema (xml.metadata.schema.delete)
 -----------------------------------------------------

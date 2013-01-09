@@ -67,7 +67,7 @@ A MEF file is simply a ZIP file which contains the following files::
 
 #.  *private*: this is a directory used to store all data (maps, shape files
     etc...) uploaded with the metadata in the GeoNetwork editor. Files in this 
-		directory are *private* in the sense that authorisation is
+    directory are *private* in the sense that authorisation is
     required to access them. There are no restrictions on the file types that
     can be stored into this directory.
 

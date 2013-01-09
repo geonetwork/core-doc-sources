@@ -43,8 +43,7 @@ the structure of its request:
     </request>
 
 
-- **POST**
-There are 3 variants of this method:
+- **POST** There are 3 variants of this method:
 
   #. **ENCODED** The request has one of the following content types: application/x-www-form-urlencoded or multipart/form-data. The first case is very common when sending web forms while the second one is used to send binary data (usually files) to the server. In these cases, the parameters are not structured so the rules of the GET method applies. Even if the second case could be used to send XML documents, this possibility is not considered on the server side.
   #. **XML** The content type is application/xml.  This is the common case when the client is not a browser but a specialised client. The request is a pure XML document in string form, encoded using the encoding specified into the prologue of the XML document. Using this form, any type of request can be made (structured or not) so any service can be called.
@@ -63,6 +62,8 @@ On a GET request, the client can force a SOAP response adding the
 application/soap+xml content type to the Accept
 header parameter.
 
+.. index:: Exception Handling
+
 .. _exception_handling:
 
 Exception handling
@@ -75,7 +76,7 @@ structure:
 
 - **error**: This is the root element of the document. It has a mandatory
   id attribute that represents an identifier of the error from a common
-  set. See :ref:`error2_ids` for a list of all id values.
+  set. See below for a list of all id values.
   
   - **message**: A message related to the error. It can be a short
     description about the error type or it can contain some other
@@ -132,7 +133,7 @@ structure:
 =========================   ===============================     =============================
 
 
-:ref:`mef_export_exception` shows an example of exception generated
+Below is an example of exception generated
 by the mef.export service. The service complains about a missing parameter, as
 you can see from the content of the id attribute. The object element contains
 the xml request with an unknown test parameter while the mandatory UUID

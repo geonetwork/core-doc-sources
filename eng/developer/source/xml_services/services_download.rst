@@ -10,6 +10,8 @@ This chapter provides a detailed explanation of GeoNetwork file download service
 
 The two services, used together, can be used to create a simple click through licensing scheme for file resources attached to metadata records in GeoNetwork.
 
+.. index:: xml.file.disclaimer
+
 xml.file.disclaimer
 -------------------
 
@@ -76,6 +78,8 @@ Errors
 - **IllegalArgumentException**: Metadata not found.
 
 - **OperationNowAllowedException**: you don't have download permission over this record.
+
+.. index:: xml.file.download
 
 xml.file.download
 -----------------

@@ -9,6 +9,8 @@ Introduction
 This chapter describes the services related to the Metadata Exchange Format.
 These services allow to import/export metadata using the MEF format.
 
+.. index:: mef.export
+
 mef.export
 ----------
 
@@ -46,6 +48,8 @@ The service’s response is a MEF file with these characteristics:
 - the name of the file is the metadata’s UUID
 
 - the extension of the file is mef
+
+.. index:: mef.import
 
 mef.import
 ----------

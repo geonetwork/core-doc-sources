@@ -7,6 +7,8 @@ These services allow retrieval and management of metadata ownership where the 'o
 Only users with **Administrator** and **UserAdmin**
 profiles can execute these services.
 
+.. index:: xml.metadata.batch.newowner
+
 .. _metadata.batch.newowner:
 
 Batch new owner (xml.metadata.batch.newowner)
@@ -92,6 +94,8 @@ Errors
 ``````
 - **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or their profile has no rights to execute the service. Returns 500 HTTP code
 
+.. index:: xml.ownership.transfer
+
 Transfer ownership (xml.ownership.transfer)
 -------------------------------------------
 
@@ -167,6 +171,8 @@ Errors
 - **Missing parameter (error id: missing-parameter)**, when mandatory parameters are not provided. Returns 500 HTTP code
 
 - **bad-parameter XXXX**, when a mandatory parameter is empty or invalid. Returns 500 HTTP code
+
+.. index:: xml.ownership.editors
 
 .. _xml.ownership.editors:
 
@@ -245,6 +251,8 @@ Errors
 ``````
 
 - **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or his profile has no rights to execute the service. Returns 500 HTTP code
+
+.. index:: xml.ownership.groups
 
 .. _xml.ownership.groups:
 

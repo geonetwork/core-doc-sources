@@ -3,6 +3,8 @@
 Metadata Status services
 ========================
 
+.. index:: xml.metadata.status
+
 Update Status on a metadata record (xml.metadata.status)
 --------------------------------------------------------
 
@@ -92,6 +94,8 @@ Errors
   a metadata record with the identifier provided does not exist
 
 - **Only the owner of the metadata can set the status. User is not the owner of the metadata**, if the user does not have ownership rights over the metadata record.
+
+.. index:: xml.metadata.batch.update.status
 
 .. _metadata.batch.update.status:
 
@@ -190,6 +194,7 @@ Errors
   authenticated or their profile has no rights to execute the
   service. Returns 500 HTTP code
 
+.. index:: xml.metadata.status.get
 
 Get status of a metadata record (xml.metadata.status.get)
 ---------------------------------------------------------

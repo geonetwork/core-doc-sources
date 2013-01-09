@@ -11,6 +11,8 @@ List of Users (xml.info?type=users)
 
 The **xml.info** service can be used to retrieve the users defined in GeoNetwork. See :ref:`xml.info`.
 
+.. index:: xml.usergrpups.list
+
 User groups list (xml.usergroups.list)
 ``````````````````````````````````````
 
@@ -78,6 +80,8 @@ Errors
 - **Service not allowed (error id: service-not-allowed)**, when the user is not authenticated or their profile has no rights to execute the service. Returns 500 HTTP code
 
 - **User XXXX doesn't exist**, if a user with provided **id** value does not exist. Returns 500 HTTP code
+
+.. index:: xml.user.get
 
 User information (xml.user.get)
 ```````````````````````````````
@@ -161,6 +165,8 @@ Errors
 
 User Maintenance Services
 -------------------------
+
+.. index:: xml.user.update
 
 Create a user (xml.user.update)
 ```````````````````````````````
@@ -472,6 +478,8 @@ Errors
 - **ERROR: you don't have rights to do this**, when the authenticated user is not
   an **Administrator** or **UserAdmin**. Returns 500 HTTP code
 
+.. index:: xml.user.infoupdate
+
 Update current authenticated user information (xml.user.infoupdate)
 ```````````````````````````````````````````````````````````````````
 
@@ -547,6 +555,8 @@ Errors
   are not provided. Returns 500 HTTP code
 
 
+.. index:: xml.user.pwupdate
+
 Change current authenticated user password (xml.user.pwupdate)
 ``````````````````````````````````````````````````````````````
 
@@ -599,6 +609,8 @@ Errors
 
 - **Bad parameter (newPassword)**, when an empty password is
   provided. Returns 500 HTTP code
+
+.. index:: xml.user.remove
 
 Remove a user (xml.user.remove)
 ```````````````````````````````

@@ -6,6 +6,8 @@ Metadata Validation services
 
 These services are for validating metadata against the XML schema documents (XSDs) and schematrons specified as part of a GeoNetwork Metadata Schema. See :ref:`schemaPlugins` for more details.
 
+.. index:: xml.metadata.validation
+
 Validate a metadata record (xml.metadata.validation)
 ----------------------------------------------------
 

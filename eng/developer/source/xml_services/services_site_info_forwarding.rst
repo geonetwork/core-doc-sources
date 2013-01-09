@@ -5,6 +5,8 @@ Site Information and Request Forwarding Services
 
 Services in this section provide information about the site (eg. name, users, groups, schemas etc) and access to the site forwarding service which can be used by JavaScript clients.
 
+.. index:: xml.info
+
 .. _xml.info:
 
 Site Information (xml.info)
@@ -344,6 +346,8 @@ such elements::
         <fre>Éditeurs</fre>
         <esp>Editores</esp>
     </label>
+
+.. index:: xml.forward
 
 Request Forwarding (xml.forward)
 --------------------------------

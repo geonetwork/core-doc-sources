@@ -3,6 +3,8 @@
 Metadata Versioning services
 ============================
 
+.. index:: xml.metadata.version
+
 Start versioning a metadata record (xml.metadata.version)
 ---------------------------------------------------------
 
@@ -80,6 +82,8 @@ Errors
 
 - **Operation Not Allowed**, if the user does not have editing rights over the 
   metadata record. Returns 500 HTTP code
+
+.. index:: xml.metadata.batch.version
 
 .. _metadata.batch.version:
 

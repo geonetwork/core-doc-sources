@@ -3,7 +3,7 @@
 Processing
 ==========
 
-GeoNetwork can batch process metadata records by applying an XSLT. The processing XSLTs are schema dependent and must be stored in the process folder of each metadata schema. For example, the process folder for the iso19139 metadata schema can be found in **GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/process**.
+GeoNetwork can batch process metadata records by applying an XSLT. The processing XSLTs are schema dependent and must be stored in the process folder of each metadata schema. For example, the process folder for the iso19139 metadata schema can be found in ``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/process``.
 
 Some examples of batch processing are:
 

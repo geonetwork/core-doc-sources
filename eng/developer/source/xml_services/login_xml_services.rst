@@ -6,6 +6,8 @@ Login and Logout services
 Login services
 --------------
 
+.. index:: xml.user.login
+
 .. _xml.user.login:
 
 GeoNetwork standard login (xml.user.login)
@@ -99,6 +101,8 @@ Errors
 
 Logout service
 --------------
+
+.. index:: xml.user.logout
 
 Logout (xml.user.logout)
 ````````````````````````

@@ -27,7 +27,7 @@ Add templates
 
 This option allows the user to select the metadata templates from any schema and add them to the catalogue.
 
-.. warning:: This will add the default templates available for each schema in GEONETWORK_DATA_DIR/config/schema_plugins - it should be used with care by an Administrator.
+.. warning:: This will add the default templates available for each schema in ``GEONETWORK_DATA_DIR/config/schema_plugins`` - it should be used with care by an Administrator.
 
 .. figure:: templates-add.png
 

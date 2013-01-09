@@ -3,6 +3,8 @@
 Metadata Privilege services
 ===========================
 
+.. index:: xml.metadata.privileges
+
 Update privileges on a metadata record (xml.metadata.privileges)
 ----------------------------------------------------------------
 
@@ -104,6 +106,8 @@ Errors
 - **ERROR: insert or update on table "operationallowed"
   violates foreign key 'operationallowed_groupid_fkey »**, if a
   group identifier provided is not valid. Returns 500 HTTP code
+
+.. index:: xml.metadata.batch.update.privileges
 
 .. _metadata.batch.update.privileges:
 

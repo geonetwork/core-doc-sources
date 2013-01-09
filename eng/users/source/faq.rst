@@ -39,7 +39,7 @@ Then check :ref:`temp-dir` and :ref:`data-dir`.
 The data/tmp directory
 ----------------------
 
-On Linux or OS X systems verify from a terminal if the data/tmp directory exists and is writable.
+This directory is used as a staging area for file uploads and image/thumbnail operations. On Linux or OS X systems verify from a terminal if the ``<install directory>/data/tmp`` directory exists and is writable.
 
 :command:`ls -la <install directory>/data` 
 
@@ -48,7 +48,6 @@ This should show the permissions on the data directory. For example, if you are 
   total 0
   drwxr-xr-x   6 tomcat  tomcat  204 19 jan 15:34 .
   drwxr-xr-x   8 tomcat  tomcat  272 23 dec 19:30 ..
-  drwxr-xr-x   3 tomcat  tomcat  102 23 dec 19:30 removed
   drwxr-xr-x   3 tomcat  tomcat  102 19 jan 15:47 tmp
 
 The above example shows that only the user tomcat has write access on the directories listed. All other users have read (and execute) rights only. See http://en.wikipedia.org/wiki/Filesystem_permissions for more details on file permissions.
@@ -93,7 +92,8 @@ At GeoNetwork 2.8:
 - the Lucene index
 - plugin configurations (schema plugins, thesauri etc)
 
-have been moved into a single directory. By default, this directory is ``<install directory>/WEB-INF/data``, but it can be located on any filesystem accessible to the GeoNetwork server. 
+have been moved into a single directory. By default, this directory is ``<install directory>/WEB-INF/data``, but it can be located on any filesystem accessible to the GeoNetwork server and the different subdirectories can even be placed in 
+different directories. See :ref:`geonetwork_data_dir` for more details. For the purposes of this FAQ, we'll assume that the GeoNetwork data directory is ``<install directory>/WEB-INF/data`` because the same principles apply no matter where the data directory is located. 
 
 Check that the user running your webserver (eg. tomcat) has permissions over this directory.
 

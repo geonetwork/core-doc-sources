@@ -305,7 +305,7 @@ or more metadata records:
 #. **If you need to support a catalog with more than 1 million records** GeoNetwork creates a 
    directory for each record that in turn contains a `public` and a `private` directory for holding 
    attached data and thumbnails. These directories are in the GeoNetwork `data` directory - 
-   typically: `INSTALL_DIR/web/geonetwork/WEB-INF/data`. This can exhaust the number of inodes 
+   typically: `INSTALL_DIR/web/geonetwork/WEB-INF/data` - see :ref:`geonetwork_data_dir`. This can exhaust the number of inodes 
    available in a Linux file system (you will often see misleading error reports saying that 
    the filesystem is 'out of space' - even though the filesystem may have lots of freespace). 
    Check this using `df -i`. Since inodes are allocated statically when the filesystem is created 
@@ -315,7 +315,7 @@ or more metadata records:
    least 5x (and to be safe 10x) the number of records you are expecting to hold and let 
    GeoNetwork create its `data` directory on that filesystem.
 
-.. _system_properties_configuration:
+.. _geonetwork_data_dir:
 
 GeoNetwork data directory
 -------------------------
@@ -328,7 +328,7 @@ web application for each deployment target or need to patch each after deploymen
  #. Configuration override files (See :ref:`adv_configuration_overriddes`)
 
 
-The GeoNetwork data directory is the location on the file system where GeoNetwork stores all of its custom configuration. 
+The GeoNetwork data directory is the location on the file system where GeoNetwork stores much of its custom configuration. 
 This configuration defines such things as: What thesaurus is used by GeoNetwork? What schema is plugged in GeoNetwork? 
 The data directory also contains a number of support files used by GeoNetwork for various purposes (eg. Lucene index, spatial index, logos).
 
@@ -339,13 +339,14 @@ Creating a new data directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 The data directory needs to be created before starting the catalogue. It must be readable and writable by the user starting the catalogue. 
-If the data directory is an empty folder, the catalogue will initialized the directory default structure. The easiest way to create a 
-new data directory is to copy one that comes with a standards installation.
+If the data directory is an empty folder, the catalogue will initialize the directory default structure. The easiest way to create a 
+new data directory is to copy one that comes with a standard installation - 
+you can find this in ``INSTALL_DIR/web/geonetwork/WEB-INF/data``.
 
 Setting the data directory
 ~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The data directory variable could be set using:
+The data directory variable can be set using:
 
  - Java environment variable
  - Servlet context parameter
@@ -377,10 +378,10 @@ For Tomcat, configuration is::
 Run the web application in read-only mode
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-In order to run the catalogue with the webapp folder in read-only mode, user needs to set 2 variables:
+In order to run GeoNetwork with the webapp folder in read-only mode, the user needs to set two variables:
 
  - <webappName>.dir or geonetwork.dir for the data folder.
- - (optional) config overrides if configuration files needs to be changed (See :ref:`adv_configuration_overriddes`).
+ - (optional) config overrides if configuration files need to be changed (See :ref:`adv_configuration_overriddes`).
  
  
 For Tomcat, configuration could be::
@@ -401,25 +402,27 @@ The structure of the data directory is::
   |   |     |--htmlcache
   |   |     |--images
   |   |     |   |--harvesting
-  |   |     |   |--logo
+  |   |     |   |--logos
   |   |     |   |--statTmp
   |   |
-  |   |--removed: Folder with removed metadata.
-  |   |--svn_repository: The subversion repository
+  |   |--metadata_subversion: The subversion repository
   |
-  |--config: Extra configuration (eg. overrides)
+  |--config: Extra configuration (eg. could contain overrides)
   |   |--schemaplugin-uri-catalog.xml
-  |   |--codelist: The thesaurus in SKOS format
+  |   |--codelist: The thesauri in SKOS format
   |   |--schemaPlugins: The directory used to store new metadata standards
   |
   |--index: All indexes used for search
   |   |--nonspatial: Lucene index
-  |   |--spatialindex.*: ESRI Shapefile for the index (if not using PostGIS)
+  |   |--spatialindex.*: ESRI Shapefile for the index (if not using spatial db)
+  | 
+  |--removed: Folder with removed metadata.
   
   
 
-Advanced configuration
-~~~~~~~~~~~~~~~~~~~~~~
+Advanced data directory configuration
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
 All sub-directories could be configured separately using java system property. For example, to put index directory in a custom location use:
 
  - <webappName>.lucene.dir and if not set using:
@@ -442,10 +445,9 @@ Example:
 System information
 ~~~~~~~~~~~~~~~~~~
 
-All catalogue configuration directory could be check in administration > system information panel.
+All catalogue configuration directory can be found using the ``System Information`` in the ``Administration`` page.
 
-    .. figure:: geonetwork-data-dirs.png
-
+.. figure:: geonetwork-data-dirs.png
 
 
 Other system properties

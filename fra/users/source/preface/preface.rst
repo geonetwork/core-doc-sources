@@ -26,7 +26,7 @@ Information sur la licence
 Logiciel
 ````````
 
-Le logiciel |project_name| est distribué sous licence `GPL <http://www.gnu.org/copyleft/gpl.html>`_.
+Le logiciel |project_name| est distribué sous licence `GPL v2 <http://www.gnu.org/licenses/old-licenses/gpl-2.0.html>`_.
 
 
 Documentation
@@ -93,7 +93,7 @@ Principales caractéristiques :
 Histoire et évolution
 ---------------------
 
-Le premier prototype du catalogue |project_name| a été développé par la FAO en 2001 
+Le premier prototype du catalogue GeoNetwork a été développé par la FAO en 2001 
 pour archiver et publier les données géographiques produites dans l'organisation. 
 Ce prototype a été bâti sur les expériences au sein et en dehors de la FAO. 
 Il a utilisé le contenu des métadonnées disponibles dans les systèmes existants 
@@ -103,7 +103,7 @@ Alimentaire Mondial (PAM) a rejoint le projet et a contribué à la première ve
 a été publié en 2003. Le système était basé sur le DIS (Draft International Standard) de l'ISO19115
 et intégré le module InterMap pour la carte interactive. 
 Les recherches distribuées était possible en utilisant la norme Z39.50.
-A ce moment, il a été décidé de distribuer |project_name| en tant que logiciel libre afin de 
+A ce moment, il a été décidé de distribuer GeoNetwork en tant que logiciel libre afin de 
 permettre à l'ensemble de la communauté géospatiale aux utilisateurs de bénéficier des
 résultats de développement et de contribuer à l'avancement du projet.
 
@@ -115,23 +115,19 @@ place de mécanisme de moissonnage et l'amélioration de la fiabilité lors de
 recherches dans plusieurs catalogues.
 
 
-En 2006, l'équipe de |project_name| a élaboré un DVD contenant le
-la version 2.0.3 de |project_name| et le meilleur des logiciels dans le domaine de
-la géomatique. Le DVD a été produit et distribué à plus de trois mille personnes.
-
 Ensuite, les standards ISO ISO19139 pour les métadonnées de données et ISO19119 pour les métadonnées services ont été ajouté.
-|project_name| a été l'implémentation  de référence pour le protocol OGC CSW 2.0.2 profile ISO.
+GeoNetwork a été l'implémentation  de référence pour le protocol OGC CSW 2.0.2 profile ISO.
 Pour améliorer les échanges, de multiples protocoles de moissonnage sont disponibles : OAI-PMH, ESRI ArcSDE, 
 CSW, Z39.50, OGC WxS, WFS, Système de fichier, Serveur WebDav, `Thredds <http://www.unidata.ucar.edu/projects/THREDDS/>`_.
 
 
-Depuis 2009, des travaux ont également permis à |project_name| de prendre en compte les recommandations de la
+Depuis 2009, des travaux ont également permis à GeoNetwork de prendre en compte les recommandations de la
 `directive INSPIRE <http://eur-lex.europa.eu/JOHtml.do?uri=OJ:L:2007:108:SOM:EN:HTML>`_ 
 en mettant en place des mécanismes avancés de validation, la saisie de métadonnées
 en mode multilingue, la gestion des thésaurus au format SKOS tel que GEMET ou AGROVOC.
 
 
-|project_name| est le résultat du travail de nombreux contributeurs avec le soutient
+GeoNetwork est le résultat du travail de nombreux contributeurs avec le soutient
 entre autres, des agences des nations unies (FAO, OCHA, CSI-GCRAI, UNEP, ...), 
 l'Agence spatiale européenne (ESA), le CSIRO, le BRGM, Swisstopo, GeoNovum, ...
 
@@ -143,13 +139,15 @@ Qu'est ce que GeoSource ?
 Initié en 2006 par la Direction Générale de la Modernisation de l'État, Geosource est un outil 
 simple de catalogage des données et services à références spatiales, 
 implémentant le profil français de la norme EN-ISO 19115:2005, et sa déclinaison en XML (ISO 19139).
-Il est dérivé du projet |project_name|.
+Il est dérivé du projet GeoNetwork.
+
+Le code source est accessible sur `github.com <http://github.com/geosource-catalogue/>`_.
 
 
 GeoNetwork et sa communauté Open Source
 ---------------------------------------
 
-La communauté des utilisateurs et des développeurs du logiciel |project_name| a augmenté
+La communauté des utilisateurs et des développeurs du logiciel GeoNetwork a augmenté
 de façon spectaculaire depuis la sortie de la version 2.0 en Décembre 2005.
 À l'heure actuelle, les listes de diffusion des utilisateurs et développeurs comptent
 respectivement plus de 640 et 340 abonnés. L'abonnement à ces listes est ouvert à tous. 
@@ -211,15 +209,16 @@ Contributeurs anciens et actuels
 
 Les développeurs actifs sur le trunk sont les suivants :
 
-- Mathieu Coudert	
-- Heikki Doeleman	
-- Jose Garcia	
-- Roberto Giaccio	
-- Simon Pigot	
+- Mathieu Coudert
+- Heikki Doeleman
+- Jose Garcia
+- Jesse Eichar
+- Roberto Giaccio
+- Simon Pigot
 - Francois Prunayre	
 - Emanuele Tajariol	
-- Jeroen Ticheler	
-- Archie Warnock	
+- Jeroen Ticheler
+- Archie Warnock
 
 
 
@@ -241,14 +240,16 @@ Les deux sont maintenus par des membres de confiance de la communauté. Ils offr
 à la documentation, les rapports de bugs, le suivi, le wiki, .... Une
 partie de la communauté se connecte via Internet Relay Chat (IRC) sur le canal ``irc://irc.freenode.net/geonetwork``.
 Cependant la majorité des dialogues a lieu sur
-`la liste utilisateur <https://lists.sourceforge.net/mailman/listinfo/geonetwork-users>`_ et 
+`la liste utilisateur anglophone <https://lists.sourceforge.net/mailman/listinfo/geonetwork-users>`_, 
+`la liste utilisateur francophone <https://lists.sourceforge.net/mailman/listinfo/geonetwork-users-fr>`_, 
+`liste de diffusion espagnole <https://lists.sourceforge.net/lists/listinfo/geonetwork-usuarios-es>`_ et 
 `la liste développeur <https://lists.sourceforge.net/mailman/listinfo/geonetwork-devel>`_
 
 
 Code source
 ```````````
 
-Le code source est accessible sur `SourceForge.net <http://sourceforge.net/projects/geonetwork>`_.
+Le code source est accessible sur `SourceForge.net <http://sourceforge.net/projects/geonetwork>`_ et `github.com <http://github.com/geonetwork/>`_.
 
 Documentation
 `````````````

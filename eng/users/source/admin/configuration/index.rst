@@ -1,10 +1,7 @@
 .. _configuration:
 
-Basic configuration
-===================
-
 System configuration
---------------------
+====================
 
 Many GeoNetwork System configuration parameters can be changed using the
 web interface. Database parameters can be changed using the GAST application.
@@ -265,75 +262,3 @@ directory is used as a backup directory to allow system administrators to recove
 related data after erroneous deletion. By default the removed directory
 is created in the GeoNetwork data folder.
 
-Authentication
-``````````````
-
-In this section you define the source against which GeoNetwork will authenticate users and passwords.
-
-.. figure:: web-config-options-authentication.png
-
-    *Authentication configuration options*
-
-By default, users are authenticated against info held in the GeoNetwork database. When the GeoNetwork database is used as the authentication source, the user self-registration function can be enabled. A later section discusses user self-registration and the configuration options it requires.
-
-You may choose to authenticate logins against either the GeoNetwork database tables or LDAP (the lightweight directory access protocol) but not both. The next section describes how to authenticate against LDAP.
-
-In addition to either of these options, you may also configure other authentication sources. At present, Shibboleth is the only additional authentication source that can be configured. Shibboleth is typically used for national access federations such as the Australian Access Federation. Configuring shibboleth authentication in GeoNetwork to use such a federation would allow not only users from a local database or LDAP directory to use your installation, but any user from such a federation.
-
-LDAP Authentication
-~~~~~~~~~~~~~~~~~~~
-
-The section defines how to connect to an LDAP authentication system.
-
-.. figure:: web-config-options-ldap.png
-
-    *The LDAP configuration options*
-
-Typically all users must have their details in the LDAP directory to login to GeoNetwork. However if a user is added to the GeoNetwork database with the Administrator profile then they will be able to login without their details being present in the LDAP directory.
-
-Shibboleth Authentication
-~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When using either the GeoNetwork database or LDAP for authentication, you can also configure shibboleth to allow authentication against access federations.
-
-.. figure:: web-config-options-shibboleth.png
-
-    *The Shibboleth configuration options*
-
-Shibboleth authentication requires interaction with Apache web server. In particular, the apache web server must be configured to require Shibboleth authentication to access the path entered in the configuration. The apache web server configuration will contain the details of the shibboleth server that works out where a user is located (sometimes called a 'where are you from' server).
-
-The remainder of the shibboleth login configuration describes how shibboleth authentication attributes are mapped to GeoNetwork user database fields as once a user is authenticated against shibboleth, their details are copied to the local GeoNetwork database.
-
-Configuring OGC Catalogue Services Web (CSW)
---------------------------------------------
-See :doc:`../csw-configuration/index`
-
-.. _config_user_self_registration:
-
-Configuring User Self-Registration
-----------------------------------
-
-GeoNetwork has a self-registration function which allows a user to request a login which provides access to 'registered-user' functions.  By default this capability is switched off. To configure this capability you must complete the following sections in the 'System configuration' menu:
-
-- configure the site name and organization name as these will be used in emails from this GeoNetwork site to newly registered users. An example of how to config these fields at the top of the system configuration form is:
-
-.. figure:: web-config-name-organization.png
-
-- configure feedback email address, SMTP host and SMTP port. The feedback email address will be sent an email when a new user registers and requests a profile other than 'Registered User'. An example of how to config these fields in the system configuration form is:
-
-.. figure:: web-config-options-feedback.png
-
-- check the box, enable user self-registration in the Authentication section of the system configuration form as follows:
-
-.. figure:: web-config-authentication-self-registration-checked.png
-
-When you save the system configuration form, return to the home page and log out as admin, your banner menu should now include two new options, 'Forgot your password?' and 'Register' (or their translations into your selected language) as follows:
-
-.. figure:: web-config-banner-with-self-registration.png
-
-You should also configure the xml file that includes contact details to be 
-displayed when an error occurs in the registration process. This file is 
-localized - the english version is located in 
-INSTALL_DIR/web/geonetwork/loc/en/xml/registration-sent.xml.
-
-Finally, if you want to change the content of the email that contains registration details for new users, you should modify INSTALL_DIR/web/geonetwork/xsl/registration-pwd-email.xsl.

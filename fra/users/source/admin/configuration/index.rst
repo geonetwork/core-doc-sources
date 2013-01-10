@@ -237,57 +237,6 @@ Permet de définir le répertoire à utiliser pour la sauvegarde lors de la supp
 Ce répertoire permet pour les administrateurs du système de récupérer des métadonnées supprimées par erreur.
 
 
-Configuration de l'authentication
-`````````````````````````````````
-
-Cette section permet de définir le mode d'authentification pour le catalogue.
-
-.. figure:: web-config-options-authentication.png
-
-    Options de configuration du mode d'authentification
-    
-
-Par défaut, les utilisateus sont identifiés par la base de données du catalogue. 
-Dans ce mode là, il est possible d'activer l'option d'enregistrement libre des internautes (alors membre du groupe invité).
-
-LDAP (lightweight directory access protocol) est un autre mode d'authentification supporté par le catalogue.  ).
-
-Shibboleth est un autre mode d'authentification utilisable en complément des 2 autres modes. Tous les utilisateurs
-de la fédération peuvent alors s'authentifier auprès du catalogue.
-
-
-Configuration de l'authentification LDAP
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The section defines how to connect to an LDAP authentication system.
-
-.. figure:: web-config-options-ldap.png
-
-    *The LDAP configuration options*
-
-Typically all users must have their details in the LDAP directory to login to |project_name|. 
-However if a user is added to the |project_name| database with the Administrator profile then they will be able to login without 
-their details being present in the LDAP directory.
-
-Configuration de l'authentification Shibboleth
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-When using either the |project_name| database or LDAP for authentication, you can also configure 
-shibboleth to allow authentication against access federations.
-
-.. figure:: web-config-options-shibboleth.png
-
-    *The Shibboleth configuration options*
-
-Shibboleth authentication requires interaction with Apache web server. In particular, 
-the apache web server must be configured to require Shibboleth authentication to access the path 
-entered in the configuration. The apache web server configuration will contain the details of the shibboleth 
-server that works out where a user is located (sometimes called a 'where are you from' server).
-
-The remainder of the shibboleth login configuration describes how shibboleth authentication 
-attributes are mapped to |project_name| user database fields as once a user is authenticated against shibboleth, 
-their details are copied to the local |project_name| database.
-
 
 .. _csw_configuration:
 

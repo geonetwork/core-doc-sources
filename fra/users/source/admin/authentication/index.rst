@@ -3,38 +3,27 @@
 .. toctree::
    :maxdepth: 2
 
-Authentication
-==============
+Configuration de l'authentication
+=================================
+
+Cette section permet de définir le mode d'authentification pour le catalogue.
 
 
-In this section you define the source against which the catlaog will authenticate users and passwords.
+Par défaut, les utilisateus sont identifiés par la base de données du catalogue. 
+Dans ce mode là, il est possible d'activer l'option d'enregistrement libre des 
+internautes alors membre du groupe invité (cf. :ref:`authentication_self_register`).
 
-
-By default, users are authenticated against info held in the catalog database. When the catalog
-database is used as the authentication source, the user self-registration function can be enabled. 
-A later section (see :ref:`authentication_self_register`) discusses user self-registration and the 
-configuration options it requires.
-
-You may choose to authenticate logins against either the catalog database tables or LDAP 
-(the lightweight directory access protocol) or both. The next section describes how to authenticate
-against the different authentication providers:
+Les chapitres à venir décrivent la configuration pour les différents mécanismes d'authentification supportés:
 
 .. contents:: 
     :depth: 1
     :local:
 
-In addition to either of these options, you may also configure other authentication sources. 
-At present, Shibboleth is one additional authentication source that can be configured. 
-Shibboleth is typically used for national access federations such as the Australian Access Federation. 
-Configuring shibboleth authentication in the catalog to use such a federation would allow not only users 
-from a local database or LDAP directory to use your installation, but any user from such a federation.
+Le mécanisme d'authentification utilise le framework Spring Security et permet de supporter plusieurs 
+`fournisseurs d'authentification <http://static.springsource.org/spring-security/site/docs/3.1.x/reference/introduction.html#modules>`_.
 
-Authentication is using Spring Security framework and could support multiple 
-`authentication providers <http://static.springsource.org/spring-security/site/docs/3.1.x/reference/introduction.html#modules>`_.
-
-
-Authentication configuration is defined in WEB-INF/config-security.properties file. When making a change to that
-configuration file, the catalog need to be restarted to take parameters into account.
+La configuration de l'authentification se fait via le fichier WEB-INF/config-security.properties. Pour prendre en compte
+les changements, il est nécessaire de relancer l'application.
 
 
 .. _authentication_ldap:
@@ -42,12 +31,12 @@ configuration file, the catalog need to be restarted to take parameters into acc
 LDAP
 ----
 
-Connection Settings
-```````````````````
-To enable LDAP support:
+Paramètres de connexion
+```````````````````````
+Pour activer le support LDAP:
 
 
-#. add the LDAP base URL property in config-security.properties::
+#. ajouter l'URL du LDAP dans config-security.properties::
  
     # LDAP security properties
     ldap.base.provider.url=ldap://localhost:389
@@ -56,41 +45,42 @@ To enable LDAP support:
     ldap.security.credentials=ldap
 
 
-   - ldap.base.provider.url: This tells the portal where the LDAP server is located. 
-     Make sure that the computer with the catalog can hit the computer with the LDAP server. 
-     Check to make sure that the appropriate ports are opened, etc.
-   - ldap.base.dn=dc=fao,dc=org: this will usually look something like: "dc=organizationnamehere,dc=org"
-   - ldap.security.principal & ldap.security.credentials: Define LDAP administrator user to use to bind to LDAP. 
-     If not define, an anonymous bind is made. Principal is the username and credentials property the password.
-   - To verify that you have the correct settings, try to connect to the LDAP server using an LDAP browser application.
-
-#. define where to find users in LDAP structure for authentication::
+   - ldap.base.provider.url: URL du serveur LDAP (il doit être accessible pour la machine où le catalogue est installé).
+   - ldap.base.dn=dc=fao,dc=org: En général, quelquechose comme "dc=organizationnamehere,dc=org" en fonction de la structure de l'annuaire
+   - ldap.security.principal & ldap.security.credentials: Identifiant et mot de passe de l'utilisateur se connectant au LDAP. 
+     Si ces paramètres ne sont pas définis, une connexion anonyme est utilisée. Dans ce cas, l'annuaire doit autoriser ce type de connexion
+   - Pour vérifier la connexion à l'annuaire, utiliser un client LDAP depuis le serveur afin de vérifier l'ensemble des paramètres.
+   
+#. définir comment identifier les utilisateurs dans l'annuaire::
 
     ldap.base.search.base=ou=people
     ldap.base.dn.pattern=uid={0},${ldap.base.search.base}
     #ldap.base.dn.pattern=mail={0},${ldap.base.search.base}
 
-   - ldap.base.search.base: this is where the catalog will look for users (for authentication)
-   - ldap.base.dn.pattern: this is the distinguished name for the user to bind with. {0} is replaced by
-     the user name typed in the sign in screen.
+   - ldap.base.search.base: Position où se trouve les utilisateurs dans l'annuaire (dépend de ldap.base.dn également).
+   - ldap.base.dn.pattern: Attribut contenant l'identifiant de l'utilisateur. {0} est remplacé par ce que l'utilisateur saisie
+     dans l'interface de connexion.
 
 
-#. add the following import to config-security.xml::
+#. activer le LDAP dans le fichier config-security.xml::
 
     <import resource="config-security-ldap.xml"/>
 
 
-Authorization Settings
-``````````````````````
+Paramètres des utilisateurs
+```````````````````````````
 
-When using LDAP, user information and privileges could be defined from the LDAP attributes.
+Avec l'annuaire, il est possible de définir les propriétés de l'utilisateur dans le catalogue.
 
-User details
-~~~~~~~~~~~~
+Information sur l'utilisateur
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-All user informations could be retrieved from the LDAP as defined in the config-security-overrides.properties.
-This property file defined for each user attribute in the catalog database which LDAP attributes match.
-If the attribute is empty or not defined, a default value could be defined. The configuration is the following::
+Toutes les informations concernant l'utilisateur peuvent être récupérées au sein de l'annuaire. 
+Pour cela, définir les correspondance dans le fichier config-security-overrides.properties.
+Ce fichier permet de définir pour chaque information, l'attribut de l'annuaire à utiliser 
+ainsi qu'une valeur par défaut.
+
+Exemple de configuration::
 
     # Map user information to LDAP attributes and default values
     # ldapUserContextMapper.mapping[name]=ldap_attribute,default_value
@@ -106,30 +96,33 @@ If the attribute is empty or not defined, a default value could be defined. The 
     ldapUserContextMapper.mapping[country]=,
 
 
-Privileges configuration
-~~~~~~~~~~~~~~~~~~~~~~~~
+Privilèges de l'utilisateur
+~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-When using LDAP, user groups and user profiles could be set from LDAP information or not.
-To manage user privileges from the local database, set the ldap.privilege.import property in
-config-security.properties to false::
+Les rôles et groupes d'appartenance d'un utilisateur peuvent être éventuellement récupérés
+dans l'annuaire.
+
+Pour utiliser la base de données locale pour la gestion des privilèges, il faut
+définir la propriété ldap.privilege.import property dans le fichier config-security.properties::
 
     ldap.privilege.import=false
 
-If LDAP information should be used to define user privileges, set it to true::
+Pour utiliser l'annuaire::
 
     ldap.privilege.import=true
 
-When importing privileges from LDAP, the catalog administrator could decide to create groups
-defined in the LDAP and not defined in local database. For this set the following property to true::
+
+Lorsque les groupes sont importés depuis l'annuaire, il est possible de créer les groupes non existant
+dans la base locale. Pour cela::
 
     ldap.privilege.create.nonexisting.groups=false
 
 
-Simple privileges configuration
-"""""""""""""""""""""""""""""""
+Configuration simple des privilèges
+"""""""""""""""""""""""""""""""""""
 
-
-In order to define which groups the user is member of and which profile is the user::
+Afin de définir les groupes et profils d'un utilisateur, utiliser le fichier config-security-overrides.properties 
+permettant de définir quels attributs utilisés ::
 
     ldapUserContextMapper.mapping[privilege]=groups,sample
     # If not set, the default profile is RegisteredUser
@@ -137,12 +130,12 @@ In order to define which groups the user is member of and which profile is the u
     ldapUserContextMapper.mapping[profile]=privileges,RegisteredUser
 
 
-Attributes configuration:
+Configuration des attributs :
 
- - privilege attribute contains the group this user is member of. More than one group is allowed.
- - profile attribute contains the profile of the user
+ - privilege : Attribut indiquant le ou les groupes de l'utilisateur.
+ - profile : Attribut indiquant le profil de l'utilisateur.
 
-User valid profiles are:
+Les profils possibles sont :
 
  - Administrator
  - UserAdmin
@@ -152,26 +145,26 @@ User valid profiles are:
  - Guest
 
 
-Profile mapping configuration
-"""""""""""""""""""""""""""""
+Correspondance de profiles
+""""""""""""""""""""""""""
 
-If LDAP attribute containing profiles does not match the catalog profile list, a mapping could be defined
-in config-security-overrides.properties::
+Si l'annuaire contient des valeurs de profils ne correspondant pas à celle attendue par le catalogue,
+il est possible de définir une correspondance dans le fichier config-security-overrides.properties::
 
     # Map LDAP custom profiles to catalog profiles. Not used if ldap.privilege.pattern is defined.
     ldapUserContextMapper.profilMapping[Admin]=Administrator
     ldapUserContextMapper.profilMapping[Editeur]=Reviewer
     ldapUserContextMapper.profilMapping[Public]=RegisteredUser
 
-For example, in the previous configuration, the attribute value Admin will be mapped to Administrator (which
-is a valid profile for the catalog).
+Dans l'exemple ci-dessus, l'attribut de l'annuaire contenant la valeur "Admin" correspondra à
+"Administrator" qui est une valeur valide pour le catalogue.
 
 
-Advanced privileges configuration
-"""""""""""""""""""""""""""""""""
+Configuration avancée
+"""""""""""""""""""""
 
-An attribute could define both the profile and the group for a user. To extract this information, 
-a custom pattern could be defined to populate user privileges according to that attribute::
+Il est possible d'utiliser un seul attribut pour définir les profils et groupes de l'utilisateur.
+Pour extraire ces informations, une expression peut être définie. Par exemple::
 
     # In config-security-overrides.properties
     ldapUserContextMapper.mapping[privilege]=cat_privileges,sample
@@ -181,7 +174,7 @@ a custom pattern could be defined to populate user privileges according to that 
     ldap.privilege.pattern.idx.group=1
     ldap.privilege.pattern.idx.profil=2
 
-The LDAP attribute can contains the following configuration to define the different type of users::
+L'attribut "cat_privileges" peut alors contenir différentes combinaisons pour les différents types d'utilisateur ::
 
     -- Define a catalog admin:
     cat_privileges=CAT_ALL_Administrator
@@ -203,20 +196,22 @@ The LDAP attribute can contains the following configuration to define the differ
 
 
 
-Synchronization
+Synchronisation
 ```````````````
 
-A synchronization task is taking care of removing LDAP user which may be deleted. For example:
+Une tâche de fond s'occupe de supprimer de la base locale des utilisateurs les utilisateurs supprimés
+du LDAP. Par exemple:
 
- - T0: a user A sign in the catalog. A local user A is created in the user database
- - T1: A is deleted from the LDAP (A could not sign in in the catalog anymore)
- - T2: the synchronization task will check that all local LDAP users exist in LDAP:
+ - T0: un utilisateur A se connecte au catalogue. Un utilisateur A est ajouté dans la base de données des utilisateurs (identifié comme venant d'un annuaire).
+ - T1: l'utilisateur A est supprimé du LDAP (A ne peut plus se connecter au catalogue).
+ - T2: la tâche de fond vérifie que tous les utilisateurs de l'annuaire, qui se sont connectés au catalogue, sont toujours présents dans le LDAP:
  
-   - if user is not owner of any records, it will be deleted
-   - if user is owner of metadata records, warning message is avaialable on the catalog logging system. 
-     record's owner should be changed to another user before the task could remove the user.
+   - si l'utilisateur n'a créé aucune fiche, il est supprimé
+   - si l'utilisateur a créé des fiches, un message d'alerte est affiché dans les logs de l'application. 
+     Un administrateur du catalogue doit utiliser l'interface d'administration pour transférer les fiches
+     de cet utilisateur vers un autre.
 
-By default the task is runned once every day. Configuration could be changed in config-security.properties::
+Par défaut, cette tâche est exécutée une fois par jour. La configuration se trouve dans config-security.properties::
 
     # Run LDAP sync every day at 23:30
     ldap.sync.cron=0 30 23 * * ?
@@ -224,7 +219,7 @@ By default the task is runned once every day. Configuration could be changed in 
 Debugging
 `````````
 
-If connection fails, try to increase logging for LDAP in log4j.cfg::
+Si la connexion échoue, il est possible d'augmenter le niveau d'information dans les logs en modifiant dans le fichier log4j.cfg::
 
     log4j.logger.geonetwork.ldap          = DEBUG
     log4j.logger.org.springframework = DEBUG, console, jeeves
@@ -237,9 +232,10 @@ If connection fails, try to increase logging for LDAP in log4j.cfg::
 CAS
 ---
 
-To enable CAS support:
+Pour activer le support de CAS :
 
-#. add the CAS base URL property in config-security.properties::
+
+#. ajouter l'URL du serveur CAS dans le fichier config-security.properties ::
  
     cas.baseURL=https://localhost:8443/cas
     cas.ticket.validator.url=${cas.baseURL}
@@ -247,7 +243,7 @@ To enable CAS support:
     cas.logout.url=${cas.baseURL}/logout?url=${geonetwork.https.url}/
  
 
-#. add the following import to config-security.xml::
+#. activer dans config-security.xml ::
 
     <import resource="config-security-cas.xml"/>
     <import resource="config-security-cas-ldap.xml"/>

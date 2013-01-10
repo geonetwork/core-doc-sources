@@ -50,9 +50,9 @@ new account details that looks something like the following:
 		Yours sincerely,
 		The team at The Greenhouse GeoNetwork Site
 
-Notice that the user has requested an 'Editor' profile. As a result an email will be sent to the Email address nominated in the Feedback section of the 'System Adminstration' menu which looks something like the following:
+Notice that the user has requested an 'Editor' profile. As a result an email will be sent to the Email address nominated in the Feedback section of the 'System Administration' menu which looks something like the following:
 
-Notice also that the user has been aded to the built-in user group 'GUEST'. This is a security restriction. An administrator/user-administrator can add the user to other groups if that is required later.
+Notice also that the user has been added to the built-in user group 'GUEST'. This is a security restriction. An administrator/user-administrator can add the user to other groups if that is required later.
 
 If you want to change the content of this email, you should modify INSTALL_DIR/web/geonetwork/xsl/registration-pwd-email.xsl.
 

@@ -3,28 +3,26 @@
 Harvesting services
 ===================
 
-Introduction
-------------
+This section describes the services used to create, update and manage GeoNetwork
+harvesters. These services allow complete control over harvester behaviour.
+Authentication is required for all services described in this section. In addition, these services can only be run by users with the **Administrator** profile.
 
-This chapter provides a detailed explanation of the GeoNetwork’s harvesting
-services. These services allow a complete control over the harvesting behaviour.
-They are used by the web interface and can be used by any other client.
 
 .. index:: xml.harvesting.get
 
-xml.harvesting.get
-------------------
+Get harvester definitions (xml.harvesting.get)
+----------------------------------------------
 
-Retrieves information about one or all configured harvesting nodes.
+Retrieves information about one or all configured harvesters.
 
 Request
 ```````
 
-Called with no parameters returns all nodes. Example::
+Called without parameters, this services return all harvesters. Example::
 
     <request/>
 
-Otherwise, an id parameter can be specified::
+Otherwise, an **id** parameter can be specified to request the definition of a specific harvester instance::
 
     <request>
         <id>123</id>
@@ -33,10 +31,10 @@ Otherwise, an id parameter can be specified::
 Response
 ````````
 
-When called with no parameters the service provide its output inside a
-nodes container. You get as many node elements as are configured. 
+When called without parameters the service returns HTTP status code 200 along
+with an XML document with all harvester instances. The XML document has a root element called ``nodes`` with a ``node`` child for each harvester.
 
-**Example of an xml.harvesting.get response for a GeoNetwork node**::
+**Example of an xml.harvesting.get response for a GeoNetwork harvester**::
 
     <nodes>
         <node id="125" type="geonetwork">
@@ -90,9 +88,9 @@ nodes container. You get as many node elements as are configured.
         </node>
     </nodes>
 
-If you specify an id, you get a response like the one below.
+If you specify a harvester **id** parameter in the request, then the XML document returned has a ``node`` root element that describes the harvester.
 
-**Example of an xml.harvesting.get response for a WebDAV node**::
+**Example of an xml.harvesting.get response for a WebDAV harvester**::
 
     <node id="165" type="webdav">
         <site>
@@ -130,26 +128,40 @@ If you specify an id, you get a response like the one below.
         </info>
     </node>
 
-The node structure for all harvesters has some common XML elements, plus 
+Each harvester has some common XML elements, plus 
 additional elements that are specific to each harvesting type.
 
 The common XML elements are described at :ref:`harvesting_nodes`.
 
+If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
+
+::
+ 
+ <error id="object-not-found">
+   <message>Object not found</message>
+   <class>ObjectNotFoundEx</class> 
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
 Errors
 ``````
 
-- ObjectNotFoundEx If the id parameter is provided but the node
+- **ObjectNotFoundEx** If a harvester definition with the specified **id**
   cannot be found.
 
 .. index:: xml.harvesting.add
 
-xml.harvesting.add
-------------------
+Create harvester instance (xml.harvesting.add)
+----------------------------------------------
 
-Create a new harvesting node. The node can be of any type supported by
-GeoNetwork (GeoNetwork node, web folder etc...). When a new node is created, its
-status is set to inactive. A call to the xml.harvesting.start service is
-required to start harvesting.
+Create a new harvester. The harvester can be of any type supported by
+GeoNetwork (see :ref:`harvesting_nodes` for a list). When a new harvester 
+instance is created, its status is set to inactive. 
+A call to the ``xml.harvesting.start`` service is
+required to set the status to active and run the harvester at the scheduled
+time.
 
 Request
 ```````
@@ -167,7 +179,7 @@ The service requires an XML tree with all information about the harvesting node 
 - :ref:`arcsde_harvesting`
 
 Summary of features of the supported harvesting types
-.....................................................
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 ===============     ==============      ================    ============
 Harvesting type     Authentication      Privileges          Categories
@@ -177,73 +189,261 @@ WebDAV              HTTP digest         yes                 yes
 CSW                 HTTP Basic          yes                 yes
 ===============     ==============      ================    ============
 
-.. index:: xml.harvesting.update
+Response
+````````
 
-xml.harvesting.update
----------------------
+If the request succeeds and the harvester instance is created, then HTTP status code 200 is returned along with an XML document containing the definition of the harvester as is described in the response section of the ``xml.harvesting.get`` service above.
 
-This service is responsible for changing the node’s parameters. A typical
-request has a node root element and must include the id attribute::
+If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
 
-    <node id="24">
-        ...
-    </node>
+::
+ 
+ <error id="object-not-found">
+   <message>Object not found</message>
+   <class>ObjectNotFoundEx</class> 
+   .....
+ </error>
 
-The body of the node element depends on the node’s type. The update policy is
-this:
+See :ref:`exception_handling` for more details.
 
-- If an element is specified, the associated parameter is updated.
+.. index:: xml.harvesting.info
 
-- If an element is not specified, the associated parameter will not be
-  changed.
+Get information for Harvester definition (xml.harvesting.info)
+--------------------------------------------------------------
 
-So, you need to specify only the elements you want to change. However, there
-are some exceptions:
+This service can be used to obtain information from the server that is relevant
+to defining a harvester eg. harvester icons, stylesheets etc.
 
-#.  **privileges**: If this element is omitted, privileges will not be changed. If
-    specified, new privileges will replace the old ones.
+Request and Response
+````````````````````
 
-#.  **categories**: Like the previous one.
+All requests must have a **type** parameter which defines the type of information required. The requests and responses for each value of the **type** parameter are:
 
-#.  **searches**: Some harvesting types support multiple searches on the
-    same remote note. When supported, the updated behaviour should be like the
-    previous ones.
+icons
+^^^^^
 
-Note that you cannot change the type of an node once it has been created.
+Return the list of icons that can be used when creating a harvester instance. Icons are usually set in **site/icon** harvester setting.
+
+POST Request::
+
+ <request>
+   <type>icons<type>
+ </request>
+
+Response::
+ 
+ <root>
+   <icons>
+     <icon>wfp.gif</icon>
+     <icon>unep.gif</icon>
+     <icon>webdav.gif</icon>
+     <icon>gn20.gif</icon>
+     <icon>thredds.gif</icon>
+     <icon>wfs.gif</icon>
+     <icon>csw.gif</icon>
+     <icon>filesystem.gif</icon>
+     <icon>fao.gif</icon>
+     <icon>default.gif</icon>
+     <icon>Z3950.gif</icon>
+     <icon>oai-mhp.gif</icon>
+     <icon>esri.gif</icon>
+   </icons>
+ </root> 
+
+importStylesheets
+^^^^^^^^^^^^^^^^^
+ 
+Return the list of stylesheets that can be used when creating a harvester instance. The ``id`` element in the response can be used in the **content/importxslt** harvester setting for those harvesters that support it.
+
+POST Request::
+ 
+ <request>
+   <type>icons<type>
+ </request>
+
+Response::
+ 
+ <root>
+   <stylesheets>
+     <record>
+       <id>ArcCatalog8_to_ISO19115.xsl</id>
+       <name>ArcCatalog8_to_ISO19115</name>
+     </record>
+     <record>
+       <id>CDMCoords-to-ISO19139Keywords.xsl</id>
+       <name>CDMCoords-to-ISO19139Keywords</name>
+     </record>
+     .....
+   </stylesheets>
+ </root>
+   
+
+oaiPmhServer
+^^^^^^^^^^^^
+
+Request information about the sets and prefixes of an OAIPMH server. This request requires an additional url attribute on the type parameter specifying the name of the OAIPMH server to query.
+
+POST Request::
+ 
+ <request>
+   <type url="http://localhost:8080/geonetwork/srv/eng/oaipmh">oaiPmhServer</type>
+ </request>
+
+Response::
+ 
+ <root>
+  <oaiPmhServer>
+    <formats>
+      <format>iso19115</format>
+      <format>fgdc-std</format>
+      <format>iso19139</format>
+      <format>csw-record</format>
+      <format>iso19110</format>
+      <format>dublin-core</format>
+      <format>oai_dc</format>
+    </formats>
+    <sets>
+      <set>
+        <name>maps</name>
+        <label>Maps &amp; graphics</label>
+      </set>
+      <set>
+        <name>datasets</name>
+        <label>Datasets</label>
+      </set>
+      ......
+    </sets>
+  </oaiPmhServer>
+ </root>
+
+wfsFragmentSchemas
+^^^^^^^^^^^^^^^^^^
+
+Return list of schemas that have WFS Fragment conversion stylesheets. These stylesheets are stored in the ``WFSToFragments`` directory in the ``convert`` directory of a metadata schema. eg. for schema iso19139 this directory would be ``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/convert/WFSToFragments``.
+
+POST Request::
+ 
+ <request>
+  <type>wfsFragmentSchemas</type>
+ </request>
+
+Response::
+ 
+ <root>
+  <schemas>
+    <record>
+      <id>iso19139</id>
+      <name>iso19139</name>
+    </record>
+  </schemas>
+ </root>
+
+wfsFragmentStylesheets
+^^^^^^^^^^^^^^^^^^^^^^
+
+Return WFS Fragment conversion stylesheets for a schema previously returned by the request type ``wfsFragmentSchemas`` described above. These stylesheets are stored in the ``WFSToFragments`` directory in the ``convert`` directory of a metadata schema. eg. for schema iso19139 this directory would be ``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/convert/WFSToFragments``.
+
+POST Request::
+ 
+ <request>
+   <schema>iso19139</schema>
+   <type>wfsFragmentStylesheets</type>
+ </request>
+
+Response::
+ 
+ <root>
+  <stylesheets>
+    <record>
+      <id>deegree22_philosopher_fragments.xsl</id>
+      <name>deegree22_philosopher_fragments</name>
+      <schema>iso19139</schema>
+    </record>
+    <record>
+      <id>geoserver_boundary_fragments.xsl</id>
+      <name>geoserver_boundary_fragments</name>
+      <schema>iso19139</schema>
+    </record>
+  </stylesheets>
+ </root>
+
+threddsFragmentStylesheets
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+
+threddsFragmentSchemas
+^^^^^^^^^^^^^^^^^^^^^^
+
+
+ogcwxsOutputSchemas
+^^^^^^^^^^^^^^^^^^^
+
+If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
+
+::
+ 
+ <error id="bad-parameter">
+   <message>type</message>
+   <class>BadParameterEx</class> 
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
+ 
+Update a Harvester Instance (xml.harvesting.update)
+---------------------------------------------------
+
+This service can be used to change the parameters of a harvester instance. 
+
+.. note:: You cannot change the harvester type.
 
 Request
 ```````
 
-The request is the same as that used to add an entry. Only the id
-attribute is mandatory.
+The simplest way to use this service is to:
+
+#. use the ``xml.harvesting.get`` service to obtain the XML definition of the harvester that you want to update.
+#. modify the parameters as required.
+#. call this service with the modified XML definition of the harvester as the request.
+
+The XML request is the same as that used in ``xml.harvesting.add``.
 
 Response
 ````````
 
-The response is the same as the xml.harvesting.get called on the updated
-entry.
+If the update succeeded then HTTP status code 200 is returned along with an XML document containing the harvester definition as supplied in the request.
+
+If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
+
+::
+ 
+ <error id="object-not-found">
+   <message>Object not found</message>
+   <class>ObjectNotFoundEx</class> 
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 .. index:: xml.harvesting.remove
 .. index:: xml.harvesting.start
 .. index:: xml.harvesting.stop
 .. index:: xml.harvesting.run
 
-xml.harvesting.remove /start /stop /run
----------------------------------------
+Control or Remove a Harvester Instance (xml.harvesting.remove, xml.harvesting.start, xml.harvesting.stop, xml.harvesting.run)
+-----------------------------------------------------------------------------------------------------------------------------
 
-These services are put together because they share a common request interface.
-Their purpose is obviously to remove, start, stop or run a harvesting node. In
-detail:
+These services are described in on section because they share a common request
+interface. Their purpose is to remove, start, stop or run a harvester:
 
-#.  **remove**: Remove a node. Completely deletes the harvesting instance.
+#.  **remove**: Remove a harvester. Deletes the harvester instance.
 
-#.  **start**: When created, a node is in the inactive state. This operation makes it
-    active, that is the countdown is started and the harvesting will be performed at
-    the timeout.
+#.  **start**: When created, a harvester is in the inactive state. This operation makes it active which means it will be run at the enxt scheduled time.
 
-#.  **stop**: Makes a node inactive. Inactive nodes are never harvested.
+#.  **stop**: Makes a harvester inactive - it will no longer be executed at the scheduled time. Note this will *not* stop a harvester that is already performing a harvest.
 
-#.  **run**: Just start the harvester now. Used to test the harvesting.
+#.  **run**: Start the harvester now. Used to test the harvesting.
 
 Request
 ```````
@@ -271,13 +471,8 @@ previous request could be::
         <id status="inactive">789</id>
     </request>
 
-:ref:`table_service_status2` summarises, for each service, the
+The table below summarises, for each service, the
 possible status values.
-
-.. _table_service_status2:
-
-Summary of status values
-........................
 
 .. |ok| image:: button_ok.png
 
@@ -292,3 +487,14 @@ already-active              |ok|
 already-running                             |ok|
 ================    ======  =====   ====    ====
 
+If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
+
+::
+ 
+ <error id="object-not-found">
+   <message>Object not found</message>
+   <class>ObjectNotFoundEx</class> 
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.

@@ -340,7 +340,7 @@ z3950repositories
 
     - **id**: The repository id. This should be used when referring 
       to the repository in GeoNetwork services (eg. xml.harvest.* services - 
-      see :ref:`harvesting_services`).
+      see :ref:`services_harvesting`).
     - **label**: The human readable name for the repository.
 
 Example response for z3950repositories::

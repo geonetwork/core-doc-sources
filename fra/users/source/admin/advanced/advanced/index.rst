@@ -552,30 +552,31 @@ dans les noms des propriétés <webappname> par le nom de la webapp afin d'évit
 Surcharge de configuration
 ==========================
 
-Configuration override files allow nearly complete access to all the configuration allowing nearly any configuration parameter to be overridden 
-for a particular deployment target.  The concept behind configuration overrides is to have the basic configuration set in the geonetwork webapplication,
-the application is deployed and a particular set of override files are used for the deployment target.  The override files only have the settings that need
-to be different for the deployment target, alleviating the need to deploy and edit the configuration files or have a different web application per deployment target.
+La surcharge de configuration permet un accès quasi complet à toute les options de configurations afin 
+de créer une configuration pour un environnement particulier (eg. DEV, PROD). Le concept de surchage repose
+sur la capacité à remplacer une partie de la configuration pour le serveur sur lequel l'application est déployée.
+La surcharge ne contient donc que les paramètres à modifier par rapport à la configuration par défaut.
 
-Configuration override files are also useful for forked Geonetwork applications that regularily merge the changes from the true Geonetwork code base.
+La surcharge est également pratique pour les "fork" de GeoNetwork qui nécessite de s'aligner sur le code source d'origine.
 
-A common scenario is to have test and production instances with different configurations. In both configurations 90% of the configuration is the same 
-but certain parts need to be updated.
+Un scénario classique est d'avoir une instance de test et une instance de production avec 2 configurations différentes. Dans les 2 cas, la configuration
+est identique pour 90% des paramètres mais une partie doit être mise à jour.
 
-An override file to be specified as a system property or as a servlet init parameter: jeeves.configuration.overrides.file.
+Un fichier de surcharge peut être défini par une propriété du système ou un paramètre
+du servlet : jeeves.configuration.overrides.file.
 
-The order of resolution is:
- * System property with key: {servlet.getServletContext().getServletContextName()}.jeeves.configuration.overrides.file
- * Servlet init parameter with key: jeeves.configuration.overrides.file
- * System property with key: jeeves.configuration.overrides.file
- * Servlet context init parameters with key: jeeves.configuration.overrides.file
- 
-The property should be a path or a URL.  The method used to find a overrides file is as follows:
- #. It is attempted to be used as a URL.  if an exception occurs the next option is tried
- #. It is assumed to be a path and uses the servlet context to look up the resources.  If it can not be found the next option is tried
- #. It is assumed to be a file.  If the file is not found then an exception is thrown
+L'ordre de résolution est :
+ * Propriété système avec la clé : {servlet.getServletContext().getServletContextName()}.jeeves.configuration.overrides.file
+ * Paramétre du servlet avec la clé : {servlet.getServletContext().getServletContextName()}.configuration.overrides.file
+ * Propriété système avec la clé: jeeves.configuration.overrides.file
+ * Paramétre du servlet avec la clé: jeeves.configuration.overrides.file
 
-An example of a overrides file is as follows::
+La propriété doit être un chemin ou une URL. La méthode utilisée pour trouver un fichier de surcharge est la suivante :
+ #. utlisation comme une URL, si exception,
+ #. c'est un chemin. Utilisation du servlet context  pour recherche la ressource. si exception,
+ #. c'est un fichier.  Si le fichier n'est pas trouvé, une exception est levée.
+
+Un exemple de surcharge ::
    
    <overrides>
        <!-- import values.  The imported values are put at top of sections -->

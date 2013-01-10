@@ -28,7 +28,7 @@ There are three types of thesaurus in GeoNetwork. The different types are based 
 ISO19115/19139 Thesaurus Categories
 -----------------------------------
 
-All thesauri in GeoNetwork are categorized using the codelist values for the gmd:MD_KeywordTypeCode element from ISO19115/19139. The categories and their meanins are given below but can also be found in http://www.isotc211.org/2005/resources/gmxCodelist.xml:
+All thesauri in GeoNetwork are categorized using the codelist values for the gmd:MD_KeywordTypeCode element from ISO19115/19139. The categories and their meanings are given below but can also be found in http://www.isotc211.org/2005/resources/gmxCodelist.xml:
 
 =========================== ==================================================================================
 ISO Thesaurus Category      Description

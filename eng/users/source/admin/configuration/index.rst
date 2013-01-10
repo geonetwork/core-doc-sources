@@ -106,7 +106,7 @@ GeoNetwork can act as a Z39.50 server. Z39.50 is the name of an older communicat
 
 *Enable*: Check this option to enable the Z39.50 server, uncheck it to disable the Z39.50 server. 
 
-*Port*: This is the port on which GeoNetwork will be listening for incoming Z39.50 requests. Z3950 servers can run on any port, but 210 (not recommended), 2100 and 6668 are common choices. If you have mutliple GeoNetwork nodes running on the same machine then you need to make sure each one has a different port number.
+*Port*: This is the port on which GeoNetwork will be listening for incoming Z39.50 requests. Z3950 servers can run on any port, but 210 (not recommended), 2100 and 6668 are common choices. If you have multiple GeoNetwork nodes running on the same machine then you need to make sure each one has a different port number.
 
 GeoNetwork must be restarted to put any changes to these values into use.
 
@@ -148,7 +148,7 @@ Options in this group determine how GeoNetwork will search metadata in multiple 
 
 *Enable auto-detecting search request language:* If this option is selected, Geonetwork will analyse the search query and attempt to detect the language that is used before defaulting to the GUI language.
 
-*Search results in requested language sorted on top:* If this option is selected, Geonetwork add a sort clause to each query to ensure that results in the current language are always sorted to be the results.  This is different from increasing priority of of the language in that it overrides the relevance of the result.  For example, if a german result has very high relevance but the search language is the search language then the frence results will all come before the german result.
+*Search results in requested language sorted on top:* If this option is selected, a sort clause will be added to each query to ensure that results in the current language are always sorted on top. This is different from increasing priority of the language in that it overrides the relevance of the result.  For example, if a german result has very high relevance but the search language is french then the french results will all come before the german result.
 
 *Search only in requested language* The options in this section determines how documents are sorted/prioritised relative to the language in the document compared to the search language.
 
@@ -156,7 +156,7 @@ Options in this group determine how GeoNetwork will search metadata in multiple 
 
 - *Prefer documents with translations requested language* - Documents with a translation in the search language (anywhere in the document) will be prioritized over documents without any elements in the search language
 
-- *Prefer documents whose language is the requested language* - Documents that are the same language as the search language (IE the documents that are specified as being in the same language as the search language) or prioritized over documents that are not.
+- *Prefer documents whose language is the requested language* - Documents that are the same language as the search language (ie. the documents that are specified as being in the same language as the search language) are prioritized over documents that are not.
 
 - *Translations in requested language* - The search results will only contain documents that have some translations in the search language.  
 

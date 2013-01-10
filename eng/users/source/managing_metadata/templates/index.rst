@@ -31,4 +31,4 @@ This option allows the user to select the metadata templates from any schema and
 
 .. figure:: templates-add.png
 
-Select the metadata schemas to add templates from (multiple selections can be made) and click on the  *Add templates* button to import them into the catalogue. They will then be avaliable for creating new metadata records.
+Select the metadata schemas to add templates from (multiple selections can be made) and click on the  *Add templates* button to import them into the catalogue. They will then be available for creating new metadata records.

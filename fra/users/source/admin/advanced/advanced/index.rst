@@ -58,21 +58,66 @@ Exemple d'une configuration pour utiliser PostGIS::
 Pool de connexions
 ------------------
 
-Le catalogue supporte 2 types de pool de connexion:
+Le pool de connexion repose sur Apache Database Connection Pool (Apache DBCP) http://commons.apache.org/dbcp/configuration.html.
 
-* Jeeves DbmsPool
-* `Apache DBCP pool <http://commons.apache.org/dbcp/>`_ (recommandé à partir des versions 2.7.x)
-
-Les paramètres suivants permettent une configuration fine du pool:
-
-* poolSize
-* maxTries
-* maxWait
+Les paramètres du pool sont présentés sur la page http://commons.apache.org/dbcp/configuration.html. 
+Un sous ensemble de ces paramètres peuvent être configurés dans l'élément resource du fichier config.xml :
 
 
-.. TODO Add more details about poolsize, maxWait, ...
+===================================   ============================================================================   =========================================
+Paramètre                             Description                                                                    Valeur par défaut               
+===================================   ============================================================================   =========================================
+maxActive                             taille du pool / nombre de connexions actives max                              10                     
+maxIdle                               nombre de connexion au repos (idle)                                            maxActive             
+minIdle                               nombre minimum de connexion au repos                                           0                     
+maxWait                               temps d'attente en millisecondes pour l'obtention d'une connexionle            200                   
+validationQuery                       requête SQL pour la vérification de la connexion                               no default            
+timeBetweenEvictionRunsMillis         interval entre les récupérations (eviction) (-1 = ignoré)                      -1                    
+testWhileIdle                         valider les connexions au repos                                                false                 
+minEvictableIdleTimeMillis            temps de repos avant récupération                                              30 x 60 x 1000 msecs  
+numTestsPerEvictionRun                nombre de connexions testées par récupération                                  3                     
+maxOpenPreparedStatements             nombre de requête SQL en cache (-1 = aucune, 0 = illimité)                     -1                    
+defaultTransactionIsolation           cf http://en.wikipedia.org/wiki/Isolation_%28database_systems%29               READ_COMMITTED
+===================================   ============================================================================   =========================================
+
+Pour des raisons de performance, il est recommandé de définir ces paramètres *après* la création de la base de données :
+
+- maxOpenPreparedStatements="300" (au minimum) 
+
+Les paramètres suivants sont définis par le catalogue et ne peuvent être configurés par l'administrateur :
+
+- removeAbandoned - true
+- removeAbandonedTimeout - 60 x 60 seconds = 1 hour
+- logAbandoned - true
+- testOnBorrow - true
+- defaultReadOnly - false
+- defaultAutoCommit - false
+- initialSize - maxActive
+- poolPreparedStatements - true, if maxOpenPreparedStatements >= 0, otherwise false 
+
+Note: Certains pare-feux détruisent les connexions au repos après un certain temps, par exemple 1 heure (= 3600 secs). 
+Pour conserver ces connexions en utilisant une requête de validation, définir :
+
+- minEvictableIdleTimeMillis à une durée inférieure au timeout, (eg. 2 mins = 120 secs = 120000 millisecs), 
+- testWhileIdle à true 
+- timeBetweenEvictionRunsMillis et numTestsPerEvictionRun pour valider les connexions fréquemments eg 15 mins = 900 secs = 900000 millisecs et 4 connexions par test
+
+Par exemple ::
+
+    <testWhileIdle>true</testWhileIdle>
+    <minEvictableIdleTimeMillis>120000</minEvictableIdleTimeMillis>
+    <timeBetweenEvictionRunsMillis>900000</timeBetweenEvictionRunsMillis>
+    <numTestsPerEvictionRun>4</numTestsPerEvictionRun>
 
 
+**Note:**
+
+- Quand le catalogue assure la gestion du pool de connexion, seules les bases de données PostGIS peuvent gérer l'index spatial. 
+  Pour les autres bases de données, l'index spatial sera au format ESRI Shapefile. Avec PostGIS, 2 pools de connexions sont alors créés. 
+  Le premier est configuré tel que décrit précédemment et le second est créé par la librairie GeoTools et ne peut être configuré. 
+  Cette approche est maintenant obsolète et il est recommandé d'utiliser un pool de connexion de type JNDI (cf. :ref:`admin_how_to_config_db_jndi`) pour que la cartouche spatiale de
+  la base de données soit utilisé (utilisant NG (Next Generation) GeoTools datastore factories).
+  
 
 
 Drivers JDBC
@@ -123,6 +168,130 @@ Après exécution, vérifier **res1.txt** et **res2.txt**.
     Solution 2 : supprimer la base, la recréer puis localiser le fichier db2cli.lst dans le répertoire d'installation de DB2, puis exécuter :
 
         db2 bind @db2cli.lst CLIPKG 30
+
+.. _admin_how_to_config_db_jndi:
+
+Connexion JNDI
+--------------
+
+La configuration via JNDI est faite dans `WEB-INF/config.xml` :
+
+::
+
+    <resource enabled="true">
+        <name>main-db</name>
+        <provider>jeeves.resources.dbms.JNDIPool</provider>
+        <config>
+            <context>java:/comp/env</context>
+            <resourceName>jdbc/geonetwork</resourceName>
+            <url>jdbc:oracle:thin:@localhost:1521:XE</url>
+            <provideDataStore>true</provideDataStore>
+        </config>
+    </resource> 
+
+Les paramètres de connexions sont les suivants :
+
+===========================   =======================================================================================================
+Paramètre                     Description
+===========================   =======================================================================================================
+context                       Le nom du context pour obtenir la resource - souvent: java:/comp/env
+resourceName                  Le nom de la resource à utiliser
+url                           L'URL de la base de données - requis pour déterminer le type de base de données pour GeoTools
+provideDataStore              Si "true", utilise la base de données pour l'index spatial, sinon un shapefile
+===========================   =======================================================================================================
+
+
+La configuration de la connexion en tant que tel est faite au niveau du container. Par exemple pour tomcat, la configuration est
+faite dans conf/context.xml avec une ressource appelée jdbc/geonetwork. Ci-dessous un exemple pour Oracle:
+
+::
+
+    <Resource name="jdbc/geonetwork"
+        auth="Container"
+        type="javax.sql.DataSource"
+        username="system"
+        password="oracle"
+        factory="org.apache.commons.dbcp.BasicDataSourceFactory"
+        driverClassName="oracle.jdbc.OracleDriver"             
+        url="jdbc:oracle:thin:@localhost:1521:XE"
+        maxActive="10"
+        maxIdle="10"
+        removeAbandoned="true"
+        removeAbandonedTimeout="3600"
+        logAbandoned="true"
+        testOnBorrow="true"
+        defaultAutoCommit="false" 
+        validationQuery="SELECT 1 FROM DUAL"
+        accessToUnderlyingConnectionAllowed="true"
+    />
+
+Pour Jetty, la configuration est faite dans `WEB-INF/jetty-env.xml`.Ci-dessous un exemple pour PostGIS:
+
+::
+
+  <Configure class="org.eclipse.jetty.webapp.WebAppContext">
+    <New id="gnresources" class="org.eclipse.jetty.plus.jndi.Resource">
+      <Arg></Arg> 
+      <Arg>jdbc/geonetwork</Arg>
+      <Arg>
+        <New class="org.apache.commons.dbcp.BasicDataSource">
+          <Set name="driverClassName">org.postgis.DriverWrapper</Set>
+          <Set name="url">jdbc:postgresql_postGIS://localhost:5432/gndb</Set>
+          <Set name="username">geonetwork</Set>
+          <Set name="password">geonetworkgn</Set>
+          <Set name="validationQuery">SELECT 1</Set>
+          <Set name="maxActive">10</Set>
+          <Set name="maxIdle">10</Set>
+          <Set name="removeAbandoned">true</Set>
+          <Set name="removeAbandonedTimeout">3600</Set>
+          <Set name="logAbandoned">true</Set>
+          <Set name="testOnBorrow">true</Set>
+          <Set name="defaultAutoCommit">false</Set>
+          <!-- 2=READ_COMMITTED, 8=SERIALIZABLE -->
+          <Set name="defaultTransactionIsolation">2</Set>
+          <Set name="accessToUnderlyingConnectionAllowed">true</Set>
+        </New>
+        </Arg>
+      <Call name="bindToENC">
+        <Arg>jdbc/geonetwork</Arg>  
+      </Call>
+    </New>
+  </Configure>
+
+
+Les paramètres peuvent être spécifiés pour controler le pool DBCP utilisé par le container Java (cf. http://commons.apache.org/dbcp/configuration.html).
+
+Les paramètres suivant doivent être définis pour que le bon fonctionnement du catalogue :
+
+============================================   ============================================================
+Tomcat Syntax                                  Jetty Syntax                                                  
+============================================   ============================================================
+defaultAutoCommit="false"                      <Set name="defaultAutoCommit">false</Set>             
+accessToUnderlyingConnectionAllowed="true"     <Set name="accessToUnderlyingConnectionAllowed">true</Set>     
+============================================   ============================================================
+
+Pour des raisons de performance, l'administrateur devrait définir les paramètres suivant après la première initialisation de la base de données :
+
+============================================   ============================================================
+Tomcat Syntax                                  Jetty Syntax                                                  
+============================================   ============================================================
+poolPreparedStatements="true"                  <Set name="poolPreparedStatements">true</Set>
+maxOpenPreparedStatements="300" (at least)     <Set name="maxOpenPreparedStatements">300</Set>
+============================================   ============================================================
+
+Notes:
+
+- Aussi bien PostGIS qu'Oracle créeront une table dans la base de données pour l'index spatial si provideDataStore est fixé à "true".
+- Les librairies commons-dbcp-1.3.jar et commons-pool-1.5.5.jar doivent être installée dans le class path du container Java (eg. `common/lib` 
+  pour tomcat5 ou `jetty/lib/ext` pour Jetty) car apache common dbcp est le seul DataSourceFactory supporté par GeoTools. 
+- les librairies par défaut tomcat-dbcp.jar semble fonctionner correctement avec GeoTools et PostGIS mais semble poser des problèmes avec
+  d'autres types de base de données (eg. DB which needs to unwrap the connection in order to do spatial operations - Oracle).
+- Oracle ojdbc-14.jar ou ojdbc5.jar ou ojdbc6.jar (en fonction de la version de Java utilisée) et sdoapi.jar
+  doivent être installés dans le class path du container Java (eg. `common/lib` pour tomcat5 ou `jetty/lib/ext` pour Jetty)
+- Usage avancé : vérifié le niveau d'isolation des transactions en fonction du driver de base de données utilisé. 
+  READ_COMMITTED semble être le plus stable pour les bases de données standards avec le catalogue. 
+  McKoi supporte uniquement SERIALIZABLE (does anyone still use McKoi?). 
+  Pour plus d'information cf. http://en.wikipedia.org/wiki/Isolation_%28database_systems%29.
 
 
 

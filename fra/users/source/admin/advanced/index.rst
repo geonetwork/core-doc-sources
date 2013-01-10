@@ -8,5 +8,4 @@ Configuration avancée
 .. toctree::
     :maxdepth: 2
     
-    logo/index.rst
     advanced/index.rst

@@ -14,6 +14,34 @@ Nouvelle version - nouvelles fonctionnalités
     *Page d'accueil standard de |project_name|*
 
 
+Version 2.9.x
+`````````````
+
+- Recherche
+
+ - Recherche à facettes
+ 
+ - Téléchargement de données WFS
+ 
+ - Support du format DCAT/RDF (http://www.w3.org/TR/vocab-dcat/) pour les services de recherche et de consultation avec ajout du support de sitemap sémantique
+
+- Editeur
+
+ - Support des aggrégats (en ISO19139) pour associer des études, capteurs, ...
+ 
+ - Possibilité de cacher des sections d'information pour les utilisateurs non identifiés (en ISO19139).
+
+- Administration 
+
+ - :ref:`monitoring`
+
+ - Amélioration du mécanisme d'authentification via LDAP, CAS (cf. :ref:`authentication`) 
+
+ - :ref:`geonetwork_data_dir`
+ 
+ - Support des profils multiples par utiisateurs
+ 
+ 
 Version 2.7.x
 `````````````
 
@@ -199,7 +227,7 @@ Version 2.3
 Où télécharger le programme d'installation ?
 --------------------------------------------
 
-Vous trouverez les différentes versions de |project_name| sur le dépôt SourceForge.net <http://sourceforge.net/projects/|project_name|/files/.
+Vous trouverez les différentes versions de |project_name| sur le dépôt SourceForge.net http://sourceforge.net/projects/geonetwork/files/.
 
 Utiliser l'installer multi plate-forme (.jar), l'installer exécutable pour Windows (.exe) ou l'archive web (.war).
 
@@ -226,14 +254,14 @@ Pré-requis système :
 
 - Jetty ou Apache Tomcat ou tout autre container Java
 
-- une base de données compatible JDBC (McKoi, MySQL, Postgres, PostGIS, Oracle, SQLServer).
+- une base de données compatible JDBC (H2, MySQL, Postgres, PostGIS, Oracle, SQLServer).
 
 Autres logiciels
 ````````````````
 
 Ces logiciels ne sont pas nécessaires pour le fonctionnement de |project_name| mais peuvent être utilisés en complément :
 
-#. `Druid <http://druid.sourceforge.net/>`_ pour voir le contenu la base de données
+#. `Druid <http://druid.sourceforge.net/>`_ pour voir le contenu de la base de données McKoi 
 
 #. `Luke <http://www.getopt.org/luke/>`_ pour voir le contenu de l'index Lucene
 

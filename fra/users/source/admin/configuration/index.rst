@@ -39,9 +39,8 @@ Les boutons au bas de la page permettent de retourner à la page administration,
 ou recharger la configuration.
 
 
-
-Les paramètres publics hôte et port
-```````````````````````````````````
+Paramètres du catalogue
+```````````````````````
 
 Ces 2 paramètres sont utilisés dans les cas suivants :
 
@@ -51,8 +50,6 @@ Ces 2 paramètres sont utilisés dans les cas suivants :
 #. Lors de requête CSW. Le document GetCapabilities retourne des liens HTTP vers le service CSW. 
 
 
-Paramètres généraux du site
-```````````````````````````
 
 - Site
 
@@ -66,6 +63,9 @@ Paramètres généraux du site
  
  - **Port** Le port est en général 80 (ie. http) ou plus rarement 8080.
 
+ - **Protocol** HTTP ou HTTPS.
+
+
 - Intranet est utilisé pour distinguer les utilisateurs du catalogue sur le réseau Intranet de l'organisation
 
  - **Network** adresse IP du réseau
@@ -75,13 +75,16 @@ Paramètres généraux du site
 
 Paramètre de recherches et indexation
 `````````````````````````````````````
-- Résultat de recherche
 
- - Nombre maximum d'items sélectionnés permet de limiter la sélection d'un trop grand nombre d'enregistrement à la fois. 
-   Ce paramètre évite des problèmes de performance sur les opérations massives.
+- Nombre maximum d'items sélectionnés permet de limiter la sélection d'un trop grand nombre d'enregistrement à la fois. 
+   Ce paramètre évite des problèmes de performance sur les opérations sur un groupe de fiches.
     
 - Optimisation de l'index : Activé par défaut. Ce processus permet de régulièrement "ranger" l'index Lucene.
   L'opération est rapide pour des catalogues peu volumineux.
+
+TODO
+- *Number of processing threads* The maximum number of processing threads that can be allocated to an indexing task. 
+
 
 Paramètre de configuration du services Z39.50
 `````````````````````````````````````````````
@@ -113,13 +116,55 @@ Les paramètres suivants sont disponibles :
 XLink
 `````
 
+La résolution des XLinks consiste à remplacer les éléments ayant un attribut @xlink:href dans les métadonnées
+(à l'exception de quelques éléments tel que srv:operatesOn, gmx:Anchor) par le contenu de l'URL indiquée dans le XLink. 
+La résolution des XLinks doit être active si:
+
+- le moissonnage de fragments est utilisés
+
+- l'association d'élément d'annuaire avec des XLinks est utilisée
+
+
 Activé ou désactivé la résolution des XLinks présents dans les métadonnées.
+
+
+Note: pour améliorer les performances, le catalogue maintient un cache des XLink.
+
 
 
 Statistique sur les recherches
 ``````````````````````````````
 
 Activé ou désactivé la génération de statistique sur les recherches (cf :ref:`stat_config`).
+
+
+Recherche multilingue
+`````````````````````
+
+Les paramètres suivant définissent comment la recherche sur du contenu multilingue doit être réalisée :
+
+
+*Enable auto-detecting search request language:* Si actif, le catalogue tentera de détecter la langue de la requête. Si la détection échoue, la langue de l'interface est utilisée.
+
+*Search results in requested language sorted on top:* Si actif, le catalogue ajoute une clause afin de trier les fiches dans la langue de recherche en premier.
+Cela différent de l'augementation de la pertinence des résultats dans une langue. En effet, un fiche en allemand avec une forte pertinence (calculée par rapport
+aux critères de recherche) sera retournée après les résultats en français si la langue de recherche est le français (même si les résultats en français sont moins
+pertinent).
+
+
+*Search only in requested language* Cette option permet de définir le niveau de priorité par rapport à la langue de la recherche.
+
+- *All documents in all languages (No preferences)* - la langue de la recherche est ignorée - aucun effet sur l'ordre des résultats
+
+- *Prefer documents with translations requested language* - les fiches avec des traductions dans la langue de la recherche (n'importe où dans le document) seront prioritaires 
+
+- *Prefer documents whose language is the requested language* - les fiches dans la langue de la recherche (ie. les documents dont la langue principale correspond à la langue de la recherche) seront prioritaires
+
+- *Translations in requested language* - seules les fiches avec des traductions dans la langue de la recherche seront retournées.  
+
+- *Document language is the requested language* - seules les fiches dans la langue de la recherche seront retournées
+
+
 
 
 Service de téléchargement
@@ -169,6 +214,31 @@ Activé ou désactivé les options INSPIRE :
 - Indexation des thèmes INSPIRE (nécessite de relancer l'indexation)
 
 - Formulaire de recherche INSPIRE (selon l'interface)
+
+
+Mode d'affichage des métadonées
+```````````````````````````````
+
+Il est possible de configurer quels onglets doivent être affichés en consultation et en édition.
+
+
+
+*Enable simple view*: La vue par défaut:
+- ne présente pas les nombreux niveaux de hiérarchie présents dans certains standards (tel que ISO19115/19139)
+- ne permet par à l'utilisateur d'ajouter des éléments non présent dans la fiche
+- cette vue permet d'avoir une vue simple et complète de la fiche
+*Enable ISO view*: Le standard ISO19115/19139 défini 3 groupes d'éléments :
+- Minimum: éléments obligatoires
+- Core: éléments obligatoires pour décrire une donnée géographique
+- All: tous les éléments
+*Enable INSPIRE view*: Vue correspondant aux règles d'implémentation sur les métadonnées de la Directive INSPIRE.
+*Enable XML view*: Vue proposant l'édition du document XML.
+
+
+Metadata Privileges
+```````````````````
+
+*Only set privileges to user's groups*: If enabled then only the groups that the user belongs to will be displayed in the metadata privileges page (unless the user is an Administrator). At the moment this option cannot be disabled and is likely to be deprecated in the next version of GeoNetwork.
 
 
 

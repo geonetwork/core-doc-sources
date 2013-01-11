@@ -6,9 +6,12 @@
 Utilisateurs et groupes
 =======================
 
-|project_name| utilise les concepts suivants : "utilisateurs", "groupes" et "profils d'utilisateurs". Un utilisateur peut appartenir à plusieurs groupes. Chaque utilisateur possède un seul et unique profil. La combinaison du profil et des groupes, auxquels l'utilisateur appartient, définit le périmètre des tâches qu'il peut réaliser avec le catalogue.
+|project_name| utilise les concepts suivants : "utilisateurs", "groupes" et "profils d'utilisateurs". Un utilisateur peut appartenir à plusieurs groupes. 
+Chaque utilisateur possède un ou plusieurs profils. Les combinaisons de profils et des groupes, auxquels l’utilisateur appartient, définit le périmètre
+des tâches qu’il peut réaliser au sein du catalogue.
 
-Les groupes d'utilisateurs peuvent par exemple correspondre à des services, des secteurs d'activités ou des éléments structurels au sein d'une entité ou d'une organisation. Exemple de groupes : Pêche, Agriculture, Eau, Santé etc.
+Les groupes d'utilisateurs peuvent par exemple correspondre à des services, des secteurs d'activités ou des éléments structurels au sein d'une entité 
+ou d'une organisation. Exemple de groupes : Pêche, Agriculture, Eau, Santé etc.
 
 
 Créer de nouveaux groupes d'utilisateurs
@@ -81,9 +84,7 @@ Pour ajouter un nouvel utilisateur il faut réaliser les opérations suivantes :
     
 #. Saisir les informations requises pour la création de l'utilisateur ;
 
-#. Affecter un profil à l'utilisateur ;
-
-#. Affecter un ou plusieurs groupes à l'utilisateur ;
+#. Affecter un ou plusieurs groupes avec un profil pour chaque groupe à l’utilisateur ;
 
 #. Cliquer sur *Sauver*.
 
@@ -93,9 +94,14 @@ Pour ajouter un nouvel utilisateur il faut réaliser les opérations suivantes :
 Profils d'utilisateurs
 ----------------------
 
-Le profil d'un utilisateur définit quels tâches il peut réaliser dans le catalogue. Le profil doit être choisi en fonction du rôle de l'utilisateur.
+Les profils d’un utilisateur définissent quelles actions sont autorisés à cet utilisateur.
 
-Les profils des utilisateurs sont hiérarchiques et exploitent des mécanismes d'héritage. Cela signifie qu'un utilisateur disposant d'un profil *Editeur* peut créer et modifier des fiches de métadonnées et qu'il peut également utiliser les fonctions accessibles à tout utilisateur dont le profil est *Utilisateur enregistré*.
+Les profils de utilisateurs sont hiérarchiques et exploitent des mécanismes d’héritage. 
+Cela signifie qu’un utilisateur disposant d’un profil Editeur peut créer et modifier des
+fiches de métadonnées et qu’il peut également utiliser les fonctions accessibles à tout 
+utilisateur dont le profil est Utilisateur enregistré. Cependant, un utilisateur étant 
+Administrateur d’utilisateur ne pourra pas créer de fiches.
+
 
 Les droits associés aux profils sont décrits ci-dessous :
 
@@ -114,7 +120,6 @@ Les droits associés aux profils sont décrits ci-dessous :
     
     - Création de nouveaux utilisateurs dans son propre groupe
     - Modification des privilèges des utilisateurs de son groupe
-    - Création, modification et suppression de fiches de métadonnées au sein de son groupe
 
 #.  Relecteur
 
@@ -124,7 +129,7 @@ Les droits associés aux profils sont décrits ci-dessous :
 
     L'éditeur dispose des droits suivants lui permettant de travailler sur les fiches de métadonnées :
     
-    - Création, modification et suppression de fiches de métadonnées au sein de son groupe
+    - Création, modification et suppression de fiches de métadonnées au sein de son groupe (publication sur Internet impossible)
 
 #.  Utilisateur Enregistré
 

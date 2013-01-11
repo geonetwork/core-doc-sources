@@ -116,7 +116,7 @@ To use this function the following set of steps should be followed:
 
 - Run the extract subtemplate function in test mode (ie. without checking the "I really want to do this" box). This will test whether your XPaths are correct by extracting one subtemplate from the selected set of records and displaying the results.
 
-- If you are happy with the test results, go ahead with the actual extraction by checking the "I really want to do this" checkbox. After the extaction completes you should see some results.
+- If you are happy with the test results, go ahead with the actual extraction by checking the "I really want to do this" checkbox. After the extraction completes you should see some results.
 
 .. figure:: extract-subtemplates-results.png
 

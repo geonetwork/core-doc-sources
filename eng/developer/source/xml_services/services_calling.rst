@@ -55,10 +55,10 @@ Response
 The response of an XML service always has a content type of
 application/xml (the only exception are those
 services which return binary data). The document encoding is the one
-specified into the document’s prologue. Anyway, all GeoNetwork services
-return documents in the UTF-8 encoding.
+specified in the document prologue which is UTF-8 (all GeoNetwork services
+return documents in the UTF-8 encoding).
 
-On a GET request, the client can force a SOAP response adding the
+On a GET request, the client can force a SOAP response by adding the
 application/soap+xml content type to the Accept
 header parameter.
 
@@ -71,38 +71,35 @@ Exception handling
 
 A response document having an error root element means that the XML service
 raised an exception. This can happen under several conditions: bad parameters,
-internal errors et cetera. In this cases the returned XML document has the following
-structure:
+internal errors et cetera. In this cases the returned XML document has the following structure:
 
 - **error**: This is the root element of the document. It has a mandatory
-  id attribute that represents an identifier of the error from a common
-  set. See below for a list of all id values.
+  id attribute that represents the identifier of the error.
+  See below for a list of identifier values.
   
   - **message**: A message related to the error. It can be a short
     description about the error type or it can contain some other
-    information that completes the id code.
-  - **class**: The Java class of the raised error (name without
-    package information).
-  - **stack**: The server’s stacktrace up to the point that generated
-    the exception. It contains several at children, one for each
-    nested level. Useful for debugging purposes.
+    information that details the id code.
+  - **class**: The Java class name of the Exception that occurred.
+  - **stack**: Execution path from method where Exception occurred to 
+    earliest method called by GeoNetwork. Each level in the execution path
+		has an ``at`` child.
 
-    - **at**: Information about a nested level of called code.
-      It has the following mandatory attributes:
-      **class** Java class of the called method. **method** Java
-      called method. **line** Line, inside the called method’s
-      source code where there the method call of the next
-      nested level. **file** Source file where the class is
-      defined.
+    - **at**: Information about the code being called when the exception 
+      occurred. It has the following mandatory attributes:
+
+      - **class** Java class name of the method that was called. 
+      - **file** Source file where the class is defined.
+      - **method** Method name in **class**.
+      - **line** Source code line number in **file**.
 
   - **object**: An optional container for parameters or other values
     that caused the exception. In case a parameter is an XML object,
     this container will contain that object in XML form.
-  - **request**: A container for some useful information that can be
-    needed to debug the service.
+  - **request**: A container for request information.
 
     - **language**: Language used when the service was called.
-    - **service**: Name of the called service.
+    - **service**: Name of the service that was called.
 
 .. _error2_ids:
 
@@ -113,22 +110,22 @@ structure:
 =========================   ===============================     =============================
 **error**                   General message, human readable     x
 **bad-format**              Reason                              x
-**bad-parameter**           Name of the parameter               Parameter’s bad value
-**file-not-found**          x                                   File’s name
+**bad-parameter**           Name of the parameter               Parameter value
+**file-not-found**          x                                   File name
 **file-upload-too-big**     x                                   x
 **missing-parameter**       Name of the parameter               XML container where the
                                                                 parameter should have been
                                                                 present.
-**object-not-found**        x                                   Object’s name
+**object-not-found**        x                                   Object name
 **operation-aborted**       Reason of abort                     If present, the object that 
                                                                 caused the abort
 **operation-not-allowed**   x                                   x
-**resource-not-found**      x                                   Resource’s name
-**service-not-allowed**     x                                   Service’s name
-**service-not-found**       x                                   Service’s name
-**user-login**              User login failed message           User’s name
-**user-not-found**          x                                   User’s id or name
-**metadata-not-found**      The requested metadata was not      Metadata’s id
+**resource-not-found**      x                                   Resource name
+**service-not-allowed**     x                                   Service name
+**service-not-found**       x                                   Service name
+**user-login**              User login failed message           User name
+**user-not-found**          x                                   User id or name
+**metadata-not-found**      The requested metadata was not      Metadata id
                             found
 =========================   ===============================     =============================
 

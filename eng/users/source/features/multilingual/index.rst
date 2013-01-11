@@ -78,7 +78,7 @@ The auto-detection feature uses Language Detection Library for Java, see https:/
     - Marathi
     - Nepali
     - Dutch
-    - Norvegian
+    - Norwegian
     - Punjabi
     - Polish
     - Portuguese
@@ -130,7 +130,7 @@ Stopwords are words that are considered to carry little or no meaning relevant t
     - Marathi
     - Malay
     - Dutch
-    - Norvegian
+    - Norwegian
     - Polish
     - Portuguese
     - Romanian

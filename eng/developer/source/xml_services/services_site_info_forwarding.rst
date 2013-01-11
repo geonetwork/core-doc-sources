@@ -331,6 +331,28 @@ Example response for status::
     ...
   </statusvalues>
 
+z3950repositories
+^^^^^^^^^^^^^^^^^
+
+- **z3950repositories**: This is the container for the Z3950 repositories that have been configured for this site.
+ 
+  - **repository \[0..n]**: A Z3950 Repository container. 
+
+    - **id**: The repository id. This should be used when referring 
+      to the repository in GeoNetwork services (eg. xml.harvest.* services - 
+      see :ref:`services_harvesting`).
+    - **label**: The human readable name for the repository.
+
+Example response for z3950repositories::
+
+  <z3950repositories>
+    <repository>
+      <id code="act" serverCode="cbb945ec-36ea-11df-9735-ebfc367b61a6">act</id>
+      <label>ACT Geographic Data Directory</label>
+    </repository>
+    .....
+  </z3950repositories>
+
 
 Localised entities
 ``````````````````

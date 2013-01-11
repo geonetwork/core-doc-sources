@@ -83,7 +83,7 @@ internal errors et cetera. In this cases the returned XML document has the follo
   - **class**: The Java class name of the Exception that occurred.
   - **stack**: Execution path from method where Exception occurred to 
     earliest method called by GeoNetwork. Each level in the execution path
-		has an ``at`` child.
+    has an ``at`` child.
 
     - **at**: Information about the code being called when the exception 
       occurred. It has the following mandatory attributes:

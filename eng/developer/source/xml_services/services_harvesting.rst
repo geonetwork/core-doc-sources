@@ -177,6 +177,7 @@ The service requires an XML tree with all information about the harvesting node 
 - :ref:`wfsfeatures_harvesting`
 - :ref:`filesystem_harvesting`
 - :ref:`arcsde_harvesting`
+- :ref:`ogcwxs_harvesting`
 
 Summary of features of the supported harvesting types
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
@@ -208,6 +209,8 @@ See :ref:`exception_handling` for more details.
 
 .. index:: xml.harvesting.info
 
+.. _xml_harvesting_info:
+
 Get information for Harvester definition (xml.harvesting.info)
 --------------------------------------------------------------
 
@@ -219,18 +222,23 @@ Request and Response
 
 All requests must have a **type** parameter which defines the type of information required. The requests and responses for each value of the **type** parameter are:
 
+.. _xml_harvesting_info&type=icons:
+
 icons
 ^^^^^
 
 Return the list of icons that can be used when creating a harvester instance. Icons are usually set in **site/icon** harvester setting.
 
-POST Request::
+POST Request Example::
 
  <request>
    <type>icons<type>
  </request>
 
-Response::
+ URL:
+ http://localhost:8080/geonetwork/srv/eng/xml.harvesting.info
+
+Response Example::
  
  <root>
    <icons>
@@ -250,18 +258,23 @@ Response::
    </icons>
  </root> 
 
+.. _xml_harvesting_info&type=importStylesheets:
+
 importStylesheets
 ^^^^^^^^^^^^^^^^^
  
 Return the list of stylesheets that can be used when creating a harvester instance. The ``id`` element in the response can be used in the **content/importxslt** harvester setting for those harvesters that support it.
 
-POST Request::
+POST Request Example::
  
  <request>
    <type>icons<type>
  </request>
 
-Response::
+ URL:
+ http://localhost:8080/geonetwork/srv/eng/xml.harvesting.info
+
+Response Example::
  
  <root>
    <stylesheets>
@@ -278,18 +291,23 @@ Response::
  </root>
    
 
+.. _xml_harvesting_info&type=oaiPmhServer:
+
 oaiPmhServer
 ^^^^^^^^^^^^
 
 Request information about the sets and prefixes of an OAIPMH server. This request requires an additional url attribute on the type parameter specifying the name of the OAIPMH server to query.
 
-POST Request::
+POST Request Example::
  
  <request>
    <type url="http://localhost:8080/geonetwork/srv/eng/oaipmh">oaiPmhServer</type>
  </request>
 
-Response::
+ URL:
+ http://localhost:8080/geonetwork/srv/eng/xml.harvesting.info
+
+Response Example::
  
  <root>
   <oaiPmhServer>
@@ -316,18 +334,23 @@ Response::
   </oaiPmhServer>
  </root>
 
+.. _xml_harvesting_info&type=wfsFragmentSchemas:
+
 wfsFragmentSchemas
 ^^^^^^^^^^^^^^^^^^
 
 Return list of schemas that have WFS Fragment conversion stylesheets. These stylesheets are stored in the ``WFSToFragments`` directory in the ``convert`` directory of a metadata schema. eg. for schema iso19139 this directory would be ``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/convert/WFSToFragments``.
 
-POST Request::
+POST Request Example::
  
  <request>
   <type>wfsFragmentSchemas</type>
  </request>
 
-Response::
+ URL:
+ http://localhost:8080/geonetwork/srv/eng/xml.harvesting.info
+
+Response Example::
  
  <root>
   <schemas>
@@ -338,19 +361,24 @@ Response::
   </schemas>
  </root>
 
+.. _xml_harvesting_info&type=wfsFragmentStylesheets:
+
 wfsFragmentStylesheets
 ^^^^^^^^^^^^^^^^^^^^^^
 
 Return WFS Fragment conversion stylesheets for a schema previously returned by the request type ``wfsFragmentSchemas`` described above. These stylesheets are stored in the ``WFSToFragments`` directory in the ``convert`` directory of a metadata schema. eg. for schema iso19139 this directory would be ``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/convert/WFSToFragments``.
 
-POST Request::
+POST Request Example::
  
  <request>
    <schema>iso19139</schema>
    <type>wfsFragmentStylesheets</type>
  </request>
 
-Response::
+ URL:
+ http://localhost:8080/geonetwork/srv/eng/xml.harvesting.info
+
+Response Example::
  
  <root>
   <stylesheets>
@@ -367,16 +395,101 @@ Response::
   </stylesheets>
  </root>
 
-threddsFragmentStylesheets
-^^^^^^^^^^^^^^^^^^^^^^^^^^
-
+.. _xml_harvesting_info&type=threddsFragmentSchemas:
 
 threddsFragmentSchemas
 ^^^^^^^^^^^^^^^^^^^^^^
 
+Return list of schemas that have THREDDS Fragment conversion stylesheets. These stylesheets are stored in the ``ThreddsToFragments`` directory in the ``convert`` directory of a metadata schema. eg. for schema iso19139 this directory would be ``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/convert/ThreddsToFragments``.
+
+POST Request Example::
+ 
+ <request>
+  <type>threddsFragmentSchemas</type>
+ </request>
+
+ URL:
+ http://localhost:8080/geonetwork/srv/eng/xml.harvesting.info
+
+Response Example::
+ 
+ <root>
+  <schemas>
+    <record>
+      <id>iso19139</id>
+      <name>iso19139</name>
+    </record>
+  </schemas>
+ </root>
+
+
+.. _xml_harvesting_info&type=threddsFragmentStylesheets:
+
+threddsFragmentStylesheets
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Return WFS Fragment conversion stylesheets for a schema previously returned by the request type ``threddsFragmentSchemas`` described above. These stylesheets are stored in the ``ThreddsToFragments`` directory in the ``convert`` directory of a metadata schema. eg. for schema iso19139 this directory would be ``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/convert/ThreddsToFragments``.
+
+POST Request Example::
+ 
+ <request>
+   <schema>iso19139</schema>
+   <type>threddsFragmentStylesheets</type>
+ </request>
+
+ URL:
+ http://localhost:8080/geonetwork/srv/eng/xml.harvesting.info
+
+Response Example::
+ 
+ <root>
+  <stylesheets>
+    <record>
+      <id>netcdf-attributes.xsl</id>
+      <name>netcdf-attributes</name>
+      <schema>iso19139</schema>
+    </record>
+    <record>
+      <id>thredds-metadata.xsl</id>
+      <name>thredds-metadata</name>
+      <schema>iso19139</schema>
+    </record>
+  </stylesheets>
+ </root>
+
+.. _xml_harvesting_info&type=ogcwxsOutputSchemas:
 
 ogcwxsOutputSchemas
 ^^^^^^^^^^^^^^^^^^^
+
+Return list of schemas that have GetCapabilities conversion stylesheets for a particular three letter OGC service type code. These stylesheets are stored in the ``OGCWxSGetCapabilitiesto19119`` directory in the ``convert`` directory of a metadata schema. eg. for schema iso19139: 
+
+- the directory for these stylesheets would be ``GEONETWORK_DATA_DIR/config/schema_plugins/iso19139/convert/OGCWxSGetCapabilitiesto19119``
+- if a conversion from the GetCapabilities statement of a particular OGC service to a metadata record of this schema exists, then a stylesheet for that serviceType will be present in the directory eg. for schema iso19139 and serviceType ``WFS``, the conversion stylesheet name would be ``OGCWFSGetCapabilities-to-ISO19119_ISO19139.xsl``
+
+POST Request Example::
+ 
+ <request>
+  <type>ogcwxsOutputSchemas</type>
+  <serviceType>WFS</serviceType>
+ </request>
+
+ URL:
+ http://localhost:8080/geonetwork/srv/eng/xml.harvesting.info
+
+Response Example::
+ 
+ <root>
+  <schemas>
+    <record>
+      <id>iso19139</id>
+      <name>iso19139</name>
+    </record>
+  </schemas>
+ </root>
+
+Errors
+``````
 
 If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
 
@@ -456,20 +569,18 @@ A set of ids to operate on. Example::
         <id>789</id>
     </request>
 
-If the request is empty, nothing is done.
-
 Response
 ````````
 
-The same as the request but every id has a status attribute indicating the
+Similar to the request but every id has a status attribute indicating the
 success or failure of the operation. For example, the response to the
 previous request could be::
 
-    <request>
+    <response>
         <id status="ok">123</id>
         <id status="not-found">456</id>
         <id status="inactive">789</id>
-    </request>
+    </response>
 
 The table below summarises, for each service, the
 possible status values.
@@ -487,13 +598,15 @@ already-active              |ok|
 already-running                             |ok|
 ================    ======  =====   ====    ====
 
-If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
+If the request has no id parameters, an empty response is returned.
+
+Most errors relating to a harvester specified in the request (eg. harvester id not found) are returned as status attributes in the response. However, exceptions can still occur, in which case HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
 
 ::
  
- <error id="object-not-found">
-   <message>Object not found</message>
-   <class>ObjectNotFoundEx</class> 
+ <error id="service-not-allowed">
+   <message>Service not allowed</message>
+   <class>ServiceNotAllowedEx</class> 
    .....
  </error>
 

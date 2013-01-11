@@ -1021,7 +1021,8 @@ The settings for an OGCWxS harvester type are:
    - **site**
 
      - **url** (*string*): OGC WxS service URL entry point. eg. http://localhost:7070/deegree/services - the harvester adds the necessary parameters to call the GetCapabilities service.
-     - **ogctype** (*WMS1.0.0|WMS1.1.1|WMS1.3.0|WFS1.0.0|WFS1.1.0|WCS1.0.0|WPS0.4.0|WPS1.0.0|CSW2.0.2|SOS1.0.0"*): Type and version of OGC service being harvested.
+     - **ogctype** (*WMS1.0.0|WMS1.1.1|WMS1.3.0|WFS1.0.0|WFS1.1.0|*
+       *|WCS1.0.0|WPS0.4.0|WPS1.0.0|CSW2.0.2|SOS1.0.0*): Type and version of OGC service being harvested.
      - **icon** (*string*): This is the icon that will be used as the metadata source logo. The image is taken from the ``images/harvesting`` folder and copied to the ``images/logos`` folder. A list of the possible values that can be used for this parameter can be obtained from the ``xml.harvesting.info`` service - see :ref:`xml_harvesting_info&type=icons`.
 
    - **options**

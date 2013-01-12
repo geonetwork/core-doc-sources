@@ -78,11 +78,11 @@ file.
 
 A MEF file can have empty public and private folders depending upon the export format, which can be:
 
-#.  *simple*: both public and private are omitted.
+-   *simple*: both public and private are omitted.
 
-#.  *partial*: only public files are provided.
+-   *partial*: only public files are provided.
 
-#.  *full*: both public and private files are provided.
+-   *full*: both public and private files are provided.
 
 It is recommended to use the .mef extension when naming MEF files.
 
@@ -94,10 +94,7 @@ MEF version 2 support the following:
 - multi-metadata support: more than one metadata record and data can be stored in a single MEF file.
 - multi-schema support: be able to store in a single MEF n formats (eg. for an ISO profile, also store a version of that record in the base ISO19115/ISO19139 schema).
 
-In future, support may be added for holding related metadata records in the MEF file. Related metadata records could be :
- - child metadata (Using parentUuid search field)
- - service metadata (Using operatesOn search field)
- - other related metadata (Using xml.relation.get service eg, siblings)
+Current export services that create MEF files from a metadata record with related records (eg. paent, feature catalog etc), can include these related metadata records in the MEF. See :ref:`mef_export`.
 
 MEF v2 format structure is the following::
 
@@ -109,8 +106,8 @@ MEF v2 format structure is the following::
          |     +--- metadata.xml 
          |     +--- (optional) metadata.iso19139.xml
          +--- info.xml
-         +--- applischema
-         |     +--- (optional) schema.xml (ISO19110)
+         +--- applschema
+         |     +--- (optional) metadata.xml (ISO19110 Feature Catalog)
          +--- public
          |     +---- all public documents and thumbnails
          +--- private
@@ -139,45 +136,45 @@ The root element must have the following children:
 
 #.  *general*: a container for general information. It must have the following children:
 
-    #.  *UUID*: this is the universally unique identifier assigned to the
+    -   *uuid*: this is the universally unique identifier assigned to the
         metadata and must be a valid UUID. This element is optional and,
         when omitted, the reader should generate one. A metadata without a
         UUID can be imported several times into the same system without
         breaking uniqueness constraints. When missing, the reader should
         also generate the siteId value.
-    #.  *createDate*: This date indicates when the metadata was created.
-    #.  *changeDate*: This date keeps track of the most recent change to
+    -   *createDate*: This date indicates when the metadata was created.
+    -   *changeDate*: This date keeps track of the most recent change to
         the metadata.
-    #.  *siteId*: This is an UUID that identifies the actor that created
+    -   *siteId*: This is an UUID that identifies the actor that created
         the metadata and must be a valid UUID. When the UUID element is
         missing, this element should be missing too. If present, it will be
         ignored.
-    #.  *siteName*: This is a human readable name for the actor that
+    -   *siteName*: This is a human readable name for the actor that
         created the metadata. It must be present only if the siteId is
         present.
-    #.  *schema*: The name of the schema for the metadata record in metadata.xml.
-				When the MEF is imported by a GeoNetwork actor, this name should be the 
-				name of a metadata schema handled by the actor (eg. iso19139). If the 
-				GeoNetwork actor does not have such a schema, it may try and select 
-				another metadata with a schema that is present (eg. the metadata in
-				metadata-iso19139.xml could be loaded because the iso19139 schema is 
-				present).
-    #.  *format*: Indicates the MEF export format. The element’s value must
+    -   *schema*: The name of the schema for the metadata record in metadata.xml.
+        When the MEF is imported by a GeoNetwork actor, this name should be the 
+        name of a metadata schema handled by the actor (eg. iso19139). If the 
+        GeoNetwork actor does not have such a schema, it may try and select 
+        another metadata with a schema that is present (eg. the metadata in
+        metadata-iso19139.xml could be loaded because the iso19139 schema is 
+        present).
+    -   *format*: Indicates the MEF export format. The element’s value must
         belong to the following set: { *simple*, *partial*, *full* }.
-    #.  *localId*: This is an optional element. If present, indicates the
+    -   *localId*: This is an optional element. If present, indicates the
         id used locally by the sourceId actor to store the metadata. Its
         purpose is just to allow the reuse of the same local id when
         reimporting a metadata.
-    #.  *isTemplate*: A boolean field that indicates if this metadata is a
+    -   *isTemplate*: A boolean field that indicates if this metadata is a
         template used to create new ones. There is no real distinction
         between a real metadata and a template but some actors use it to
         allow fast metadata creation. The value must be: {
         *true*, *false* }.
-    #.  *rating*: This is an optional element. If present, indicates the
+    -   *rating*: This is an optional element. If present, indicates the
         users’ rating of the metadata ranging from 1 (a bad rating) to 5 (an
         excellent rating). The special value 0 means that the metadata has
         not been rated yet. Can be used to sort search results.
-    #.  *popularity*: Another optional value. If present, indicates the
+    -   *popularity*: Another optional value. If present, indicates the
         popularity of the metadata. The value must be positive and high
         values mean high popularity. The criteria used to set the popularity
         is left to the writer. Its main purpose is to provide a metadata

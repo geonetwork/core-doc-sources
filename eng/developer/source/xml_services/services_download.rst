@@ -93,7 +93,9 @@ xml.file.download
 
 After your application has received any license conditions that go with the file resources attached to the metadata record from ``xml.file.disclaimer``, you can use this service to download the resources.
 
-Note: only users that have download rights over the record will be able to use this service. To obtain these rights your application will need to use ``xml.user.login`` - see :ref:`xml.user.login`.
+.. note:: only users that have download rights over the record will be able to use this service. To obtain these rights your application will need to use ``xml.user.login`` - see :ref:`xml.user.login`.
+
+.. note:: this service is protected against users and/or applications that do not go through the ``xml.file.disclaimer`` service first.
 
 Request
 ```````
@@ -114,26 +116,11 @@ Called with a metadata id or uuid, one or more file names (if more than one file
 Response
 ````````
 
-The service returns a zip archive containing the file resources requested, a copy of the metadata record (as a mef) and a copy of the html license generated and provided by the ``xml.file.disclaimer`` service.
+The service returns HTTP status code 200 along with a zip archive containing:
 
-Note: this service is protected against users and/or applications that do not go through the ``xml.file.disclaimer`` service first.
+ - the file resources requested in the **fname** parameter(s)
+ - a copy of the metadata record (as a mef) - called ``metadata.zip``
+ - a copy of the html license generated (as provided by the ``xml.file.disclaimer`` service) - called ``license-annex.html``
 
-If an exception occurred then the service returns HTTP status code 500 and an XML document describing what went wrong. An example of such a response is::
- 
- <error id="metadata-not-found">
-   <message>Metadata not found</message>
-   <class>MetadataNotFoundEx</class>
-   .......
- </error>
-
-See :ref:`exception_handling` for more details.
-
-Errors
-``````
-
-- **IllegalArgumentException**: Request must contain a UUID or an ID parameter.
-
-- **MetadataNotFoundException**: Metadata not found.
-
-- **OperationNowAllowedException**: you don't have download permission over this record.
+If an exception occurs or the ``xml.file.disclaimer`` service has not been executed by the same user, then a zero-length file will be returned. Unlike other GeoNetwork services, no other indication of an exception is given.
 

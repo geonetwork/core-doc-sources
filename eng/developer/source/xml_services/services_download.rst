@@ -3,10 +3,7 @@
 File download services
 ======================
 
-Introduction
-------------
-
-This chapter provides a detailed explanation of GeoNetwork file download services. These are the services you would use if you want to download a file attached to a metadata record as 'Data for Download' (usually in onlineResources section of an ISO record) or perhaps as a gmx:FileName (where allowed).
+This section provides a detailed explanation of GeoNetwork file download services. These are the services you would use if you want to download a file attached to a metadata record as 'Data for Download' (usually in onlineResources section of an ISO record) or perhaps as a gmx:FileName (where allowed).
 
 The two services, used together, can be used to create a simple click through licensing scheme for file resources attached to metadata records in GeoNetwork.
 
@@ -17,7 +14,7 @@ xml.file.disclaimer
 
 Retrieves information from the metadata about constraints or restrictions on the resources attached to the metadata record. The information is xml and an xhtml presentation of the constraints and restrictions.
 
-Note: only users that have download rights over the record will be able to use this service. To obtain these rights your application will need to use xml.user.login.
+Note: only users that have download rights over the record will be able to use this service. To obtain these rights your application will need to use ``xml.user.login`` - see :ref:`xml.user.login`.
 
 Request
 ```````
@@ -34,9 +31,9 @@ Called with a metadata id or uuid, one or more file names (if more than one file
 Response
 ````````
 
-The service returns a copy of the request parameters, a copy of the metadata record xml and an HTML version of the license annex generated from the metadata record by the XSL metadata-license-annex.xsl (see web/geonetwork/xsl directory).
+The service returns a copy of the request parameters, a copy of the metadata record xml and an HTML version of the license annex generated from the metadata record by the XSL ``metadata-license-annex.xsl`` (in the ``INSTALL_DIR/web/geonetwork/xsl`` directory).
 
-Example of an xml.file.disclaimer response for a GeoNetwork node (Note: the <metadata> and <license> elements are not shown in full as they are too big)::
+Example of an ``xml.file.disclaimer`` response for a GeoNetwork node (Note: the <metadata> and <license> elements are not shown in full as they are too big)::
 
     <response>
         <id>22</id>
@@ -66,16 +63,26 @@ Example of an xml.file.disclaimer response for a GeoNetwork node (Note: the <met
 
 The idea behind this service is that you will receive an HTML presentation of the constraints/restrictions on the resource that you can show to a user for an accept/decline response.
 
-The HTML presentation is controlled by the server so together with the xml.file.download service, this is the way that GeoNetwork can be used to provide a simple click-through licensing system for file resources attached to metadata records.
+The HTML presentation is controlled by the server so together with the ``xml.file.download`` service, this is the way that GeoNetwork can be used to provide a simple click-through licensing system for file resources attached to metadata records.
 
-To signify acceptance of the license and download the resources you should use the xml.file.download service.
+To signify acceptance of the license and download the resources you should use the ``xml.file.download`` service.
+
+If an exception occurred then the service returns HTTP status code 500 and an XML document describing what went wrong. An example of such a response is::
+ 
+ <error id="metadata-not-found">
+   <message>Metadata not found</message>
+   <class>MetadataNotFoundEx</class>
+   .......
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
 
 - **IllegalArgumentException**: Request must contain a UUID or an ID parameter.
 
-- **IllegalArgumentException**: Metadata not found.
+- **MetadataNotFoundException**: Metadata not found.
 
 - **OperationNowAllowedException**: you don't have download permission over this record.
 
@@ -84,9 +91,9 @@ Errors
 xml.file.download
 -----------------
 
-After your application has received any license conditions that go with the file resources attached to the metadata record from xml.file.disclaimer, you can use this service to download the resources.
+After your application has received any license conditions that go with the file resources attached to the metadata record from ``xml.file.disclaimer``, you can use this service to download the resources.
 
-Note: only users that have download rights over the record will be able to use this service. To obtain these rights your application will need to use xml.user.login.
+Note: only users that have download rights over the record will be able to use this service. To obtain these rights your application will need to use ``xml.user.login`` - see :ref:`xml.user.login`.
 
 Request
 ```````
@@ -107,14 +114,26 @@ Called with a metadata id or uuid, one or more file names (if more than one file
 Response
 ````````
 
-The service returns a zip archive containing the file resources requested, a copy of the metadata record (as a mef) and a copy of the html license generated and provided by the xml.file.disclaimer service.
+The service returns a zip archive containing the file resources requested, a copy of the metadata record (as a mef) and a copy of the html license generated and provided by the ``xml.file.disclaimer`` service.
 
-Note: this service is protected against users and/or applications that do not go through the xml.file.disclaimer service first.
+Note: this service is protected against users and/or applications that do not go through the ``xml.file.disclaimer`` service first.
+
+If an exception occurred then the service returns HTTP status code 500 and an XML document describing what went wrong. An example of such a response is::
+ 
+ <error id="metadata-not-found">
+   <message>Metadata not found</message>
+   <class>MetadataNotFoundEx</class>
+   .......
+ </error>
+
+See :ref:`exception_handling` for more details.
 
 Errors
 ``````
 
 - **IllegalArgumentException**: Request must contain a UUID or an ID parameter.
+
+- **MetadataNotFoundException**: Metadata not found.
 
 - **OperationNowAllowedException**: you don't have download permission over this record.
 

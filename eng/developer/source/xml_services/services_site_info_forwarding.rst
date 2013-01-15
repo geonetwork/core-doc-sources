@@ -149,7 +149,7 @@ Groups
     - **description**: Group description
     - **referrer**: The user responsible for this group
     - **email**: The email address to notify when a data file uploaded with the metadata is downloaded
-    - **label**: The localised labels used to show the group in the user interface.
+    - **label**: The localised labels used to show the group in the user interface. See :ref:`localised_entities`.
 
 Example response::
   
@@ -233,7 +233,7 @@ Categories
     identifier for the category. 
 
     - **name**: Category name
-    - **label**: The localised labels used to show the category in the user interface.
+    - **label**: The localised labels used to show the category in the user interface. See :ref:`localised_entities`.
 
 Example response::
   
@@ -260,7 +260,7 @@ Operations
     - **reserved**: Can be y or n and is used to
       distinguish between system reserved and user defined
       operations.
-    - **label**: The localised labels used to show the operation in the user interface.
+    - **label**: The localised labels used to show the operation in the user interface. See :ref:`localised_entities`.
 
 Example response for operations::
   
@@ -287,7 +287,7 @@ Regions
     - **south**: South coordinate of the bounding box.
     - **west**: West coordinate of the bounding box.
     - **east**: east coordinate of the bounding box.
-    - **label**: The localised labels used to show the region in the user interface.
+    - **label**: The localised labels used to show the region in the user interface. See :ref:`localised_entities`.
 
 Example response for regions::
   
@@ -316,7 +316,7 @@ Status
       distinguish between system reserved and user defined
       status values.
     - **label**: The localised labels used to show the
-      status value in the user interface.
+      status value in the user interface. See :ref:`localised_entities`.
 
 Example response for status::
 
@@ -354,14 +354,12 @@ Example response for z3950repositories::
   </z3950repositories>
 
 
+.. _localised_entities:
+
 Localised entities
 ``````````````````
 
-Localised entities have a general label element which contains the
-localised strings in all supported languages. This element has  a child for each
-supported language. Each child has a name reflecting the
-language code while its content is the localised text. Here is an example of
-such elements::
+Localised entities in the responses from this service have a label element which contains localised strings in all supported languages. This element has a child for each supported language. Each child has a name reflecting the language code and content set to the localised text. Example::
 
     <label>
         <eng>Editors</eng>

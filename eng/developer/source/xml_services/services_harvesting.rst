@@ -153,6 +153,8 @@ Errors
 
 .. index:: xml.harvesting.add
 
+.. _xml.harvesting.add:
+
 Create harvester instance (xml.harvesting.add)
 ----------------------------------------------
 
@@ -601,6 +603,141 @@ already-running                             |ok|
 If the request has no id parameters, an empty response is returned.
 
 Most errors relating to a harvester specified in the request (eg. harvester id not found) are returned as status attributes in the response. However, exceptions can still occur, in which case HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
+
+::
+ 
+ <error id="service-not-allowed">
+   <message>Service not allowed</message>
+   <class>ServiceNotAllowedEx</class> 
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
+.. index:: xml.harvesting.history
+
+.. _xml.harvesting.history:
+
+Retrieve Harvesting History (xml.harvesting.history)
+----------------------------------------------------
+
+This service can be used to retrive the history of harvest sessions for a 
+specified harvester instance or all harvester instances. The harvester history
+information is stored in the GeoNetwork database in the HarvestHistory table.
+
+Request
+```````
+
+Called without an **id** parameter, this service returns the harvest history of all harvesters. The response can be sorted by harvest *date* or by harvester *type*. The sort order is specified in the parameter **sort**. Example::
+
+    <request>
+      <sort>date</sort>
+    </request>
+
+Otherwise, an **id** parameter can be specified to request the harvest history of a specific harvester instance. In this case the sort order is by *date* of harvest::
+
+    <request>
+      <id>123</id>
+    </request>
+
+
+Response
+````````
+
+If the update succeeded then HTTP status code 200 is returned along with an XML document containing the harvest history. The response for both types of requests is the same except that the response to a request for the history of a specific harvester will only have history details for that harvester. An example of the response is::
+
+ <response>
+  <response>
+    <record>
+      <id>1</id>
+      <harvestdate>2013-01-01T19:24:54</harvestdate>
+      <harvesteruuid>b6a11fc3-3f6f-494b-a8f3-35eaadced575</harvesteruuid>
+      <harvestername>test plaja</harvestername>
+      <harvestertype>geonetwork</harvestertype>
+      <deleted>n</deleted>
+      <info>
+        <result>
+          <total>5</total>
+          <added>5</added>
+          <updated>0</updated>
+          <unchanged>0</unchanged>
+          <unknownSchema>0</unknownSchema>
+          <removed>0</removed>
+          <unretrievable>0</unretrievable>
+          <doesNotValidate>0</doesNotValidate>
+        </result>
+      </info>
+      <params>	 
+        .....
+      </params>
+    </record>
+  </response>
+  <nodes>
+    <node id="955" type="geonetwork">
+      .....
+    </node>
+    .....
+  </nodes>
+  <sort>date</sort>
+ </response> 
+ 
+Each **record** element in the embedded **response** element contains the details of a harvest session. The elements are:
+
+- **id** - harvest history record id in harvesthistory table
+- **harvestdate** - date of harvest
+- **harvesteruuid** - uuid of harvester that ran
+- **harvestername** - name of harvester (Site/Name parameter) that ran
+- **harvestertype** - type of harvester that ran
+- **deleted** - has the harvester that ran been deleted? 'y' - yes, 'n' - no
+- **info** - results of the harvest. May contain one of the following elements:
+
+ - **result** - details of the successful harvest (a harvester dependent list of results from the harvest)
+ - **error** - an exception from an unsuccessful harvest - see :ref:`exception_handling` for content details of this element
+
+- **params** - the parameters that the harvester had been configured with for the harvest
+
+
+After the embedded **response** element, the currently configured harvesters are returned as **node** children of a **nodes** element - see :ref:`xml.harvesting.add` for references to each of the harvester types that can be returned here.
+
+If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
+
+::
+ 
+ <error id="object-not-found">
+   <message>Object not found</message>
+   <class>ObjectNotFoundEx</class> 
+   .....
+ </error>
+
+See :ref:`exception_handling` for more details.
+
+.. index:: xml.harvesting.history.delete
+
+Delete Harvesting History Entries (xml.harvesting.history.delete)
+-----------------------------------------------------------------
+
+This service can be used to delete harvester history entries from the harvesthistory table in the GeoNetwork database.
+
+Request
+```````
+
+One or more **id** parameters can be specified to request deletion of the harvest history entries in the harvesthistory table. The **id** element values can be obtained from :ref:`xml.harvesting.history`::
+
+    <request>
+      <id>1</id>
+      <id>2</id>
+    </request>
+
+Response
+````````
+
+If successful then HTTP status code 200 is returned along with an XML document with details of how many harvest history records were successfully deleted. An example of this response is::
+
+ <response>2</response>
+
+.. note:: If records with the id specified in the parameters are not present, they will be quietly ignored.
+
+If an error occurred then HTTP status code 500 is returned along with an XML document which contains details of what went wrong. An example of such an error response is:
 
 ::
  

@@ -5,4 +5,3 @@ Create GeoNetwork releases
     :maxdepth: 2
 
     stable.rst
-    branch.rst

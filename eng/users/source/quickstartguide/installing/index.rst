@@ -72,10 +72,12 @@ The installer allows to install these additional packages:
 1. GeoNetwork User Interface: Experimental UI for GeoNetwork using javascript components based on ExtJs library.
 2. GeoServer: Web Map Server that provides default base layers for the GeoNetwork map viewer.
 3. European Union INSPIRE Directive configuration pack: Enables INSPIRE support in GeoNetwork.
+
  - INSPIRE validation rules.
  - Thesaurus files (GEMET, Inspire themes).
  - INSPIRE search panel.
  - INSPIRE metadata view.
+
 4. GAST: Installs GeoNetwork's Administrator Survival Tool. See :ref:`gast`.
 
 Installation using the platform independent installer
@@ -221,7 +223,7 @@ Choose a Database Connection Pool
 `````````````````````````````````
 To manage connections with the database efficiently, a database connection pool is used.  GeoNetwork uses the `Apache Database Connection Pool (DBCP) <http://commons.apache.org/dbcp/>`_. This connection pool can be configured directly in the config.xml file described below or in Jetty/tomcat through the Java Naming and Directory Interface (JNDI).
 
-- **ApacheDBCPool**: This pool is recommended for smaller catalogs (less than 10,000 records).
+* **ApacheDBCPool**: This pool is recommended for smaller catalogs (less than 10,000 records).
 * **JNDIPool**: This pool is configured in Jetty or Tomcat. It is recommended for larger catalogs (especially those with more than approx 30,000 records).
 
 More details about the DBCP configuration parameters that can be used here are in the advanced configuration section of this manual (See :ref:`Database_JNDI_configuration`).

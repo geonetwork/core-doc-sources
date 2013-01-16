@@ -27,11 +27,11 @@ Configuration options:
 
 - **Search criteria** - This allows you to select metadata records for harvest based on certain criteria: 
 
-    - *From* - You can provide a start date here. Any metadata whose last change date is equal to or greater than this date will be harvested. To add or edit a value for this field you need to use the icon alongside the text box. This field is optional so if you don't provide a start date the constraint is dropped. Use the icon to clear the field. 
-    - *Until* - Functions in the same way as the *From* parameter but adds an end constraint to the last change date search. Any metadata whose last change data is less than or equal to this data will be harvested.
-    - *Set* - An OAI-PMH server classifies metadata into sets (like categories in GeoNetwork). You can request all metadata records that belong to a set (and any of its subsets) by specifying the name of that set here.
-    - *Prefix* - 'Prefix' means metadata format. The oai_dc prefix must be supported by all OAI-PMH compliant servers. 
-    You can use the Add button to add more than one Search Criteria set. Search Criteria sets can be removed by clicking on the small cross at the top left of the set.
+  - *From* - You can provide a start date here. Any metadata whose last change date is equal to or greater than this date will be harvested. To add or edit a value for this field you need to use the icon alongside the text box. This field is optional so if you don't provide a start date the constraint is dropped. Use the icon to clear the field. 
+  - *Until* - Functions in the same way as the *From* parameter but adds an end constraint to the last change date search. Any metadata whose last change data is less than or equal to this data will be harvested.
+  - *Set* - An OAI-PMH server classifies metadata into sets (like categories in GeoNetwork). You can request all metadata records that belong to a set (and any of its subsets) by specifying the name of that set here.
+  - *Prefix* - 'Prefix' means metadata format. The oai_dc prefix must be supported by all OAI-PMH compliant servers. 
+  - You can use the Add button to add more than one Search Criteria set. Search Criteria sets can be removed by clicking on the small cross at the top left of the set.
 
 .. note:: the 'OAI provider sets' drop down next to the *Set* text box and the 'OAI provider prefixes' drop down next to the *Prefix* textbox are initially blank. After specifying the connection URL, you can press the **Retrieve Info** button, which will connect to the remote OAI-PMH server, retrieve all supported sets and prefixes and fill the drop downs with these values. Selecting a value from either of these drop downs will fill the appropriate text box with the selected value. 
 

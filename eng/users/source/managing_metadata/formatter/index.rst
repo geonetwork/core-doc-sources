@@ -11,10 +11,15 @@ The metadata.show service (the metadata viewer) displays a metadata document usi
 To this end the metadata.formatter.html and metadata.formatter.xml services allow an alternate stylesheet to be used for displaying the metadata.  The urls of interest to an end-user are:
 
  * /geonetwork/srv/<langCode>/metadata.formatter.html?xsl=<formatterId>&id=<metadataId>
+
   * Applies the stylesheet identified by xsl parameter to the metadata identified by id param and returns the document with the *html* contentType
+
  * /geonetwork/srv/<langCode>/metadata.formatter.xml?xsl=<formatterId>&id=<metadataId>
+
   * Applies the stylesheet identified by xsl parameter to the metadata identified by id param and returns the document with the *xml* contentType
+
  * /geonetwork/srv/<langCode>/metadata.formatter.list
+
   * Lists all of the metadata formatter ids
   
 Another use-case for metadata formatters is to embed the metadata in other websites.  Often a metadata document contains a very large amount of data and perhaps only a subset is interesting for a particular website or perhaps the branding/stylesheets needs to be customized to match the website.
@@ -49,37 +54,46 @@ If a zip file is uploaded the zip file must contain a file view.xsl.  The view.x
 
 The view.xsl stylesheet is executed on an xml file with essentially the following format:
 
-{{{
 - root 
+
  - url - text of the url tag is the base url to make requests to geonetwork.  An example is /geonetwork/
  - locUrl - text of the url tag is the localised url to make requests to geonetwork.  An example is /geonetwork/srv/eng/
- - resourceUrl - a base url for accessing a resource from the bundle.  An example of image tag might be:
+ - resourceUrl - a base url for accessing a resource from the bundle.  An example of image tag might be::
+
                  <img src="{/root/resourceURL}/img.png"/>
+
  - <metadata> - the root of the metadata document
  - loc
+
   - lang - the text of this tag is the lang code of the localization files that are loaded in this section
-  - <bundle loc file> - the contents of the bundles loc/<locale>/*.xml files
+  - <bundle loc file> - the contents of the bundles loc/<locale>/\*.xml files
+
  - strings - the contents of geonetwork/loc/<locale>/xml/strings.xml
  - schemas
+
   - <schema> - the name of the schema of the labels and codelists strings to come
+
    - labels - the localised labels for the schema as defined in the schema_plugins/<schema>/loc/<locale>/labels.xml
    - codelists - the localised codelists labels for the schema as defined in the schema_plugins/<schema>/loc/<locale>/codelists.xml
    - strings - the localised strings for the schema as defined in the schema_plugins/<schema>/loc/<locale>/strings.xml
-}}}
 
-If the view.xsl output needs to access resources in the formatter bundle (like css files or javascript files) the xml document contains a tag: resourceUrl that contains the url for obtaining that resource.  An example of an image tag is: {{{<img src="{/root/resourceURL}/img.png"/>}}}.
+If the view.xsl output needs to access resources in the formatter bundle (like css files or javascript files) the xml document contains a tag: resourceUrl that contains the url for obtaining that resource.  An example of an image tag is:: 
+
+ <img src="{/root/resourceURL}/img.png"/>
 
 By default the strings, labels, etc... will be localized based on the language provided in the URL.  For example if the url is /geonetwork/srv/eng/metadata.formatter.html?xsl=default&id=32 then the language code that is used to look up the localization will be eng.  However if the language code does not exist it will fall back to the Geonetwork platform default and then finally just load the first local it finds. 
 
-Schemas and geonetwork strings all have several different translations but extra strings, etc... can be added to the formatter bundle under the loc directory.  The structure would be:{{{loc/<langCode>/strings.xml}}}.  The name of the file does not have to be strings.xml.  All xml files in the loc/<langCode>/ directory will be loaded and added to the xml document.
+Schemas and geonetwork strings all have several different translations but extra strings, etc... can be added to the formatter bundle under the loc directory.  The structure would be::
+ 
+ loc/<langCode>/strings.xml
 
-The format of the formatter bundle is as follows:
+The name of the file does not have to be strings.xml.  All xml files in the loc/<langCode>/ directory will be loaded and added to the xml document.
 
-{{{
-config.properties
-view.xsl
-loc/<langCode>/
-}}}
+The format of the formatter bundle is as follows::
+ 
+ config.properties
+ view.xsl
+ loc/<langCode>/
 
 Only the view.xsl is required.  If a single xsl file is uploaded then the rest of the directory structure will be created and some files will be added with default values.  So a quick way to get started on a bundle is to upload an empty xsl file and then download it again.  The downloaded zip file will have the correct layout and contain any other optional files.
 
@@ -91,10 +105,13 @@ The config.properties file contains some configuration options used when creatin
  - *fixedLang* - sets the language of the strings to the fixed language, this ensures that the formatter will always use the same language for its labels, strings, etc... no matter what language code is in the url.
  - *loadGeonetworkStrings* - if true or non-existent then geonetwork strings will be added to the xml document before view.xsl is applied.  The default is true so if this parameter is not present then the strings will be loaded
  - *schemasToLoad* - defines which schema localization files should be loaded and added to the xml document before view.xsl is applied
+
   - if a comma separated list then only those schemas will be loaded
   - if all then all will be loaded
   - if none then no schemas will be loaded
+
  - *applicableSchemas* - declares which schemas the bundle can format
+
   - A comma separated list indicates specifically which schemas the bundle applies to
   - If the value is all (or value is empty) then all schemas are considered supported
   

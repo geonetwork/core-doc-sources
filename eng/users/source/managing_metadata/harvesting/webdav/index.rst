@@ -41,5 +41,6 @@ Notes
 `````
 
 - The same metadata could be harvested several times by different instances of the WebDAV harvester. This is not good practise because copies of the same metadata record will have a different UUID.
+
 .. include:: ../common_notes.rst
 

@@ -13,6 +13,8 @@ GeoNetwork is able to harvest from the following sources (for more details see b
 #. An old GeoNetwork 2.0 node (deprecated). See :ref:`gn2_harvester`
 #. A WebDAV server. See :ref:`webdav_harvester`
 #. A CSW 2.0.1 or 2.0.2 catalogue server. See :ref:`csw_harvester`
+#. A GeoPortal 9.3.x server. See :ref:`geoportal_rest_harvester`
+#. A File system acessible by GeoNetwork. See :ref:`localfilesystem_harvester`
 #. An OAI-PMH server. See :ref:`oaipmh_harvester`
 #. An OGC service using its GetCapabilities document. These include WMS, WFS, WPS and WCS services. See :ref:`ogcwxs_harvester`
 #. An ArcSDE server. See :ref:`sde_harvester`
@@ -326,6 +328,8 @@ You can choose the type of harvest you intend to perform and press *Add* to begi
 		gn/index.rst
 		webdav/index.rst
 		csw/index.rst
+		geoPREST/index.rst
+		localfilesystem/index.rst
 		gn2.0/index.rst
 		oaipmh/index.rst
 		ogcwxs/index.rst

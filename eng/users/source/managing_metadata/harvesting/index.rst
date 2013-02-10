@@ -9,18 +9,18 @@ Harvesting is the process of collecting metadata from a remote source and storin
 
 GeoNetwork is able to harvest from the following sources (for more details see below):
 
-#. Another GeoNetwork node (version 2.1 or above). See :ref:`harvesting_gn`
-#. An old GeoNetwork 2.0 node (deprecated). See :ref:`gn2_harvester`
-#. A WebDAV server. See :ref:`webdav_harvester`
-#. A CSW 2.0.1 or 2.0.2 catalogue server. See :ref:`csw_harvester`
-#. A GeoPortal 9.3.x server. See :ref:`geoportal_rest_harvester`
-#. A File system acessible by GeoNetwork. See :ref:`localfilesystem_harvester`
-#. An OAI-PMH server. See :ref:`oaipmh_harvester`
-#. An OGC service using its GetCapabilities document. These include WMS, WFS, WPS and WCS services. See :ref:`ogcwxs_harvester`
-#. An ArcSDE server. See :ref:`sde_harvester`
-#. A THREDDS catalog. See :ref:`thredds_harvester`
-#. An OGC WFS using a GetFeature query. See :ref:`getfeature_harvester`
-#. One or more Z3950 servers. See :ref:`z3950_harvester`
+ #. Another GeoNetwork node (version 2.1 or above). See :ref:`harvesting_gn`
+ #. An old GeoNetwork 2.0 node (deprecated). See :ref:`gn2_harvester`
+ #. A WebDAV server. See :ref:`webdav_harvester`
+ #. A CSW 2.0.1 or 2.0.2 catalogue server. See :ref:`csw_harvester`
+ #. A GeoPortal 9.3.x server. See :ref:`geoportal_rest_harvester`
+ #. A File system acessible by GeoNetwork. See :ref:`localfilesystem_harvester`
+ #. An OAI-PMH server. See :ref:`oaipmh_harvester`
+ #. An OGC service using its GetCapabilities document. These include WMS, WFS, WPS and WCS services. See :ref:`ogcwxs_harvester`
+ #. An ArcSDE server. See :ref:`sde_harvester`
+ #. A THREDDS catalog. See :ref:`thredds_harvester`
+ #. An OGC WFS using a GetFeature query. See :ref:`getfeature_harvester`
+ #. One or more Z3950 servers. See :ref:`z3950_harvester`
 
 Mechanism overview
 ------------------

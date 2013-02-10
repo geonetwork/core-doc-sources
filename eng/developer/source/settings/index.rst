@@ -133,7 +133,7 @@ hierarchy below.
 - **harvesting**
 
  - **node** \[0..n] (*geonetwork|csw|arcsde|filesystem|geonetwork20|oaipmh|*
-   *ogcwxs|thredds|webdav|wfsfeatures|z3950|z3950Config*): Type of 
+   *ogcwxs|thredds|webdav|wfsfeatures|z3950|z3950Config|geoPREST*): Type of 
    harvesting node 
 
    - **site**: A container for site information.
@@ -1087,3 +1087,102 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
     <running>false</running>
   </info>
  </node>
+
+.. _geoportal_rest_harvesting:
+
+Harvesting node type geoPREST
+`````````````````````````````
+
+This harvester type is capable of querying a GeoPortal 9.3.x site and harvesting
+metadata using the GeoPortal REST API.
+
+ - **node** (*string*): geoPREST
+
+   - **site**
+
+     - **baseUrl** (*string*): Base URL of the GeoPortal server site. eg. http://yoursite.com/geoportal. REST URLs will be built from this URL.
+     - **icon** (*string*): This is the icon that
+       will be used as the metadata source logo. The image is taken
+       from the ``images/harvesting`` folder and copied to the ``images/logos``
+       folder.
+       A list of the
+       possible values that can be used for this parameter can be obtained from
+       the ``xml.harvesting.info`` service - see 
+       :ref:`xml_harvesting_info&type=icons`.
+
+   - **search** \[0..n]: Contains search parameters. If this element is
+     missing, no results will be returned. You can use the Lucene query syntax documented at http://webhelp.esri.com/geoportal_extension/9.3.1/index.htm#srch_lucene.htm.
+
+     - **freeText** (*string*)
+
+XML Example
+^^^^^^^^^^^
+
+Harvester settings in XML are used by the harvester services - see :ref:`services_harvesting`. 
+*Example of geoPREST harvester settings in XML:*::
+ 
+ <node id="978" type="geoPREST">
+  <site>
+    <name>qldtest</name>
+    <uuid>4b9de966-1d5f-4133-97da-f4232fb7761a</uuid>
+    <account>
+      <use>true</use>
+      <username />
+      <password />
+    </account>
+    <baseUrl>http://qspatial.information.qld.gov.au/geoportal</baseUrl>
+    <icon>default.gif</icon>
+  </site>
+  <content>
+    <validate>false</validate>
+    <importxslt>none</importxslt>
+  </content>
+  <options>
+    <every>0 0 0 ? * *</every>
+    <oneRunOnly>true</oneRunOnly>
+    <status>inactive</status>
+  </options>
+  <searches>
+    <search>
+      <freeText>Barrier Reef</freeText>
+    </search>
+    <search>
+      <freeText>Cadastral</freeText>
+    </search>
+  </searches>
+  <privileges>
+    <group id="1">
+      <operation name="view" />
+      <operation name="dynamic" />
+      <operation name="featured" />
+    </group>
+  </privileges>
+  <categories>
+    <category id="2" />
+  </categories>
+  <info>
+    <lastRun />
+    <running>false</running>
+    <result>
+      <total>119</total>
+      <added>87</added>
+      <updated>32</updated>
+      <unchanged>0</unchanged>
+      <unknownSchema>0</unknownSchema>
+      <removed>0</removed>
+      <unretrievable>0</unretrievable>
+      <badFormat>0</badFormat>
+      <doesNotValidate>0</doesNotValidate>
+    </result>
+  </info>
+ </node>
+
+Notes
+^^^^^
+
+- this harvester uses two REST services from the GeoPortal API:
+
+ - ``rest/find/document`` with searchText parameter to return an RSS listing of metadata records that meet the search criteria
+ - ``rest/document`` with id parameter from each result returned in the RSS listing
+
+- this harvester has been tested with GeoPortal 9.3.x. It should be used for that version of GeoPortal in preference to the CSW harvester.

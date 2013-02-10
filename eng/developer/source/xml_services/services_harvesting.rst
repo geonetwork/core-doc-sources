@@ -18,7 +18,7 @@ Retrieves information about one or all configured harvesters.
 Request
 ```````
 
-Called without parameters, this services return all harvesters. Example::
+Called without parameters, this service returns all harvesters. Example::
 
     <request/>
 
@@ -180,6 +180,7 @@ The service requires an XML tree with all information about the harvesting node 
 - :ref:`filesystem_harvesting`
 - :ref:`arcsde_harvesting`
 - :ref:`ogcwxs_harvesting`
+- :ref:`geoportal_rest_harvesting`
 
 Summary of features of the supported harvesting types
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

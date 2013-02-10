@@ -28,7 +28,7 @@ The figure above shows the options available:
 
 - **Harvested Content** - Options that are applied to harvested content.
 
-  - *Apply this XSLT to harvested records* - Choose an XSLT here that will convert harvested records to a different format.
+  - *Apply this XSLT to harvested records* - Choose an XSLT here that will convert harvested records to a different format. See notes section below for typical usage.
   - *Validate* - If checked, the metadata will be validated after retrieval. If the validation does not pass, the metadata will be skipped. 
 
 - **Privileges** - Assign privileges to harvested metadata. 
@@ -46,7 +46,9 @@ Notes
 
 - this harvester uses two REST services from the GeoPortal API: 
 
- - ``rest/find/document`` with searchText parameter to return an RSS listing of metadata records that meet the search criteria 
+ - ``rest/find/document`` with searchText parameter to return an RSS listing of metadata records that meet the search criteria (maximum 100000)
  - ``rest/document`` with id parameter from each result returned in the RSS listing
 
-- this harvester has been tested with GeoPortal 9.3.x. It should be used for that version of GeoPortal in preference to the CSW harvester.
+- this harvester has been tested with GeoPortal 9.3.x. It should be used for that version of GeoPortal in preference to the CSW harvester
+
+- typically ISO19115 metadata produced by the Geoportal software will not have a 'gmd' prefix for the namespace ``http://www.isotc211.org/2005/gmd``. GeoNetwork XSLTs will not have any trouble understanding this metadata but will not be able to map titles and codelists in the viewer/editor. To fix this problem, please select the `Add-gmd-prefix` XSLT for the *Apply this XSLT to harvested records* in the **Harvested Content** set of options described earlier

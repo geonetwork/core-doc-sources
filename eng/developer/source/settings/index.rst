@@ -204,8 +204,8 @@ Settings for each of the different harvesters that show the additional elements 
 
 .. _geonetwork_harvesting:
 
-Harvesting node type geonetwork
-```````````````````````````````
+Harvesting node geonetwork
+``````````````````````````
 
 This is the native harvesting supported by GeoNetwork 2.1 and above.
 
@@ -301,8 +301,8 @@ Notes
 
 .. _webdav_harvesting:
 
-Harvesting node type webdav
-```````````````````````````
+Harvesting node webdav
+``````````````````````
 
 This harvester type is capable of connecting to a web server which is WebDAV
 enabled (WebDAV is WEB Distributed Authoring and Versioning) or WAF (Web Accessible Folder) enabled.
@@ -384,8 +384,8 @@ Notes
 
 .. _csw_harvesting:
 
-Harvesting node type csw
-````````````````````````
+Harvesting node csw
+```````````````````
 
 This harvester type is capable of querying an OGC Catalogue Services for the
 Web (CSW) server and harvesting metadata.
@@ -474,8 +474,8 @@ Notes
 
 .. _z3950_harvesting:
 
-Harvesting node type z3950
-``````````````````````````
+Harvesting node z3950
+`````````````````````
 
 This harvester type is capable of querying one or more Z3950 servers 
 and harvesting metadata.
@@ -552,8 +552,8 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
 
 .. _oaipmh_harvesting:
 
-Harvesting node type oaipmh
-```````````````````````````
+Harvesting node oaipmh
+``````````````````````
 
 This harvester type is capable of querying an OAIPMH (Open Archives Initiative Protocol for Metadata Harvesting version 2.0) server and harvesting metadata.
 
@@ -649,8 +649,8 @@ Notes
 
 .. _thredds_harvesting:
 
-Harvesting node type thredds
-````````````````````````````
+Harvesting node thredds
+```````````````````````
 
 This harvester type is capable of harvesting metadata from a THREDDS (Thematic Real-time Environmental Data Directory Service). The metadata fragments are:
 
@@ -767,8 +767,8 @@ Notes
 
 .. _wfsfeatures_harvesting:
 
-Harvesting node type wfsfeatures
-````````````````````````````````
+Harvesting node wfsfeatures
+```````````````````````````
 
 This harvester type is capable of querying and harvesting metadata from the GetFeature response from an OGC Web Feature Service (WFS). The metadata fragments are:
 
@@ -862,8 +862,8 @@ Notes
 
 .. _filesystem_harvesting:
 
-Harvesting node type filesystem
-````````````````````````````````
+Harvesting node filesystem
+```````````````````````````
 
 This harvester type is capable of querying and harvesting metadata (filename \*.xml) from a directory tree on a filesystem accessible to the GeoNetwork server.
 
@@ -930,8 +930,8 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
 
 .. _arcsde_harvesting:
 
-Harvesting node type arcsde
-```````````````````````````
+Harvesting node arcsde
+``````````````````````
 
 This harvester type is capable of harvesting metadata from an arcsde server.
 
@@ -1009,8 +1009,8 @@ Notes
 
 .. _ogcwxs_harvesting:
 
-Harvesting node type ogcwxs
-```````````````````````````
+Harvesting node ogcwxs
+``````````````````````
 
 This harvester type is capable of harvesting metadata from the GetCapabilities response of OGC services. 
 
@@ -1090,8 +1090,8 @@ Harvester settings in XML are used by the harvester services - see :ref:`service
 
 .. _geoportal_rest_harvesting:
 
-Harvesting node type geoPREST
-`````````````````````````````
+Harvesting node geoPREST
+````````````````````````
 
 This harvester type is capable of querying a GeoPortal 9.3.x site and harvesting
 metadata using the GeoPortal REST API.

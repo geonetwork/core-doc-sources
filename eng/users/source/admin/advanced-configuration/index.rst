@@ -315,9 +315,9 @@ or more metadata records:
    least 5x (and to be safe 10x) the number of records you are expecting to hold and let 
    GeoNetwork create its `data` directory on that filesystem.
 
-.. _geonetwork_data_dir:
-
 .. index:: GEONETWORK_DATA_DIR
+
+.. _geonetwork_data_dir:
 
 GeoNetwork data directory
 -------------------------

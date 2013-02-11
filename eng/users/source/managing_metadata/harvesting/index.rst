@@ -281,18 +281,18 @@ a table, with some rows labelled as follows:
 - **Could not insert** - Number of records that the harvester could not insert into the catalog (usually because the record was already present eg. in the Z3950 harvester this can occur if the same record is harvested from different servers).
 
 
-==============================   ==========  ======     ======   =======  ===========  ================  =======  ===============
-Result vs harvesting type        GeoNetwork  WebDAV     CSW      OAI-PMH  OGC Service  OGC WFS Features  THREDDS  Z3950 Server(s)
-==============================   ==========  ======     ======   =======  ===========  ================  =======  ===============
-Total                            |ok|        |ok|       |ok|     |ok|     |ok|         |ok|              |ok|     |ok|
-Added                            |ok|        |ok|       |ok|     |ok|     |ok|                                    |ok|
-Removed                          |ok|        |ok|       |ok|     |ok|     |ok|                                    |ok|
-Updated                          |ok|        |ok|       |ok|     |ok|                                             |ok|
-Unchanged                        |ok|        |ok|       |ok|     |ok|                                             |ok|
-Unknown schema                   |ok|        |ok|       |ok|     |ok|     |ok|                                    |ok|
-Unretrievable                    |ok|        |ok|       |ok|     |ok|     |ok|                           |ok|     |ok|
-Bad Format                                   |ok|                |ok|                                             |ok|
-Does Not Validate                            |ok|                |ok|                  |ok|                       |ok|
+==============================   ==========  ======     ======   =======  ===========  ================  =======  ===============  ==============
+Result vs harvesting type        GeoNetwork  WebDAV     CSW      OAI-PMH  OGC Service  OGC WFS Features  THREDDS  Z3950 Server(s)  GeoPortal REST
+==============================   ==========  ======     ======   =======  ===========  ================  =======  ===============  ==============
+Total                            |ok|        |ok|       |ok|     |ok|     |ok|         |ok|              |ok|     |ok|             |ok|
+Added                            |ok|        |ok|       |ok|     |ok|     |ok|                                    |ok|             |ok|
+Removed                          |ok|        |ok|       |ok|     |ok|     |ok|                                    |ok|             |ok|
+Updated                          |ok|        |ok|       |ok|     |ok|                                             |ok|             |ok|
+Unchanged                        |ok|        |ok|       |ok|     |ok|                                             |ok|             |ok|
+Unknown schema                   |ok|        |ok|       |ok|     |ok|     |ok|                                    |ok|             |ok|
+Unretrievable                    |ok|        |ok|       |ok|     |ok|     |ok|                           |ok|     |ok|             |ok|
+Bad Format                                   |ok|                |ok|                                             |ok|             |ok|
+Does Not Validate                            |ok|                |ok|                  |ok|                       |ok|             |ok|
 Thumbnails / Thumbnails failed                                            |ok|                           |ok|
 Metadata URL attribute used                                               |ok|
 Services Added                                                                                           |ok|
@@ -306,7 +306,7 @@ Fragments Matched                                                               
 Existing datasets                                                                                        |ok|
 Records Built                                                                          |ok|              |ok|
 Could not insert                                                          |ok|                                    |ok|
-==============================   ==========  ======     ======   =======  ===========  ================  =======  ===============
+==============================   ==========  ======     ======   =======  ===========  ================  =======  ===============  ==============
 
 
 *Result information supported by harvesting types*

@@ -1,5 +1,110 @@
 ================================================================================
 ===
+=== GeoNetwork 2.8.0: List of changes
+===
+================================================================================
+--------------------------------------------------------------------------------
+--- Bug fixes
+--------------------------------------------------------------------------------
+- Ensure gmd prefix xslt works for records with prefix and without
+- Fix for ticket #1199
+- fix resource loading when servlet is not called geonetwork
+- SDE harvester validation rules: remove trailing comma causing issues in IE
+- #1186 WebDav harvester doesn't keep in synch uuid in database and xml metadata content after reharvest
+- Clean up unused options as system configuration was broken
+- Fixed few issues with wrong/missing scripts in debug mode. - When in debug mode use the non-compressed version of the 
+openlayers - Also added a missing CSW js scripts for debug mode.
+- Batch import was not transactional any more - MEFLib/Importer should not control the dbms connection as threads need to 
+do that - split out indexing from database because some indexing methods in DataManager commit the dbms
+- Fix help text for gmd:protocol in metadata editor
+- Make path added to schemaplugin-uri-catalog.xml a uri - fix for ticket #1024
+- Fix for reader acquire of a previous version.
+- Don't set _title lucene field again - it is already set Don't reset isoLangId - it is already set
+- fixed selection with csw
+- fixed problem searching by uuid
+- Fix for ticket #1088 - thanks to bjohare
+- INSPIRE test suite (http://testsuite.gdi-de.org/gdi/) seem not agnostic about namespace prefix for 
+http://inspire.ec.europa.eu/schemas/common/1.0 and requires inspire_com prefix
+- field _title is being added to lucene index document twice
+- When calculating default index language allow for case where language element may be present but blank
+- Patch to improve lucene search manager and fix too many open files bug
+- Comment invalid comparison operators according to INSPIRE
+- fixed mapfish print to a specific version (used by georchestra as well
+- fix catalog searcher (csw) for spatial searches and paging
+- fixed compilation error and use 2 letter char
+- fixed geonetwork harvester for harvesting from geonetwork 2.9+ servers (new security)
+- Fixed small bug in case where the original local id is lower case. It was being missed in the conversion in gmd:LocalisedCharacterString. 
+Applying uppercase conversion fixes the issue.
+- Fix for ticket #1169
+- remove hit limitting in spatial filters to work around bug in calculating the end hit
+- #1053 scripts/ext/locale/* not loading
+- Fix for ticket #1159 - move form save into afterHide event on modal box that shows file upload results - otherwise modalbox
+gets treated badly by form save and won't come back to life again
+- Fix for ticket #1145 - cannot use root element of metadata because sometimes it is not present (eg. when adding a 
+gmd:onlineResource element) - also not necessary to have that check because only ever editing 1 record and the record 
+is the only xml element in /root with a geonet:info child (other elements in /root are gui and request)
+- Another fix related to Ticket #525 Missing POL in the build
+- Fix for ticket #1154
+- Fix for ticket #1152
+- Fix issue where it was not displaying category icons correctly when there were several.
+- Only display div for categories if categories exists.  fixes issues in cases where no category exists was messing up the display
+- Fix for Ticket #1146 Add missing category icons if the <display-in-search mode="db"/> is on
+- Supposed to be the same image as web-client/src/main/resources/apps/images/default/category
+- Fix for ticket #1130
+- Fix for Ticket #998 typo in local rating
+- Fix for Ticket #757 fix typo for term "Gazzetteer" should be "Gazetteer"
+- Another related fix for Ticket #1128 Removed extra parameter from call checkForFileUpload as it was no longer required.
+- Fix for ticket Ticket #1128 Only show file related error if we are dealing with the "File for download" protocol.
+- Fix for 1135, Transaction fails to import if user does not have a group
+- 1116 add missing directory
+- 1116: GetRecords hardcoded prefixes in TypeNames check
+- [PATCH] Fix minified js encoding, enforce UTF-8 (bug #980)
+- Fix #1120.  Error retrieving template during THREDDS fragment harvest due to user session not being present in context 
+while running harvest
+- #1118 Add xlink:href with CSW link to srv:operatesOn when editing the element in metadata editor
+
+
+--------------------------------------------------------------------------------
+--- Changes
+--------------------------------------------------------------------------------
+- Add geoportal REST harvester
+- Move schema list and status values list services into xml.info service
+- Fix editor metadata section tooltips
+- Use MetadataNotFoundEx for consistency
+- Add xml-error.xsl for harvesting services to provide XML error responses
+- added english translation for requestedlanguagesorted
+- added sort language back to ui
+- Move 'Clone' into Operation column.
+- Enable xml.metadata.schema.add,delete,update services
+- Some services need to use MetadataNotFoundEx Add services for xml_services (mainly for xml error handling) Add simple 
+Validation service Bug fix in DataManager getMetadataNoInfo NPE Bug fix to add www.opengis.net to iso19139 oasis remap 
+error-xml.xml and xml-error.xml doing the same thing - combine
+- Switch from status List service to Info service for advanced search menu
+- Include xml.schema.list service
+- updated config page's multilingual settings so only the correct settings are available
+- Added missing script (fi language) for debug mode.
+- Allow config overrides on schema conversions files
+- #1090 Duplicate key "selectOneFile" in strings.xml
+- Move jetty to 7.5.0 for mvn jetty:run
+- Add sample config file for jetty to access JNDIPool
+- added webspecs submodule
+- #1178 New UI - Display default pointer in search results, except for links/actions (display hand pointer)
+- #1137 Hovering over "+" symbol in editor displays "Add add"
+- updated spring version to 1.5.5 for #1161
+- Improve schema selection process in MEFv2 files - use schema from info.xml as suggested by Ian to choose metadata 
+to load, if not present then try preferredSchema, if neither present then select first one with valid schema to load.
+- Changed regular expression from ^WWW:DOWNLOAD-.*-http--download$ to ^WWW:DOWNLOAD-.*-http--download.* 
+So that it would include WWW:DOWNLOAD-.*-http--downloaddata
+- Standardized the search for WWW:DOWNLOAD-*-http--download. There were a few variations Used a regular 
+expression as it was cleaner.
+- Updated MEF load process to generate better debugging messages and better error message so that it would be easier 
+to identify where the error is. By better, in this case it meant adding the folder to the error message otherwise it would 
+generally only specify "metadata.xml" which is the default filename...
+- Set maxWritesInTransaction on spatial database to 1 by default - this is safest as it sets the spatial index writer to 
+autocommit thus protecting it from problems when connection to db is lost. Now safe to use as a result of earlier bug fixes.
+
+================================================================================
+===
 === GeoNetwork 2.8.0RC2: List of changes
 ===
 ================================================================================

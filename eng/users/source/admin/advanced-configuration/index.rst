@@ -481,7 +481,7 @@ for a particular deployment target.  The concept behind configuration overrides 
 the application is deployed and a particular set of override files are used for the deployment target.  The override files only have the settings that need
 to be different for the deployment target, alleviating the need to deploy and edit the configuration files or have a different web application per deployment target.
 
-Configuration override files are also useful for forked Geonetwork applications that regularily merge the changes from the true Geonetwork code base.
+Configuration override files are also useful for forked Geonetwork applications that regularly merge the changes from the true Geonetwork code base.
 
 A common scenario is to have test and production instances with different configurations. In both configurations 90% of the configuration is the same 
 but certain parts need to be updated.
@@ -567,6 +567,17 @@ An example of a overrides file is as follows::
             <update linePattern="(.*) Relations">$1 NewRelations</update>
             <update linePattern="(.*)relatedId(.*)">$1${aparam}$2</update>
         </textFile>
+       <!-- configure the spring aspects of geonetwork -->
+       <spring>
+         <!-- import a complete spring xml file -->
+         <import file="./config-spring-overrides.xml"/>
+         <!-- declare a file as a spring properties override file: See http://static.springsource.org/spring/docs/3.0.x/api/org/springframework/beans/factory/config/PropertyOverrideConfigurer.html -->
+         <propertyOverrides file="./config-property-overrides.properties" />
+         <!-- set a property on one bean to reference another bean -->
+         <set>beanName.propertyName=beanName</set>
+         <!-- add a references to a bean to a property on another bean.  This assumes the property is a collection -->
+         <add>beanName.propertyName=beanName</add>
+       </spring>
     </overrides>
 
 

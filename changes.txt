@@ -6,6 +6,9 @@
 --------------------------------------------------------------------------------
 --- Bug fixes
 --------------------------------------------------------------------------------
+- fixed increase popularity task
+- #1225 TableExport service is prone to SQL injection and allows export any GeoNetwork table
+- ported back memory leak fix
 - Ensure gmd prefix xslt works for records with prefix and without
 - Fix for ticket #1199
 - fix resource loading when servlet is not called geonetwork
@@ -62,7 +65,6 @@ is the only xml element in /root with a geonet:info child (other elements in /ro
 - Fix #1120.  Error retrieving template during THREDDS fragment harvest due to user session not being present in context 
 while running harvest
 - #1118 Add xlink:href with CSW link to srv:operatesOn when editing the element in metadata editor
-
 
 --------------------------------------------------------------------------------
 --- Changes

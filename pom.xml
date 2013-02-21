@@ -246,8 +246,37 @@
              </configuration>
            </execution>
             
+            <execution>
+             <id>user-docs-build-latex-fra</id>
+             <phase>prepare-package</phase>
+             <goals>
+               <goal>exec</goal>
+             </goals>
+             <configuration>
+               <executable>make</executable>
+                 <arguments>
+                   <argument>latex</argument>
+                 </arguments>
+               <workingDirectory>${basedir}/fra/users</workingDirectory>
+             </configuration>
+           </execution>
 
-          <execution>
+            <execution>
+             <id>user-docs-build-all-pdf-fra</id>
+             <phase>prepare-package</phase>
+             <goals>
+               <goal>exec</goal>
+             </goals>
+             <configuration>
+               <executable>make</executable>
+                 <arguments>
+                   <argument>all-pdf</argument>
+                 </arguments>
+               <workingDirectory>${basedir}/fra/users/build/latex</workingDirectory>
+             </configuration>
+           </execution>
+           
+<!--          <execution>
             <id>ant-widgets-clean</id>
             <phase>clean</phase>
             <goals>
@@ -270,7 +299,68 @@
               
               <workingDirectory>${basedir}/widgets</workingDirectory>
             </configuration>
-          </execution>
+          </execution> -->
+          
+			<execution>
+              <id>widgets-docs-clean</id>
+              <phase>prepare-package</phase>
+              <goals>
+                <goal>exec</goal>
+              </goals>
+              <configuration>
+                <executable>make</executable>
+                  <arguments>
+                    <argument>clean</argument>
+                  </arguments>
+                <workingDirectory>${basedir}/widgets</workingDirectory>
+              </configuration>
+            </execution>
+
+            <execution>
+             <id>widgets-docs-build-html</id>
+             <phase>prepare-package</phase>
+             <goals>
+               <goal>exec</goal>
+             </goals>
+             <configuration>
+               <executable>make</executable>
+                 <arguments>
+                   <argument>html</argument>
+                 </arguments>
+               <workingDirectory>${basedir}/widgets</workingDirectory>
+             </configuration>
+           </execution>
+
+            <execution>
+             <id>widgets-docs-build-latex</id>
+             <phase>prepare-package</phase>
+             <goals>
+               <goal>exec</goal>
+             </goals>
+             <configuration>
+               <executable>make</executable>
+                 <arguments>
+                   <argument>latex</argument>
+                 </arguments>
+               <workingDirectory>${basedir}/widgets</workingDirectory>
+             </configuration>
+           </execution>
+           
+          <execution>
+             <id>widgets-docs-build-all-pdf</id>
+             <phase>prepare-package</phase>
+             <goals>
+               <goal>exec</goal>
+             </goals>
+             <configuration>
+               <executable>make</executable>
+                 <arguments>
+                   <argument>all-pdf</argument>
+                 </arguments>
+               <workingDirectory>${basedir}/widgets/build/latex</workingDirectory>
+             </configuration>
+           </execution>
+
         </executions>      
       </plugin>
     </plugins>

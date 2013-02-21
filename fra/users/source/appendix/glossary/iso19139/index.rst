@@ -3496,7 +3496,7 @@ Glossaire des champs de métadonnées (ISO19139)
         
 - *Information complémentaire :* 
       En Europe, si la ressource est une série de données géographiques ou un ensemble de séries de données géographiques, il
-      convient de fournir au moins un mot clé du thésaurus multilingue de l’environnement (GEMET, General Environ­mental Multi-lingual Thesaurus) 
+      convient de fournir au moins un mot clé du thésaurus multilingue de l’environnement (GEMET, General Environmental Multilingual Thesaurus) 
       décrivant le thème dont relèvent les données géographiques, conformément aux
       définitions des annexes I, II ou III de la directive 2007/2/CE.
             

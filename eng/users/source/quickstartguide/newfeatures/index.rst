@@ -7,7 +7,7 @@ The new GeoNetwork opensource comes with substantial upgrades of different compo
 
 User interface 
 --------------
-- **Javascript widget user interface:** A new user interface using one of the latest Javascript widget libraries (extJS) has been added to support searching, editing and viewing metadata records. The user interface is now much easier for Javascript developers to reorganize and customize. GeoNetwork comes with two flavours of home page: one has the sidebar search similar to the old interface and the other uses a tabbed search layout. The 2.6.x user interface is still available.
+- **Javascript widget user interface:** A new user interface using one of the latest Javascript widget libraries (extJS) has been added to support searching, editing and viewing metadata records. The user interface is now much easier for Javascript developers to reorganize and customize. GeoNetwork comes with two flavours of home page: one has the sidebar search similar to the old interface and the other uses a tabbed search layout. The 2.6.x user interface is still available as the default and has been updated.
 
 .. figure:: Home_page_tn.png
 
@@ -44,7 +44,7 @@ CSW service
 INSPIRE Directive
 -----------------
 - **Support for the INSPIRE Directive:** Indexing and user interface extensions to support those who need to implement the INSPIRE metadata directive (EU).
-- **Installer package to enable INSPIRE options:** An optional new package in installer that enable GeoNetwork INSPIRE features if selected, avoiding later manual steps to enable INSPIRE support.
+- **Installer package to enable INSPIRE options:** An optional new package in the installer enables GeoNetwork INSPIRE features if selected, avoiding manual steps to enable INSPIRE support.
 
 Other
 -----

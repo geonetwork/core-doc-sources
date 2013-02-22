@@ -3,9 +3,12 @@
 New Features 
 ============
 
-The new GeoNetwork opensource comes with substantial upgrades of different components. 
+GeoNetwork opensource v2.8
+^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-- **Javascipt widget user interface:** A new user interface using one of the latest Javascript widget libraries (extJS) has been added to support searching, editing and viewing metadata records. The user interface is now much easier for Javascript developers to reorganize and customize. GeoNetwork comes with two flavours of home page: one has the sidebar search similar to the old interface and the other uses a tabbed search layout. The 2.6.x user interface is still available.
+The new version comes with substantial upgrades of different components. Here's a non-exhaustive list of them.
+
+- **Javascript widget user interface:** A new user interface using one of the latest Javascript widget libraries (extJS) has been added to support searching, editing and viewing metadata records. The user interface is now much easier for Javascript developers to reorganize and customize. GeoNetwork comes with two flavours of home page: one has the sidebar search similar to the old interface and the other uses a tabbed search layout. The 2.6.x user interface is still available as the default and has been updated.
 - **Search Statistics:** Captures and displays statistics on searches carried out in GeoNetwork. The statistics can be summarized in tables or in charts using JFreeChart. There is an extensible interface that you can use to display your own statistics. See :ref:`search_statistics`.
 - **Metadata Status:** Allows finer control of the metadata workflow. Records can be assigned a status that reflects where they are in the metadata workflow: draft, approved, retired, submitted, rejected. When the status changes the relevant user is informed via email. eg. when an editor changes the status to 'submitted', the content reviewer receives an email requesting review. See :ref:`metadata_status`.
 - **Metadata Versioning:** Captures changes to metadata records and metadata properties (status, privileges, categories) and records them as versions in a subversion respository. See :ref:`metadata_versioning`.
@@ -18,7 +21,7 @@ The new GeoNetwork opensource comes with substantial upgrades of different compo
 - **Extended Metadata Exchange Format (MEF):** More than one metadata file can be present in a MEF Zip archive. This is MEF version 2. See :ref:`export`.
 - **Plug in metadata schemas:** You can define your own metadata schema and plug it into GeoNetwork on demand. Documentation to help you do this and example plug in schemas can be found in the Developers Manual. Some of the most common community plug in schemas can be downloaded from the GeoNetwork source code repository. See :ref:`schemas`.
 - **Improved Database Connection Handling and Pooling:** Replacement of the Jeeves based database connection pool with the widely used and more robust Apache Database Connection Pool (DBCP). Addition of JNDI or container based database connection support. See :ref:`Database_JNDI_configuration`.
-- **Support for the INSPIRE Directive:** Indexing and user interface extensions to support those who need to implement the INSPIRE metadata directive (EU).
+- **Support for the INSPIRE Directive:** Indexing and user interface extensions to support those who need to implement the INSPIRE metadata directive (EU). An optional new package in the installer enables GeoNetwork INSPIRE features if selected, avoiding lmanual steps to enable INSPIRE support.
 - **Virtual CSW Endpoints:** Now you can define a custom CSW service that works with a set of metadata records that you define. See :ref:`VirtualCSW`.
 - **Configuration Overrides:** Now you can add your own configuration options to GeoNetwork, keep them in one file and maintain them independently from GeoNetwork. See :ref:`adv_configuration_overriddes`.
 - **Multilingual Indexing:** If you have to cope with metadata in different languages, GeoNetwork can now index each language and search all across language indexes by translating your search terms. See :ref:`multilingual`.

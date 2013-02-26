@@ -44,9 +44,9 @@ copyright = u'2013, Open Source Geospatial Foundation'
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '2.8.0'
+version = '2.8.1-SNAPSHOT'
 # The full version, including alpha/beta/rc tags.
-release = '2.8.0'
+release = '2.8.1-SNAPSHOT'
 
 language = 'en'
 

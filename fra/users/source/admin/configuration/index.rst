@@ -144,10 +144,10 @@ Recherche multilingue
 Les paramètres suivant définissent comment la recherche sur du contenu multilingue doit être réalisée :
 
 
-*Enable auto-detecting search request language:* Si actif, le catalogue tentera de détecter la langue de la requête. Si la détection échoue, la langue de l'interface est utilisée.
+*Activer l'auto-détection langage de requête de recherche :* Si actif, le catalogue tentera de détecter la langue de la requête. Si la détection échoue, la langue de l'interface est utilisée.
 
-*Search results in requested language sorted on top:* Si actif, le catalogue ajoute une clause afin de trier les fiches dans la langue de recherche en premier.
-Cela différent de l'augementation de la pertinence des résultats dans une langue. En effet, un fiche en allemand avec une forte pertinence (calculée par rapport
+*Résultats de la recherche dans la langue demandée triés sur le dessus :* Si actif, le catalogue ajoute une clause afin de trier les fiches dans la langue de recherche en premier.
+Cela est différent de l'augmentation de la pertinence des résultats dans une langue. En effet, un fiche en allemand avec une forte pertinence (calculée par rapport
 aux critères de recherche) sera retournée après les résultats en français si la langue de recherche est le français (même si les résultats en français sont moins
 pertinent).
 
@@ -223,22 +223,23 @@ Il est possible de configurer quels onglets doivent être affichés en consultat
 
 
 
-*Enable simple view*: La vue par défaut:
+*Activer la vue simple*: La vue par défaut:
 - ne présente pas les nombreux niveaux de hiérarchie présents dans certains standards (tel que ISO19115/19139)
 - ne permet par à l'utilisateur d'ajouter des éléments non présent dans la fiche
 - cette vue permet d'avoir une vue simple et complète de la fiche
-*Enable ISO view*: Le standard ISO19115/19139 défini 3 groupes d'éléments :
+*Activer la vue ISO*: Le standard ISO19115/19139 défini 3 groupes d'éléments :
 - Minimum: éléments obligatoires
 - Core: éléments obligatoires pour décrire une donnée géographique
 - All: tous les éléments
-*Enable INSPIRE view*: Vue correspondant aux règles d'implémentation sur les métadonnées de la Directive INSPIRE.
-*Enable XML view*: Vue proposant l'édition du document XML.
+*Activer la vue INSPIRE*: Vue correspondant aux règles d'implémentation sur les métadonnées de la Directive INSPIRE.
+*Activer la vue XML*: Vue proposant l'édition du document XML.
 
 
-Metadata Privileges
-```````````````````
+Privilèges des métadonnées
+``````````````````````````
 
-*Only set privileges to user's groups*: If enabled then only the groups that the user belongs to will be displayed in the metadata privileges page (unless the user is an Administrator). At the moment this option cannot be disabled and is likely to be deprecated in the next version of GeoNetwork.
+*Définir les privilèges uniquement pour les groupes de l'utilisateur*: Si cette option est activée alors seul le groupe
+auquel appartient l'utilisateur sera affiché dans la page des privilèges des métadonnées (sauf si l'utilisateur est administrateur).
 
 
 
@@ -272,8 +273,8 @@ alors nécessaire pour lui de passer par le proxy de l'organisation.
 Configuration du proxy pour le proxy du catalogue
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-L'interface cliente javascript du catalogue à parfois besoin de réaliser des appels vers d'autre
-site (eg. récupération d'un GetCapabilities par le module cartographique). Pour cela, 
+L'interface cliente javascript du catalogue à parfois besoin de réaliser des appels vers d'autres
+sites (eg. récupération d'un GetCapabilities par le module cartographique). Pour cela, 
 elle a besoin d'un proxy au niveau du serveur. Si vous utilisez le proxy par défaut
 du catalogue et que ce proxy doit passer par un proxy côté serveur pour accèder à Internet, il est alors nécessaire de
 définir les variables d'environnement http.proxyHost et http.proxyPort [#fproxy]_ au lancement de l'application.

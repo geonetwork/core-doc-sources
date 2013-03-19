@@ -190,7 +190,19 @@ For each metadata schema, GeoNetwork has an XSLT that it can apply to a metadata
 
 INSPIRE
 ```````
-Enables/disables the INSPIRE search options in advanced search panel.
+Enables/disables the INSPIRE support: 
+
+- CSW GetCapabilities includes the INSPIRE section (ie. ExtendedCapabilities) that administrator can customize in xml/csw/capabilities_inspire.xml 
+  and response support language extensions. The language provided defines:
+
+ - Natural language fields are returned in the language requested (see :ref:`csw_configuration`)
+
+ - The end-points are returned for the language requested
+
+- INSPIRE themes are indexed (check that INSPIRE themes thesaurus is available and reindex the catalog)
+
+- Enables/disables INSPIRE search panel: Add INSPIRE criteria in the advanced search panel (eg. Annex, INSPIRE theme)
+
 
 Metadata Views
 ``````````````

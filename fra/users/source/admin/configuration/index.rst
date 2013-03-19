@@ -209,11 +209,16 @@ INSPIRE
 ```````
 Activé ou désactivé les options INSPIRE :
 
-- CSW GetCapabilities INSPIRE
+- L'opération GetCapabilities du CSW contient alors une section INSPIRE (ie. ExtendedCapabilities). Il est possible de modifier
+  cette section dans le fichier xml/csw/capabilities_inspire.xml. Le paramètre LANGUAGE est alors supporté de la manière suivante :
+  
+ - Les champs d'information titre, résumé, contrainte d'accès et frais sont retournés dans la langue demandée (cf :ref:`csw_configuration`)
 
-- Indexation des thèmes INSPIRE (nécessite de relancer l'indexation)
+ - Les URL des end-points sont retournées dans la langue demandée
 
-- Formulaire de recherche INSPIRE (selon l'interface)
+- Les thèmes INSPIRE sont alors indexés (nécessite de vérifier la présence du thésaurus INSPIRE et de relancer l'indexation)
+
+- Le formulaire de recherche INSPIRE est ajouté dans les critères avancés (selon l'interface)
 
 
 Mode d'affichage des métadonées

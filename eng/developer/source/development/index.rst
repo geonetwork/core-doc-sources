@@ -219,7 +219,7 @@ The Assembly Plugin configuration is in the release module (See bin.xml and zip-
 Eclipse setup
 -------------
 
-The easiest way to develop geoNetwork within eclipse is with the `m2e plugin<http://eclipse.org/m2e/>`, 
+The easiest way to develop geoNetwork within eclipse is with the `m2e plugin <http://eclipse.org/m2e/>`_, 
 which comes by default on many eclipse installations.
     
 Import source code
@@ -236,13 +236,15 @@ In order to import the source code, follow instructions below :
 
  - example: C:\dev\geonetwork\trunk
 
-- Select All projects and Press **Finish** button. 
+- Select All projects and Press **Finish** button. If there appears another window, just continue without changing any option.
+
+It will take some minutes while the m2e plugin downloads all the maven dependencies.
  
 Debugging into eclipse
 ``````````````````````
 - JRebel Plugin : 
 
-Using the `JRebel plugin<http://zeroturnaround.com/software/jrebel/>` is very useful for debugging on eclipse. 
+Using the `JRebel plugin <http://zeroturnaround.com/software/jrebel/>`_ is very useful for debugging on eclipse. 
 
 An example of the configuration file for JRebel may be the following:
 

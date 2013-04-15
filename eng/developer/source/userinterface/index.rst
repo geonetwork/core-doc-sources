@@ -29,11 +29,18 @@ Compatibility table:
 | HTML5UI                | .. figure:: pl.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
 +------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
 
-Full compatibility .. figure:: ok.png
-Compatibility with penalties .. figure:: pl.png  
-No compatible .. figure:: no.png  
+Full compatibility |okpng|
+
+Compatibility with penalties |plpng|
+
+No compatible |nopng|
 
 Blank spaces means no information provided for that case.
+
+
+.. |okpng| image:: ok.png
+.. |plpng| image:: pl.png
+.. |nopng| image:: no.png
 
 Classic
 -------
@@ -64,3 +71,10 @@ To use this UI, you have to compile the web project with **html5ui** profile act
   mvn clean package -Phtml5ui
 
 .. figure:: html5ui2.png
+
+
+.. toctree::
+    :maxdepth: 2
+
+    html5ui/index.rst
+

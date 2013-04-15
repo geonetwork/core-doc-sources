@@ -21,3 +21,4 @@ Other documents:
     mef/index.rst
     xml_services/index.rst
     settings/index.rst
+    userinterface/index.rst

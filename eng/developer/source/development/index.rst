@@ -286,3 +286,44 @@ TODO
  - `How do I configure Tomcat to support remote debugging? <http://wiki.apache.org/tomcat/FAQ/Developing#Q1>`_
  - `How do I remotely debug Tomcat using Eclipse? <http://wiki.apache.org/tomcat/FAQ/Developing#Q2>`_
 
+Code Quality Tools in Eclipse
+`````````````````````````````
+
+In order to see the same code quality warnings in eclipse as maven will detect, Find Bugs and Checkstyle need to be installed
+in your eclipse install and configured as follows:
+
+ - Start Eclipse
+ - Go to **Help > Eclipse Marketplace**
+  - Install **findbugs**
+   - Don't Restart
+  - Install **checkstyle**
+   - Now Restart
+ - Open preferences **Window > Preferences**
+  -  Select *Java > Code Style > Code Templates*
+   -  Select both Comments and Code elements
+   -  Click **Import** and import **code_quality/codetemplates.xml**
+  -  Select **Java > Code Style > Formatter**
+   -  Click **Import** and import **code_quality/formatter.xml**
+  -  Select **Java > Code Style > Clean Up**
+   -  Click **Import** and import **code_quality/cleanup.xml**
+  -  Select **Checkstyle**
+   - Click **New**
+   - Select **External Configuration**
+   - Enter any name (IE Geonetwork)
+   - For **location** choose **code_quality/checkstyle_checks.xml**
+   - Press *OK*
+  - Select **Java > FindBugs**
+   - Set **analysis effort** to **Maximum**
+   - Set **Minimum rank to report** to **2**
+   - Set **Minimum confidence to report** to **Medium**
+   - Check(enable) all bug categories
+   - Set all **Mark bugs with ... rank as** to **Warning**
+   - Change to _Filter files_ tab
+    - Add **code_quality/findbugs-exclude.xml** file to the **Exclude filter files**
+  - Close Prefences
+  - Right click on project in **Projects View** select **Checkstyle > Activate Checkstyle**
+  - Rebuild full project ( **Project > Clean...** )
+   - Checkstyle violations will show up as warnings
+  - Right click on project in **Projects View** select **Find Bugs > Find Bugs**
+   - FindBugs violations will show up as warnings
+

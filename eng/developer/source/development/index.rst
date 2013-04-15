@@ -219,36 +219,15 @@ The Assembly Plugin configuration is in the release module (See bin.xml and zip-
 Eclipse setup
 -------------
 
-Setting eclipse preferences
-```````````````````````````
-
-- **M2_REPO** Classpath Variable:
-
-- Navigate to **Java**> **Build Path**> **Classpath Variable**
-- Press New.. button
-- In Name field enter M2_REPO
-- In Path field enter the path to your .m2/repository_directory
-
- - Example: "C:\Documents and Settings\m.coudert\.m2\repository"
-
-An alternative to set up this variable directly using maven could to run 
-the following command into your workspace directory ::
-
-    $ mvn -Declipse.workspace=. eclipse:add-maven-repo
-    
-- Generate Eclipse project files
-
-To generate all the .classpath and .project files execute the following command
-at the project root directory ::
-
-    $ mvn eclipse:eclipse
+The easiest way to develop geoNetwork within eclipse is with the `m2e plugin <http://eclipse.org/m2e/>`_, 
+which comes by default on many eclipse installations.
     
 Import source code
 ``````````````````
 In order to import the source code, follow instructions below :
 
 - Press **File**> **Import** Menu item
-- In new dialog Select **General**> **Existing Projects into Workspace**
+- In new dialog Select **Maven**> **Existing Maven Projects**
 - Press Next 
 
 .. figure:: eclipse-import-existing-projects.png
@@ -257,29 +236,50 @@ In order to import the source code, follow instructions below :
 
  - example: C:\dev\geonetwork\trunk
 
-- Select All projects and Press **Finish** button. 
+- Select All projects and Press **Finish** button. If there appears another window, just continue without changing any option.
 
-
-Setting `m2eclipse <http://m2eclipse.sonatype.org/>`_ plugin
-````````````````````````````````````````````````````````````
-
-To install m2eclipse, please refer to the following `documentation 
-<http://m2eclipse.sonatype.org/installing-m2eclipse.html>`_.
-
-Then click on **File** > **Import** > **Maven** > **Check out Maven Projects From SCM**
-Choose svn and enter your Github fork as **SCM URL** options. (If you have not made a fork you can use: git://github.com/geonetwork/core-geonetwork.git)
-
-.. figure:: eclipse-checkout-from-SCM.png
-
-.. note :: 
-    It is also possible to import existing Maven projects using Maven (m2eclipse) import facilities 
-    choosing the **Existing Maven projects** option.
+It will take some minutes while the m2e plugin downloads all the maven dependencies.
  
 Debugging into eclipse
 ``````````````````````
+- JRebel Plugin : 
+
+Using the `JRebel plugin <http://zeroturnaround.com/software/jrebel/>`_ is very useful for debugging on eclipse. 
+
+An example of the configuration file for JRebel may be the following:
+
+     <?xml version="1.0" encoding="UTF-8"?>
+     <application xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.zeroturnaround.com" xsi:schemaLocation="http://www.zeroturnaround.com http://www.zeroturnaround.com/alderaan/rebel-2_0.xsd">
+     
+          <classpath>
+     		<dir name="------/web/target/classes"/>
+     	</classpath>
+     
+     	<web>
+     		<link target="/">
+     			<dir name="--------/web/src/main/webapp">
+     			</dir>
+     		</link>
+             <link target="/">
+                 <dir name="------/web-client/src/main/resources">
+                 </dir>
+             </link>
+             <link target="/">
+                 <dir name="-------/web/target/webapp">
+                 </dir>
+             </link>
+             <link target="/">
+                 <dir name="--------/web/target/geonetwork">
+                 </dir>
+             </link>
+     	</web>
+     
+     </application>
+
+
 - Tomcat Server :
 
-TODO
+Create a new Tomcat Server (6) on eclipse and add the geonetwork-main project as a web project. 
 
 - Remote debuging :
 

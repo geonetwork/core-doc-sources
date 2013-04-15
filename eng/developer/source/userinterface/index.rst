@@ -29,11 +29,18 @@ Compatibility table:
 | HTML5UI                | .. figure:: pl.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
 +------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
 
+<<<<<<< HEAD
 Full compatibility .. figure:: ok.png
 Compatibility with penalties .. figure:: pl.png  
 No compatible .. figure:: no.png  
 
 Blank spaces means no information provided for that case.
+=======
+.. figure:: ok.png  Full compatibility
+.. figure:: pl.png  Compatibility with penalties
+.. figure:: no.png  No compatible
+blank No info provided
+>>>>>>> a64bf4453b07930523258f700376275f902c92e2
 
 Classic
 -------

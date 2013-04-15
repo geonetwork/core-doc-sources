@@ -7,9 +7,9 @@ There are four different user interfaces on geonetwork:
 
 - **Classic** - Perfect for hard environments, uses less javascript.
 
-- **Search** - Uses the new widgets library. More responsive than the classic UI. `Example<http://newgui.geocat.net/geonetwork/apps/search/>`_
+- **Search** - Uses the new widgets library. More responsive than the classic UI. `Example <http://newgui.geocat.net/geonetwork/apps/search/>`_
 
-- **TabSearch** - Similar to the **Search** UI, but desktop-like as it uses tabs. `Example<http://newgui.geocat.net/geonetwork/apps/tabsearch/>`_
+- **TabSearch** - Similar to the **Search** UI, but desktop-like as it uses tabs. `Example <http://newgui.geocat.net/geonetwork/apps/tabsearch/>`_
 
 - **HTML5UI** - Also based on widgets, makes use of latest web technologies.
 

@@ -13,6 +13,27 @@ There are four different user interfaces on geonetwork:
 
 - **HTML5UI** - Also based on widgets, makes use of latest web technologies.
 
+Compatibility table:
+
++------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+| Compatibility          |                                        IE                                         |    Chrome          |        Firefox     |       Safari       |
++------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+|                        |         7          |   8                |                9   |                10  |                    |                    |                    |
++========================+====================+====================+====================+====================+====================+====================+====================+
+| Classic                | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
++------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+| Search                 | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
++------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+| TabSearch              | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
++------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+| HTML5UI                | .. figure:: pl.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
++------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
+
+.. figure:: ok.png  Full compatibility
+.. figure:: pl.png  Compatibility with penalties
+.. figure:: no.png  No compatible
+blank No info provided
+
 Classic
 -------
 //TODO
@@ -41,4 +62,4 @@ HTML5UI
 To use this UI, you have to compile the web project with **html5ui** profile activated, like:
   mvn clean package -Phtml5ui
 
-
+.. figure:: html5ui2.png

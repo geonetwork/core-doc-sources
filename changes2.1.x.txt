@@ -1,3 +1,4 @@
+
 ================================================================================
 ===
 === GeoNetwork 2.1.1 : List of changes
@@ -829,9 +830,9 @@
 
 - Added possibility to have a user administrator
    - Added UserAdmin profile
-	- Filtered profile combobox : removed "Guest" profile and listed only profiles
-	  that are equal to or lower than the creating user 
-	
+    - Filtered profile combobox : removed "Guest" profile and listed only profiles
+      that are equal to or lower than the creating user 
+    
 - Added a form to easily add and remove thumbnails
 
 - Added the possibility to specify a metadata template during search.
@@ -867,10 +868,10 @@
 - Installer : added some defaults. The user's password now must be at least 6 chars
 
 - Changes to the database
-	- Renamed field "sourceId" to "sourceUri" in table "Metadata"
-	- Removed table "Feedback"
+    - Renamed field "sourceId" to "sourceUri" in table "Metadata"
+    - Removed table "Feedback"
    - Added unique to the name of users, groups, categories
-		
+        
 ================================================================================
 === Bugs fixed
 ================================================================================
@@ -916,10 +917,10 @@
 - Added a form to remove old, empty metadata
   An empty metadata has been defined as follow:
     - it is not a template
-	 - it is local (its source == to the geonetwork site id)
-	 - the difference between the last change date and the creation date (in
-	   minutes) is less than a given difference
-	 - it has no operations associated to the internet group
+     - it is local (its source == to the geonetwork site id)
+     - the difference between the last change date and the creation date (in
+       minutes) is less than a given difference
+     - it has no operations associated to the internet group
 
 - Added a button to create a metadata from a template
   Added a form (in administration) to create a metadata from a template
@@ -952,7 +953,7 @@
 
 - Changes to the database (installer data files adjusted as needed):
    - Table Metadata: added "uuid"
-	- Table Groups  : added "description", "email", "referrer"
+    - Table Groups  : added "description", "email", "referrer"
 
 - Fixed some initial data in the installer
 
@@ -963,10 +964,10 @@
 
 - Creation of a new metadata ('create' button, xml insert/import): 
    - privileges belonging to the 'internet' group are removed. This is related
-	  to the 'search for empty/unused metadata' functionality.
-	- privileges belonging to the 'intranet' group are removed.
-	- the group that is adding the metadata has all privileges on it
-	- privileges associated to other groups are copied from the DefaultOper table
+      to the 'search for empty/unused metadata' functionality.
+    - privileges belonging to the 'intranet' group are removed.
+    - the group that is adding the metadata has all privileges on it
+    - privileges associated to other groups are copied from the DefaultOper table
 
 - Changed behavior of back button in the editor to go back to editing mode, and 
   improved diagnostic message

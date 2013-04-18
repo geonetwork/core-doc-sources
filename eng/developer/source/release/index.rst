@@ -59,6 +59,10 @@ Add the 3 RC milestone (http://trac.osgeo.org/geonetwork/admin/ticket/milestones
 Making the release
 ------------------
 
+This procedure creates a new development branch and its first RC version.
+
+TODO : Add procedure to only make a new release from an existing dev branch.
+
 ::
   
   # Set version numbers
@@ -68,7 +72,7 @@ Making the release
   minorversion=RC0
   masterversion=2.9.0
   previousversion=2.8.x
-  
+  sourceforge_username=YourSourceforgeUserName
   
   # Get the code
   git clone --recursive https://github.com/geonetwork/core-geonetwork.git geonetwork-$version
@@ -90,10 +94,6 @@ Making the release
   done
   git add .
   git commit -m "Update version to $version-SNAPSHOT"
-  
-  # Push to github
-  git submodule foreach `git push origin $devversion`
-  git push origin $devversion
   
   
   
@@ -124,19 +124,22 @@ Making the release
   
   # Test the installer
   
-  # Tag the release
-  git tag -a $version$minorversion -m "Tag for $version-$minorversion release"
-  git push origin $version$minorversion
-  
-  cat > changes-$version-$minorversion.txt <<EOL
+  # Generate list of changes
+  cat <<EOF > docs/changes$devversion.txt
   ================================================================================
   ===
   === GeoNetwork $version: List of changes
   ===
   ================================================================================
-  ... 
-  EOL
-  git log --pretty='format:- %s' origin/$previousversion... >> changes-$version-$minorversion.txt
+  EOF
+  git log --pretty='format:- %s' origin/$previousversion... >> docs/changes$devversion.txt
+  
+  
+  # Tag the release
+  git tag -a $version$minorversion -m "Tag for $version-$minorversion release"
+  git push origin $version$minorversion
+  
+  
   
   
   # Restore version number to SNAPSHOT
@@ -149,8 +152,14 @@ Making the release
   git commit -m "Update version to $version-SNAPSHOT"
   
   
+  
+  # Push to github - could be done at the end of the process ?
+  git submodule foreach `git push origin $devversion`
+  git push origin $devversion
+  
+  
   # Publish in sourceforge
-  sftp sourceforge_username,geonetwork@frs.sourceforge.net
+  sftp $sourceforge_username,geonetwork@frs.sourceforge.net
   cd /home/frs/project/g/ge/geonetwork/GeoNetwork_opensource
   mkdir 2.10.0
   cd 2.10.0

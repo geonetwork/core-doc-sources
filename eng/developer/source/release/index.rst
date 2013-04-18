@@ -81,7 +81,7 @@ Making the release
   git submodule foreach git checkout -b $devversion origin/master
   
   # Update version number
-  ./release.sh $masterversion $version-SNAPSHOT
+  ./update-version.sh $masterversion $version-SNAPSHOT
   
   # Commit the new x branch (if it does not exist) for project and modules
   for i in "${modules[@]}"
@@ -98,7 +98,7 @@ Making the release
   
   
   # Create the new release
-  ./release.sh $version $version-$minorversion
+  ./update-version.sh $version $version-$minorversion
   
   # Commit the new minor version for modules
   for i in "${modules[@]}"
@@ -140,7 +140,7 @@ Making the release
   
   
   # Restore version number to SNAPSHOT
-  ./release.sh $version $version-SNAPSHOT
+  ./update-version.sh $version $version-SNAPSHOT
   for i in "${modules[@]}"
   do
         cd $i; git add .; git commit -m "Update version to $version-SNAPSHOT"; cd ..

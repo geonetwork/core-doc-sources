@@ -3,7 +3,7 @@
 GeoPortal REST Harvesting
 -------------------------
 
-This harvester will connect to a remote GeoPortal version 9.3.x server and retrieve metadata records that match the query parameters specified using the GeoPortal REST API.
+This harvester will connect to a remote GeoPortal version 9.3.x or 10.x server and retrieve metadata records that match the query parameters specified using the GeoPortal REST API.
 
 Adding a GeoPortal REST harvester
 `````````````````````````````````
@@ -49,6 +49,10 @@ Notes
  - ``rest/find/document`` with searchText parameter to return an RSS listing of metadata records that meet the search criteria (maximum 100000)
  - ``rest/document`` with id parameter from each result returned in the RSS listing
 
-- this harvester has been tested with GeoPortal 9.3.x. It should be used for that version of GeoPortal in preference to the CSW harvester
+- this harvester has been tested with GeoPortal 9.3.x and 10.x. It can be used in preference to the CSW harvester if there are issues with the handling of the OGC standards etc.
+
+.. figure:: web-harvesting-geoportal-10-rest.png
+
+    *GeoPortal REST harvester for a version 10 site*
 
 - typically ISO19115 metadata produced by the Geoportal software will not have a 'gmd' prefix for the namespace ``http://www.isotc211.org/2005/gmd``. GeoNetwork XSLTs will not have any trouble understanding this metadata but will not be able to map titles and codelists in the viewer/editor. To fix this problem, please select the `Add-gmd-prefix` XSLT for the *Apply this XSLT to harvested records* in the **Harvested Content** set of options described earlier

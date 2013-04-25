@@ -349,6 +349,8 @@ in your eclipse install and configured as follows:
    - Enter any name (IE Geonetwork)
    - For **location** choose **code_quality/checkstyle_checks.xml**
    - Press *OK*
+   - Select New configuration 
+   - Press *Set as Default*
   - Select **Java > FindBugs**
    - Set **analysis effort** to **Maximum**
    - Set **Minimum rank to report** to **2**
@@ -372,6 +374,11 @@ way of resolving violations are to use eclipse and run check style or find bugs 
 a detailed report will be provided in eclipse along with suggested fixes.  If the violation is determined to be an intentional violation
 the **code_quality/findbugs-excludes.xml** or **code_quality/checkstyle_suppressions.xml** should be updated to suppress the reporting 
 of the violation.  (See Find Bugs and Checkstyle sections for more details.)
+
+Since the FindBugs and Checkstyle processes can be quite time consuming adding -DskipTests to the maven commandline will skip those 
+processes as well as tests.  For example:
+
+    mvn install -DskipTests
    
 FindBugs
 ````````

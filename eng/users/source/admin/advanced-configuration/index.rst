@@ -357,14 +357,27 @@ The data directory variable can be set using:
 
 For java environment variable and servlet context parameter use:
 
- - <webappName>.dir and if not set using:
- - geonetwork.dir
+ - <webappName>.dir and if not set using geonetwork.dir
 
 
 For system environment variable use:
 
- - <webappName>_dir and if not set using:
- - geonetwork_dir
+ - <webappName>_dir and if not set using geonetwork_dir
+
+Resolution order is:
+ 
+ #. <webappname>.dir
+  #. Java environment variable (ie. -D<webappname>.dir=/a/data/dir)
+  #. Servlet context parameter (ie. web.xml)
+  #. Config.xml appHandler parameter (ie. config.xml)
+  #. System environment variable (ie. <webappname>_dir=/a/data/dir). "." is not supported in env variables
+ #. geonetwork.dir
+  #. Java environment variable (ie. -Dgeonetwork.dir=/a/data/dir)
+  #. Servlet context parameter (ie. web.xml)
+  #. Config.xml appHandler parameter (ie. config.xml)
+  #. System environment variable (ie. geonetwork_dir=/a/data/dir). "." is not supported in env variables
+
+
 
 
 Java System Property
@@ -678,4 +691,34 @@ A sample boosting class is available. RecencyBoostingQuery will promote recently
     </boostQuery>
 
 
- 
+
+Faceted search configuration
+----------------------------
+
+Faceted search provides a way to easily filter search:
+
+
+.. figure:: faceted-search.png
+
+
+
+In WEB-INF/config-summary.xml, catalogue administrator can configure the faceted search displayed in the search page.
+
+In the hits section, new facet could be added::
+
+    <hits>
+      <item name="keyword" plural="keywords" indexKey="keyword" max="15"/>
+
+
+An item element defines a facet with the following parameters:
+
+* name: the name of the facet (ie. the tag name in the XML response)
+* plural: the plural for the name (ie. the parent tag of each facet values)
+* indexKey: the name of the field in the index
+* (optional) sortBy: the ordering for the facet. Defaults is by count.
+* (optional) sortOrder: asc or desc. Defaults is descendant.
+* (optional) max: the number of values to be returned for the facet. Defaults is 10.
+
+When an item is modified or added, reload the lucene configuration and rebuild the index from the administration panel.
+
+For easier update, config overrides could be used to modify the config-summary file (See :ref:`adv_configuration_overriddes`).

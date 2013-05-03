@@ -3,6 +3,54 @@
 === GeoNetwork 2.10.0: List of changes
 ===
 ================================================================================
+- #1277 magic string typo
+- #1277 magic string typo
+- #1277 fix saving ownerGroup for some harvesters
+- #1277 prevent NPE if harvester has no owner
+- #1277 missing i18n
+- #1277 fix 'sample' is not a system group
+- #1278 Reduce code duplication - fix test
+- Harvester / XSL error (#1280).
+- #1278 Reduce code duplication
+- #1277 Harvesters belonging to a group, and can be managed by UserAdmin
+- #1275 Extend temporal search
+- Fix classname for list of status (related to eaba7b10adfdf76df38ade8802c5482ba210c0b7).
+- Fix migration script error in 280 and 290 steps.
+- fixed a harvester history bug where there is bad data in database it kills history with null pointer
+- Harvester / CSW / cleaning (related to #1259).
+- #1276 Fix spring security rules for service not allowed and login form
+- #1274 feedback on specific metadata
+- #1266 Align the Interactive Map button behavior in the widgets UI and the classic UI
+- #1266 Align the Interactive Map button behavior in the widgets UI and the classic UI
+- #1266 Align the Interactive Map button behavior in the widgets UI and the classic UI
+- Do not search for migration task if db version > webapp version.
+- Fix typo in label for.
+- Administration / reordering menu.
+- Widgets / Create INSPIRE field only if INSPIRE enableSearchPanel is set.
+- Add missing SQL statement required for CSW virtual admin.
+- Move schema list and status values list services into xml.info service
+- PRE_EVALUATE_DOC_FUNCTION (from http://www.saxonica.com/documentation9.0/javadoc/net/sf/saxon/FeatureKeys.html#PRE_EVALUATE_DOC_FUNCTION) should be set to false so that XSLTs that use document function are able to pick up changes eg. when using a metadata record from the catalog via xml.metadata.get it is very desirable that the document function be evaluated each time the XSLT is run rather than just once at compile time
+- more findbugs warnings fixed
+- a few more findbugs fixes
+- fix build error by fixing several findbugs errors
+- PRE_EVALUATE_DOC_FUNCTION (from http://www.saxonica.com/documentation9.0/javadoc/net/sf/saxon/FeatureKeys.html#PRE_EVALUATE_DOC_FUNCTION) should be set to false so that XSLTs that use document function are able to pick up changes eg. when using a metadata record from the catalog via xml.metadata.get it is very desirable that the document function be evaluated each time the XSLT is run rather than just once at compile time
+- Search suggestion / Improve layout.
+- Search suggestion / Add option for sorting
+- update to a fixed webspecs version
+- fixed more warning reported by findbugs
+- Search suggestion / Add option to place results which starts with requested string on top of the results (#1148).
+- fixes to account for spaces in path on windows
+- CSW / Return exception while reindexing all records (#1273).
+- Delete rss.latest service and redirect url to rss.search?sortBy=changeDate
+- fixed bug when datadir is not absolute
+- #1269 Show html error page when invoking a non existent jeeves service
+- Subtemplate / Minor layout improvements.
+- Indexing / Subtemplate indexing does not work (#1272) - do not add taxonomy for a document if empty eg. for subtemplates.
+- Support search for metadata or template (#1271).
+- Merge pull request #82 from ianwallen/2.8.x
+- Fixed bug - ID on help tags were being duplicated which was causing tooltip to popup next to incorrect location.
+- #1269 Show html error page when invoking a non existent jeeves service
+- Update version to 2.10.0-SNAPSHOT
 - Update version to 2.10.0-SNAPSHOT
 - Latest commit for docs module.
 - Latest commit for docs module.
@@ -44,6 +92,9 @@
 - Merge remote-tracking branch 'origin/master'
 - Added some changes to make recovering from a corrupt index or corrupt spatial index more robust
 - Widgets / Editing metadata related resources (#1255).
+- Fixed bug - ID on help tags were being duplicated which was causing tooltip to popup next to incorrect location.
+- Escape line-feeds too in escapeXMLEntities otherwise breaks when title contains a \n (bug #1229)
+- make database healthcheck cross database
 - Xsl processing / Allows editor to process records (#1265).
 - fixed a mis-placed ' in xsl
 - fixed last commit...

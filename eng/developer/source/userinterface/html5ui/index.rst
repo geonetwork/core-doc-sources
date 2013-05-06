@@ -3,6 +3,11 @@ HTML 5 UI
 
 This is an html5 based UI which uses the wigets from geonetwork and the library ExtJS.
 
+.. toctree::
+    :maxdepth: 2
+
+    widgets/index.rst
+
 It contains two maps: preview map and big map. You can access the big map
 clicking on the preview map. Both maps have synchronized layers, so if you add
 or remove (or change style) on one map layer, you will see that the other map
@@ -83,6 +88,33 @@ shown:
  
 If you add a new "view", you should update all this functions so the view is
  hidden or shown when you want.
+
+Settings
+*****************************
+
+There are a few configurations of this user interface defined on two javascript files.
+
+js/Settings.js
+========
+
+You can find here some global configuration settings for the UI. Usually you won't have to change any of them. 
+
+There are constants like:
+
+ * GeoNetwork.Settings.facetListConfig: used to configure the keywords for the facet search.
+ * OpenLayers.ProxyHostURL: (relative or absolute) path to url required by openlayers.
+
+js/map/Settings.js
+========
+
+You can find here some specific map configuration settings for the UI. You can use this file to set up the kind of projection and default base layers the maps will use.
+
+There are constants like:
+
+ * GeoNetwork.map.PROJECTION: Basic projection for maps. EPSG 900913 by default.
+ * GeoNetwork.map.BACKGROUND_LAYERS: Base layers for the maps.
+ * GeoNetwork.map.MAIN_MAP_OPTIONS: Used by the constructor of the main (big) map.
+ * GeoNetwork.map.MAP_OPTIONS: When the user interface creates a new secondary map, it uses this options on the constructor. Right now it works for the mini-map, but will be used on each view a secondary map is shown.
 
 Changing more complex features
 *****************************

@@ -44,7 +44,11 @@ Blank spaces means no information provided for that case.
 
 Classic
 -------
-//TODO
+
+This is the default user interface in GeoNetwork. It is a complete user interface with all the functionalities the rest of the user interfaces have, but it is prepared to work on the hardest environments, using as less javascript and Ajax as possible, for example. 
+
+You don't have to do anything special to run this user interface, as it is the default one.
+
 
 Search
 -------
@@ -54,7 +58,10 @@ To use this UI, you have to compile the web project with **widgets** profile act
 
 .. figure:: search.png
 
+.. toctree::
+    :maxdepth: 2
 
+    widgets/index.rst
 
 TabSearch
 -------
@@ -63,6 +70,11 @@ To use this UI, you have to compile the web project with **widgets-tab** profile
   mvn clean package -Pwidgets-tab
 
 .. figure:: tabsearch.png
+
+.. toctree::
+    :maxdepth: 2
+
+    widgets/index.rst
 
 HTML5UI
 -------
@@ -77,4 +89,9 @@ To use this UI, you have to compile the web project with **html5ui** profile act
     :maxdepth: 2
 
     html5ui/index.rst
+    
+.. toctree::
+    :maxdepth: 2
+
+    widgets/index.rst
 

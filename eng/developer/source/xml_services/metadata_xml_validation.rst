@@ -33,11 +33,11 @@ Example with an ISO19115/19139 metadata record::
   Post request:
   <?xml version="1.0" encoding="UTF-8"?>
   <request>
-    <data>
+    <data><![CDATA[
       <gmd:MD_Metadata ....>
         .....
       </gmd:MD_Metadata>
-    </data>
+    ]]></data>
   </request>
 
 Response

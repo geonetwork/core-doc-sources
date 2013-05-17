@@ -379,6 +379,12 @@ Since the FindBugs and Checkstyle processes can be quite time consuming adding -
 processes as well as tests.  For example:
 
     mvn install -DskipTests
+	
+Or if you want to run the tests but skip static analysis:
+
+    mvn install -P-run-static-analysis
+	
+That disables the profile that executes the static analysis tasks.
    
 FindBugs
 ````````

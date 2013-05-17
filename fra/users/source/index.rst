@@ -17,7 +17,6 @@ Ce document est le manuel d'utilisation de |project_name|.
     admin/index.rst
     appendix/index.rst
     faq/faq.rst
-    jeevlet/jeevlet.rst
 
 Autres documents :
 

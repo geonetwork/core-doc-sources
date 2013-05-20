@@ -3,6 +3,58 @@
 === GeoNetwork 2.10.0: List of changes
 ===
 ================================================================================
+- Update doc.
+- Merge remote-tracking branch 'origin/2.10.x' into 2.10.x
+- Merge pull request #90 from Delawen/2.10.x
+- NullPointer check. If there is no such field, just don't fail, go on.
+- Adding reset icon to reset button on advanced search form
+- Better image icon for add wms layer to map buttons
+- Merge branch '2.10.x' of github.com:geonetwork/core-geonetwork into 2.10.x
+- Fixes to bookmark function (search result)
+- Generic addMap icon
+- Cookies text
+- Adding font to style (html5ui)
+- Fonts for style
+- Buttons for metadata view panel
+- Using more space (width), do not waste it
+- Small changes for metadata panel
+- Adding two new tabs: Catalog and Map
+- Perfecting styling for Home page
+- Widgets / Add harvesting menu to user action menu.
+- Harvester / OGC WxS / Scale hint conversion error on harvesting (#1289).
+- Widgets / Fix quick links menu.
+- Widgets / Removed unused variable.
+- Add HTML5 UI to the list.
+- Proxy / if allowedHost is  then localhost was the only allowed host.
+- reenabled option of controlling allowed hosts in proxy
+- Using a better styling, first approach
+- Widgets / LoginForm / Add user info & quick search links (#1285).
+- HTML5UI / Simplify URLs. Add missing OpenSearch link. Fix RSS link and duplicated href attribute.
+- HTML5UI / Add missing styling.
+- Widgets / Suggestion / Add css class for custom styling.
+- HTML5UI / Remove unused CSS.
+- HTML5UI / Ignore minified JS.
+- Widgets / toggle on clicking on section title (and not only icon).
+- Merge pull request "New html5 based UI" from Maria Arias
+- Widgets / Metadata link / default label if no custom label defined in translation for protocol.
+- Harvester / Sort icons by name and add a blank icon.
+- Widgets / Add css class for call for actions.
+- Admin / template / display order is not saved & restored properly (#1287).
+- Widgets / Relation manager / Fix label and improve style.
+- Widgets / Cleaning and properly set protocol with value instead of label in relation manager.
+- Harvester / Add missing files for OGC WxS CSW and SOS services.
+- Merge remote-tracking branch 'origin/2.10.x' into 2.10.x
+- Cleaning / Remove or replace console.log from JS.
+- ArcSDE harvester: use instance ArcSDEResult variable
+- ArcSDE harvester: use instance ArcSDEResult variable
+- Add logo class when needed.
+- RSS link update & content
+- Fix check for http method to use in CSW harvester
+- Fix check for http method to use in CSW harvester
+- Merge remote-tracking branch 'origin/2.10.x' into 2.10.x
+- Fix bug for surname in xml.info?type=me
+- #1277 some harvesters do not retrieve groups
+- Update version to 2.10.0-SNAPSHOT
 - #1277 magic string typo
 - #1277 magic string typo
 - #1277 fix saving ownerGroup for some harvesters

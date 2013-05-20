@@ -20,27 +20,22 @@ Compatibility table:
 +------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
 |                        |         7          |   8                |                9   |                10  |                    |                    |                    |
 +========================+====================+====================+====================+====================+====================+====================+====================+
-| Classic                | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
+| Classic                |          X         |          X         |          X         |                    |          X         |          X         |          X         |
 +------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-| Search                 | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
+| Search                 |          X         |          X         |          X         |                    |          X         |          X         |          X         |
 +------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-| TabSearch              | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
+| TabSearch              |          X         |          X         |          X         |                    |          X         |          X         |          X         |
 +------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
-| HTML5UI                | .. figure:: pl.png | .. figure:: ok.png | .. figure:: ok.png |                    | .. figure:: ok.png | .. figure:: ok.png | .. figure:: ok.png |
+| HTML5UI                |          x         |          X         |          X         |                    |          X         |          X         |          X         |
 +------------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+--------------------+
 
-Full compatibility |okpng|
+Full compatibility: X
 
-Compatibility with penalties |plpng|
+Compatibility with penalties: x
 
-No compatible |nopng|
 
 Blank spaces means no information provided for that case.
 
-
-.. |okpng| image:: ok.png
-.. |plpng| image:: pl.png
-.. |nopng| image:: no.png
 
 Classic
 -------

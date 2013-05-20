@@ -112,6 +112,7 @@ Les paramètres suivants sont disponibles :
 
 - Taille du cache
 
+.. _admin_xlink:
 
 XLink
 `````
@@ -390,8 +391,8 @@ A partir de la page administration il est possible de gérer les logos. Les acti
 
 - définition du logo du catalogue
 
-- définition de l'icône favorite du catalogue (il est recommandé d'utiliser une image de forme carré pour cela car elle
-    sera redimmensionnée au format 16x16 px)
+- définition de l'icône favorite du catalogue (il est recommandé d'utiliser une image de forme carrée pour cela car elle
+  sera redimmensionnée au format 16x16 px)
     
     
 .. figure:: config-logo.png

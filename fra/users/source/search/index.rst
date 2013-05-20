@@ -21,13 +21,15 @@ Critères de recherche
 - Le type de représentation spatiale (par exemple "Vecteur")
 - Le niveau d'échelle
 - Le catalogue source (Cf :ref:`how_to_harvest`)
-- Le groupe auquel la métadonnée appartient
-- Le type de métadonnée (modèle de saisie ou métadonnée)
-- Le niveau de conformité
-
+- pour les utilisateurs authentifiés:
+ - Le groupe auquel la métadonnée appartient
+ - Le type de métadonnée (modèle de saisie ou métadonnée)
+ - Le niveau de validation
+ - L'état de la fiche
+ 
+ 
 .. figure:: advancedSearch.png
 
-   Critère avancé de recherche
 
 
 
@@ -67,6 +69,26 @@ Les options de tri sont :
 - La note : repose sur les notations des utilisateurs du catalogue
 - La popularité : repose sur le nombre de fois où la fiche d'une ressource a été consultée
 - L'échelle : le niveau d'échelle
+
+
+.. _faceted_search:
+
+Recherche à facettes
+====================
+
+La recherche à facettes permet un filtrage rapide des résultats. Elle est composée de 2 éléments :
+
+ * une synthèse des résultats par catégories (eg. organisation, type de ressource). Il est possible de 
+   sélectionner une valeur pour définir de nouveaux filtres
+ * une liste des facettes sélectionnées
+
+
+.. figure:: facet.png
+
+A partir de chaque facette sélectionnée, il est possible de basculer vers d'autres valeurs.
+
+.. figure:: facet-swither.png
+
 
 
 Consultation des résultats

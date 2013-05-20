@@ -588,17 +588,16 @@ previous request could be::
 The table below summarises, for each service, the
 possible status values.
 
-.. |ok| image:: button_ok.png
 
 ================    ======  =====   ====    ====
 Status value        remove  start   stop    run
 ================    ======  =====   ====    ====
-ok                  |ok|    |ok|    |ok|    |ok|
-not-found           |ok|    |ok|    |ok|    |ok|
-inactive                                    |ok|
-already-inactive                    |ok|    
-already-active              |ok|            
-already-running                             |ok|
+ok                    X       X       X       X 
+not-found             X       X       X       X 
+inactive                                      X 
+already-inactive                      X     
+already-active                X             
+already-running                               X 
 ================    ======  =====   ====    ====
 
 If the request has no id parameters, an empty response is returned.

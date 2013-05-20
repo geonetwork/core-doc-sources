@@ -104,7 +104,8 @@ L’édition de métadonnées selon les normes ISO permet aux éditeurs de:
 - Sélectionner un ou plusieurs mots-clés à ajouter à la liste des éléments sélectionnés (en utilisant les flèches ou glisser-déplacer) sur la droite;
 - Ajouter les mots-clés choisis directement dans les métadonnées, regrouper les mots-clés par thésaurus.
 
-L’interface de recherche permet aux éditeurs de choisir le nombre maximum de mots-clés en retour et dans quel thésaurus la recherche doit se faire (valeur par défaut: “tous”).
+L’interface de recherche permet aux éditeurs de choisir le nombre maximum de mots-clés en retour et 
+dans quel thésaurus la recherche doit se faire (valeur par défaut: “tous”).
 
 .. figure:: thesaurus-KeywordSelection.png
 
@@ -113,6 +114,60 @@ L’interface de recherche permet aux éditeurs de choisir le nombre maximum de 
 .. figure:: thesaurus-KeywordView.png
 
     *Sélection de mots-clés (mode d’affichage).*
+
+
+Les différents modes d'ajouts
+`````````````````````````````
+
+
+
+3 modes d'ajout de mots clés sont disponibles :
+ 
+ - Mode texte (recommandé)
+ - Mode Anchor
+ - Mode XLink
+
+Le mode texte ajoute les mots clés en utilisant la balise gco:CharacterString. Celui-ci est préférable car géré par la plupart
+des outils de catalogage.
+
+.. code-block:: xml
+
+  <?xml version="1.0" encoding="UTF-8"?>
+  <gmd:MD_Keywords>
+   <gmd:keyword>
+      <gco:CharacterString>Bâtiments</gco:CharacterString>
+   </gmd:keyword>
+   <gmd:type>
+      <gmd:MD_KeywordTypeCode codeList="http://www.isotc211.org/2005/resources/codeList.xml#MD_KeywordTypeCode"
+                              codeListValue="theme"/>
+   </gmd:type>
+   <gmd:thesaurusName>
+      ...
+      
+
+Le mode Anchor utilise la balise gmx:Anchor pour les mots clés. En complément de la valeur du mots clés, un lien vers le
+concept est ajouté via l'attribut href. Cette information peut être utilisé pour faire un simple lien vers une page web
+ou vers la description du concept en RDF. Dans le dernier cas, les moteurs sémantiques peuvent exploiter cette information
+pour associer les ressources entre elles.
+
+.. code-block:: xml
+      
+   <gmd:MD_Keywords>
+     <gmd:keyword>
+       <gmx:Anchor xlink:href="http://rdfdata.eionet.europa.eu/inspirethemes/themes/15">Bâtiments</gmx:Anchor>
+     </gmd:keyword>
+
+
+Le mode XLink ajoute un lien entre la fiche et le thésaurus. Ce lien est résolu lors de la consultation de la fiche
+si la résolution des XLinks est activée dans l'administration  (cf. :ref:`admin_xlink`) .
+
+.. code-block:: xml
+
+  <?xml version="1.0" encoding="UTF-8"?>
+  <gmd:MD_Keywords
+                 xlink:href="http://localhost/geonetwork/srv/fre/xml.keyword.get?thesaurus=external.theme.inspire-theme&amp;amp;id=http://rdfdata.eionet.europa.eu/inspirethemes/themes/15&amp;amp;multiple=false"
+                 xlink:show="replace"/>
+
 
 Critères de recherche : Mots-clés
 ---------------------------------

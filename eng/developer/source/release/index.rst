@@ -7,8 +7,8 @@ This guide details the process of performing a release.
 
 .. note:: 
     
-    * BRANCH: Branches are created for major stables releases and end with .x (for example 2.8.x) 
-    * VERSION (for tag): version to release (for example 2.8.1 or 2.8.1RC0) 
+    * BRANCH: Branches are created for major stables releases and end with .x (for example 2.10.x) 
+    * VERSION (for tag): version to release (for example 2.10.1 or 2.10.1RC0) 
 
 Call for vote
 -------------

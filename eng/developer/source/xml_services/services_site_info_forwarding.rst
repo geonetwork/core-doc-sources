@@ -211,7 +211,7 @@ Example response for schemas:
     <id>3f95190a-dde4-11df-8626-001c2346de4c</id>
     <version>1.0</version>
     <namespaces>xmlns:gts="http://www.isotc211.org/2005/gts" xmlns:gmx="http://www.isotc211.org/2005/gmx" xmlns:gco="http://www.isotc211.org/2005/gco" xmlns:srv="http://www.isotc211.org/2005/srv" xmlns:gss="http://www.isotc211.org/2005/gss" xmlns:gml="http://www.opengis.net/gml" xmlns:gsr="http://www.isotc211.org/2005/gsr" xmlns:gmd="http://www.isotc211.org/2005/gmd" xmlns:xlink="http://www.w3.org/1999/xlink"</namespaces>
-    <convertDirectory>/usr/local/src/git/geonetwork-2.8.x/web/src/main/webapp/WEB-INF/data/config/schema_plugins/iso19139/convert/</convertDirectory>
+    <convertDirectory>/usr/local/src/git/geonetwork-2.10.x/web/src/main/webapp/WEB-INF/data/config/schema_plugins/iso19139/convert/</convertDirectory>
     <edit>true</edit>
     <conversions>
       <converter name="xml_iso19139" nsUri="http://www.isotc211.org/2005/gmd" schemaLocation="www.isotc211.org/2005/gmd/gmd.xsd" xslt="" />

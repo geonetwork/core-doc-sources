@@ -239,7 +239,7 @@ In order to add a new node, define the configuration in geoserver-nodes.xml::
     
     
      <!-- 
-        Add here all geoserver node which could
+        Add here all GeoServer node which could
         be configure by GeoNetwork.
         
         GeoServer 2.x or later are supported. The REST API must be installed in the GeoServer node.

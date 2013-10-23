@@ -127,7 +127,7 @@ Error in output.log::
   sun.misc.ServiceConfigurationError: javax.imageio.spi.ImageOutputStreamSpi: Provider com.sun.media.imageioimpl.stream.ChannelImageOutputStreamSpi could not be instantiated: java.lang.SecurityException: sealing violation: package com.sun.media.imageioimpl.stream is sealed.
 
 Jetty by default ships with a classloader that does not conform to the Java classloading model: 
-you'll notice because Geoserver will fail all (:term:`JAI`) usage attempt with a "sealing violation" exception. 
+you'll notice because GeoServer will fail all (:term:`JAI`) usage attempt with a "sealing violation" exception. 
 It can be restored to standard behaviour locating the etc/jetty-webapps.xml configuration file and 
 changing the web app context configuration to look like the following::
 

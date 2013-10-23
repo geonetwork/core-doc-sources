@@ -54,7 +54,7 @@ Within the root <record> element there can be zero to many <record> elements.  W
 
 Within a <record> element there can be zero to many <fragment> elements and zero to many <replacementGroup> elements.  A <replacementGroup> element can itself contain zero to many <fragment> elements.  Ordering of <fragment> elements and <replacementGroup> elements within a <record> or <replacementGroup> element is not important.
 
-<fragment> elements contain individual xml fragments.  The content of the <fragment> can be any xml element from a supported geonetwork schema with the proviso that the element must contain enough relevant metadata to allow the target schema to be identified (i.e. distinguishing namespaces).
+<fragment> elements contain individual xml fragments.  The content of the <fragment> can be any xml element from a supported GeoNetwork schema with the proviso that the element must contain enough relevant metadata to allow the target schema to be identified (i.e. distinguishing namespaces).
 
 <replacementGroup> elements have significance during metadata generation only.  They are used to group zero or more fragments for insertion into or creation of links in a copy of the metadata template used to generate the metadata.   Where the <replacementGroup> element contains no <fragment> elements, the referenced element in the template copy will be removed, otherwise it will be replaced with the contents of the fragment.
 
@@ -88,7 +88,7 @@ The procedure to follow is:
 
 - From the Administration->System Configuration menu, enable the XLink Resolver and *Save* the configuration to the database.
 - Add an *OGC WFS GetFeature response* harvester from the Administration->Harvesting menu.
-- Give it a *Name* (eg. gboundaries) and enter the URL of the wfs service from the bundled geoserver (eg. http://localhost:8080/geoserver/wfs)  in the *Service URL* field.
+- Give it a *Name* (eg. gboundaries) and enter the URL of the wfs service from the bundled GeoServer (eg. http://localhost:8080/geoserver/wfs)  in the *Service URL* field.
 - We'll use a simple GetFeature query to select all countries from the boundaries shapefile behind the WFS. The XML for such a query (which is to be entered in the *GetFeature Query* textarea) is:
 
 ::
@@ -118,7 +118,7 @@ After the harvester has been run you should see a results screen that looks some
 
 .. figure:: web-harvesting-features-boundaries-example-results.png
 
-*WFS GetFeature Harvesting - Results for geoserver boundaries example*
+*WFS GetFeature Harvesting - Results for GeoServer boundaries example*
 
 The results page shows that there were 1506 fragments of metadata harvested from the WFS GetFeature response. They were saved to the GeoNetwork database as subtemplates and linked into the metadata template to form 251 new metadata records.
 

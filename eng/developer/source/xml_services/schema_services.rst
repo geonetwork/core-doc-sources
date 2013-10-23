@@ -165,7 +165,7 @@ Schema add request example::
   Post request:
   <request>
     <schema>iso19139.mcp</schema>
-    <fname>/usr/local/src/git/schemaPlugins-2.8.x/dist/iso19139.mcp.zip</fname>
+    <fname>/usr/local/src/git/schemaPlugins-2.10.x/dist/iso19139.mcp.zip</fname>
   </request>
 
 Response
@@ -223,7 +223,7 @@ Schema update request example::
   Post request:
   <request>
     <schema>iso19139.mcp</schema>
-    <fname>/usr/local/src/git/schemaPlugins-2.8.x/dist/iso19139.mcp.zip</fname>
+    <fname>/usr/local/src/git/schemaPlugins-2.10.x/dist/iso19139.mcp.zip</fname>
   </request>
 
 Response

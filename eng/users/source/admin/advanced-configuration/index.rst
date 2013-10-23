@@ -135,7 +135,7 @@ The remainder of the configuration is done in the container context. eg. for tom
 		accessToUnderlyingConnectionAllowed="true"
 	/>
 
-eg. for jetty, this configuration is in `INSTALL_DIR/web/geonetwork/WEB-INF/jetty-env.xml`. Here is an example for the Postgis database:
+eg. for jetty, this configuration is in `INSTALL_DIR/web/geonetwork/WEB-INF/jetty-env.xml`. Here is an example for the PostGIS database:
 
 ::
 
@@ -322,9 +322,9 @@ or more metadata records:
 GeoNetwork data directory
 -------------------------
 
-When customizing Geonetwork for a specific deployment server you need to be able to modify the configuration for that specific server.  One way is to 
-modify the configuration files within Geonetwork web application, however this is a problematic method because you essentially need either a different
-web application for each deployment target or need to patch each after deployment.  Geonetwork provides two methods for addressing this issue
+When customizing GeoNetwork for a specific deployment server you need to be able to modify the configuration for that specific server.  One way is to 
+modify the configuration files within GeoNetwork web application, however this is a problematic method because you essentially need either a different
+web application for each deployment target or need to patch each after deployment.  GeoNetwork provides two methods for addressing this issue
 
  #. GeoNetwork data directory
  #. Configuration override files (See :ref:`adv_configuration_overriddes`)
@@ -468,18 +468,18 @@ All catalogue configuration directory can be found using the ``System Informatio
 Other system properties
 ~~~~~~~~~~~~~~~~~~~~~~~
 
-In Geonetwork there are several system properties that can be used to configure different aspects of Geonetwork.  When a webcontainer
+In GeoNetwork there are several system properties that can be used to configure different aspects of GeoNetwork.  When a webcontainer
 is started the properties can be set.  For example in Tomcat one can set either JAVA_OPTS or CATALINA_OPTS with -D<propertyname>=<value>.
 
  * <webappname>.jeeves.configuration.overrides.file - See :ref:`adv_configuration_overriddes`
  * jeeves.configuration.overrides.file - See :ref:`adv_configuration_overriddes`
  * mime-mappings -  mime mappings used by jeeves for generating the response content type
- * http.proxyHost - The internal geonetwork Http proxy uses this for configuring how it can access the external network (Note for harvesters there is also a setting in the Settings page of the administration page)
- * http.proxyPort - The internal geonetwork Http proxy uses this for configuring how it can access the external network (Note for harvesters there is also a setting in the Settings page of the administration page)
+ * http.proxyHost - The internal GeoNetwork Http proxy uses this for configuring how it can access the external network (Note for harvesters there is also a setting in the Settings page of the administration page)
+ * http.proxyPort - The internal GeoNetwork Http proxy uses this for configuring how it can access the external network (Note for harvesters there is also a setting in the Settings page of the administration page)
  * geonetwork.sequential.execution - (true,false) Force indexing to occur in current thread rather than being queued in the ThreadPool.  Good for debugging issues.
 
 
-There is a usecase where multiple geonetwork instances might be ran in the same webcontainer, because of this many of the system properties 
+There is a usecase where multiple GeoNetwork instances might be ran in the same webcontainer, because of this many of the system properties 
 listed above have <webappname>.  When declaring the property this should be replaced with the webapp name the setting applies to. Typically this will
 be geonetwork.
 
@@ -490,11 +490,11 @@ Configuration override
 ----------------------
 
 Configuration override files allow nearly complete access to all the configuration allowing nearly any configuration parameter to be overridden 
-for a particular deployment target.  The concept behind configuration overrides is to have the basic configuration set in the geonetwork webapplication,
+for a particular deployment target.  The concept behind configuration overrides is to have the basic configuration set in the GeoNetwork webapplication,
 the application is deployed and a particular set of override files are used for the deployment target.  The override files only have the settings that need
 to be different for the deployment target, alleviating the need to deploy and edit the configuration files or have a different web application per deployment target.
 
-Configuration override files are also useful for forked Geonetwork applications that regularly merge the changes from the true Geonetwork code base.
+Configuration override files are also useful for forked GeoNetwork applications that regularly merge the changes from the true GeoNetwork code base.
 
 A common scenario is to have test and production instances with different configurations. In both configurations 90% of the configuration is the same 
 but certain parts need to be updated.
@@ -564,7 +564,7 @@ An example of a overrides file is as follows::
                  The files are assumed to be property files and all the properties are loaded in order.  
                  The later properties overriding the previously defined parameters. Since the normal
                  log file is not automatically located, the base must be also defined.  It can be the once
-                 shipped with geonetwork or another. -->
+                 shipped with GeoNetwork or another. -->
             <logging>
                 <logFile>/WEB-INF/log4j.cfg</logFile>
                 <logFile>/WEB-INF/log4j-jeichar.cfg</logFile>
@@ -580,7 +580,7 @@ An example of a overrides file is as follows::
             <update linePattern="(.*) Relations">$1 NewRelations</update>
             <update linePattern="(.*)relatedId(.*)">$1${aparam}$2</update>
         </textFile>
-       <!-- configure the spring aspects of geonetwork -->
+       <!-- configure the spring aspects of GeoNetwork -->
        <spring>
          <!-- import a complete spring xml file -->
          <import file="./config-spring-overrides.xml"/>
@@ -726,7 +726,7 @@ For easier update, config overrides could be used to modify the config-summary f
 Character Set
 -------------
 
-By default the character set of geonetwork is UTF-8.  This works well for many locales in the world and is compatible with ASCII
+By default the character set of GeoNetwork is UTF-8.  This works well for many locales in the world and is compatible with ASCII
 that is typically used in US and Canada.  However, if UTF-8 is not a compatible characterset in your environment you can change
 the default.  
 
@@ -736,7 +736,7 @@ For example if you are running tomcat you can set
 
 JAVA_OPTS="-Dgeonetwork.file.encoding=UTF-16"
 
-to the startup script and the default codec in Geonetwork will be UTF-16.  
+to the startup script and the default codec in GeoNetwork will be UTF-16.  
 
 It is also recommended to set the file.encoding parameter to the same codec as this dictates to the default encoding 
 used in Java and the Web Server may reference at times use the default codec.  

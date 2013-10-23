@@ -65,9 +65,9 @@ Check out source code
 
 If you just want to quickly get the code the fastest way is to download the zip bundle: https://github.com/geonetwork/core-geonetwork/zipball/master
 
-However, it is recommended that if you want to contribute back to Geonetwork you create a Github account, fork the Geonetwork repository and work on your fork.  This is a huge benefit because you can push your changes to your repository as much as you want and when a feature is complete you can make a 'Pull Request'.  Pull requests are the recommended method of contributing back to Geonetwork because Github has code review tools and merges are much easier than trying to apply a patch attached to a ticket.
+However, it is recommended that if you want to contribute back to GeoNetwork you create a Github account, fork the GeoNetwork repository and work on your fork.  This is a huge benefit because you can push your changes to your repository as much as you want and when a feature is complete you can make a 'Pull Request'.  Pull requests are the recommended method of contributing back to GeoNetwork because Github has code review tools and merges are much easier than trying to apply a patch attached to a ticket.
 
-The Geonetwork Repository is at: https://github.com/geonetwork/core-geonetwork.
+The GeoNetwork Repository is at: https://github.com/geonetwork/core-geonetwork.
 
 Follow the instructions on the Github website to get started (make accounts, how to fork etc...) http://help.github.com/
 
@@ -79,7 +79,7 @@ A clone contains all branches so you can list the branches with::
      
 Just look at last section (ignoring remotes/origin/).  To checkout a branch just::
 
-     $ git checkout 2.8.x
+     $ git checkout 2.10.x
      
 Typically work is done on branches and merged back so when developing normally you will go change to the branch you want to work on, create a branch from there, work and then merge the changes back (or make a Pull Request on Github).  There are many great guides (See the links above) but here is a quick sequence illustrating how to make a change and commit the change.
 
@@ -103,7 +103,7 @@ Typically work is done on branches and merged back so when developing normally y
      # more work
      # another commit
      $ git push origin myfeature
-        # this pushed your new branch to Github now you are ready to make a Pull Request to get the new feature added to Geonetwork
+        # this pushed your new branch to Github now you are ready to make a Pull Request to get the new feature added to GeoNetwork
 
 Build GeoNetwork
 ----------------
@@ -346,7 +346,7 @@ in your eclipse install and configured as follows::
   -  Select **Checkstyle**
    - Click **New**
    - Select **External Configuration**
-   - Enter any name (IE Geonetwork)
+   - Enter any name (IE GeoNetwork)
    - For **location** choose **code_quality/checkstyle_checks.xml**
    - Press *OK*
    - Select New configuration 
@@ -394,7 +394,7 @@ bad practices like using default platform charset instead of a explicit charset.
 
 Because bad practices are checked for, sometimes Findbugs detects issues that are intentional. In order to account for
 these intentional violations Findbugs has exclude filter files which contain rules for which violations should be ignored.
-In Geonetwork the excludes filter file can be found at **<root>/code_quality/findbugs-excludes.xml**.
+In GeoNetwork the excludes filter file can be found at **<root>/code_quality/findbugs-excludes.xml**.
 
 For complete details of how to specify matches in the excludes file see http://findbugs.sourceforge.net/manual/filter.html 
 and look at the existing examples in the file.

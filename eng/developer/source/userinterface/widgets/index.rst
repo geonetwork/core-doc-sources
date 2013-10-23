@@ -1,7 +1,7 @@
 Widgets
 ########
 
-The GeoNetwork widget framework provides a list of independent pieces of code that let you build a geonetwork user interface.
+The GeoNetwork widget framework provides a list of independent pieces of code that let you build a GeoNetwork user interface.
 
 Add widget
 **********

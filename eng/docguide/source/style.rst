@@ -58,7 +58,7 @@ Capitalization of page names
 Each word in the page name should be capitalized except for articles (such as "the", "a", "an") and conjunctions (such as "and", "but", "or"). A page name should never start with an article.
 
 Bad
-   Adding a shapefile or postgis table
+   Adding a shapefile or PostGIS table
 Good
    Adding a Shapefile or PostGIS Table
 

@@ -256,7 +256,7 @@ The Assembly Plugin configuration is in the release module (See bin.xml and zip-
 Eclipse setup
 -------------
 
-The easiest way to develop geoNetwork within eclipse is with the `m2e plugin <http://eclipse.org/m2e/>`_, 
+The easiest way to develop GeoNetwork within eclipse is with the `m2e plugin <http://eclipse.org/m2e/>`_, 
 which comes by default on many eclipse installations.
     
 Import source code

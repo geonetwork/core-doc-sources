@@ -38,15 +38,15 @@ master_doc = 'index'
 # General substitutions.
 project = u'GeoNetwork'
 manual = u'Developer Manual'
-copyright = u'2010, Open Source Geospatial Foundation'
+copyright = u'2013, Open Source Geospatial Foundation'
 
 # The default replacements for |version| and |release|, also used in various
 # other places throughout the built documents.
 #
 # The short X.Y version.
-version = '2.10.0-SNAPSHOT'
+version = '2.10.2'
 # The full version, including alpha/beta/rc tags.
-release = '2.10.0-SNAPSHOT'
+release = '2.10.2'
 
 language = 'en'
 

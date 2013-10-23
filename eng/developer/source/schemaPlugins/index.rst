@@ -9,7 +9,7 @@ view and possibly edit content from XML metadata records.
 
 To be used in GeoNetwork, a schema directory can be manually placed in the 
 ``config/schema_plugins`` sub directory of 
-the geonetwork data directory. The default geonetwork data directory location is 
+the GeoNetwork data directory. The default GeoNetwork data directory location is 
 ``INSTALL_DIR/web/geonetwork/WEB-INF/data``. The contents of these schemas are 
 parsed during GeoNetwork initialization. If valid, they will be available for 
 use when GeoNetwork starts up.
@@ -22,7 +22,7 @@ ways using functions in the Administration menu:
 #. HTTP URL (eg. http://somehost/somedirectory/iso19139.mcp.zip)
 #. As an online resource attached to an ISO19115/19139 metadata record
 
-Uploaded schemas are also stored in the ``config/schema_plugins`` sub directory of the geonetwork data directory.
+Uploaded schemas are also stored in the ``config/schema_plugins`` sub directory of the GeoNetwork data directory.
 
 Contents of a GeoNetwork schema
 ```````````````````````````````

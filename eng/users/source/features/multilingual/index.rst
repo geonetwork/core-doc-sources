@@ -8,7 +8,7 @@ Introduction
 
 GeoNetwork supports *multilingual* search. Depending on the configuration, this influences which search results are returned and how they are presented:
 
-*Enable auto-detecting search request language:* If this option is selected, Geonetwork will analyse the search query and attempt to detect the language that is used before defaulting to the GUI language.
+*Enable auto-detecting search request language:* If this option is selected, GeoNetwork will analyse the search query and attempt to detect the language that is used before defaulting to the GUI language.
 
 *Search only in requested language* The options in this section determines how documents are sorted/prioritised relative to the language in the document compared to the search language.
 

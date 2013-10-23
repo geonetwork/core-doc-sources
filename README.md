@@ -1,4 +1,4 @@
 doc-sources
 ===========
 
-Documentation sources for geonetwork documentation
+Documentation sources for GeoNetwork documentation

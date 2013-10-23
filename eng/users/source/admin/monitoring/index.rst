@@ -3,7 +3,7 @@
 System Monitoring
 =================
 
-The monitoring system provides automated monitoring of a Geonetwork web application to be able track the health of the system over time.  The monitoring is based on the '''Metrics''' library (http://metrics.codahale.com/) by Yammer and detailed explanation for developers desiring specific monitors can be found there.
+The monitoring system provides automated monitoring of a GeoNetwork web application to be able track the health of the system over time.  The monitoring is based on the '''Metrics''' library (http://metrics.codahale.com/) by Yammer and detailed explanation for developers desiring specific monitors can be found there.
 
 The metrics are available via JMX or as JSON with http GET requests.  The same information is available through both APIs.  The web requests provided are:
 

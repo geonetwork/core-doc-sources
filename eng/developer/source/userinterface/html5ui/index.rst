@@ -1,7 +1,7 @@
 HTML 5 UI 
 ########
 
-This is an html5 based UI which uses the wigets from geonetwork and the library ExtJS.
+This is an html5 based UI which uses the wigets from GeoNetwork and the library ExtJS.
 
 .. toctree::
     :maxdepth: 2

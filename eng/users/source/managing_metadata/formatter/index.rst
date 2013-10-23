@@ -27,7 +27,7 @@ Another use-case for metadata formatters is to embed the metadata in other websi
 Administration
 --------------
 
-A metadata formatter is a bundle of files that can be uploaded to Geonetwork as a zip file (or in the simplest case just upload the xsl).  
+A metadata formatter is a bundle of files that can be uploaded to GeoNetwork as a zip file (or in the simplest case just upload the xsl).  
 
 An administration user interface exists for managing these bundles.  The starting page of the ui contains a list of the available bundles and has a field for uploading new bundles.  There are three upload options:
 
@@ -81,9 +81,9 @@ If the view.xsl output needs to access resources in the formatter bundle (like c
 
  <img src="{/root/resourceURL}/img.png"/>
 
-By default the strings, labels, etc... will be localized based on the language provided in the URL.  For example if the url is /geonetwork/srv/eng/metadata.formatter.html?xsl=default&id=32 then the language code that is used to look up the localization will be eng.  However if the language code does not exist it will fall back to the Geonetwork platform default and then finally just load the first local it finds. 
+By default the strings, labels, etc... will be localized based on the language provided in the URL.  For example if the url is /geonetwork/srv/eng/metadata.formatter.html?xsl=default&id=32 then the language code that is used to look up the localization will be eng.  However if the language code does not exist it will fall back to the GeoNetwork platform default and then finally just load the first local it finds. 
 
-Schemas and geonetwork strings all have several different translations but extra strings, etc... can be added to the formatter bundle under the loc directory.  The structure would be::
+Schemas and GeoNetwork strings all have several different translations but extra strings, etc... can be added to the formatter bundle under the loc directory.  The structure would be::
  
  loc/<langCode>/strings.xml
 
@@ -103,7 +103,7 @@ Config.properties
 The config.properties file contains some configuration options used when creating the xml document.  Some of the properties include:
 
  - *fixedLang* - sets the language of the strings to the fixed language, this ensures that the formatter will always use the same language for its labels, strings, etc... no matter what language code is in the url.
- - *loadGeonetworkStrings* - if true or non-existent then geonetwork strings will be added to the xml document before view.xsl is applied.  The default is true so if this parameter is not present then the strings will be loaded
+ - *loadGeonetworkStrings* - if true or non-existent then GeoNetwork strings will be added to the xml document before view.xsl is applied.  The default is true so if this parameter is not present then the strings will be loaded
  - *schemasToLoad* - defines which schema localization files should be loaded and added to the xml document before view.xsl is applied
 
   - if a comma separated list then only those schemas will be loaded

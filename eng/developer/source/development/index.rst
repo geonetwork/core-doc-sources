@@ -65,9 +65,9 @@ Check out source code
 
 If you just want to quickly get the code the fastest way is to download the zip bundle: https://github.com/geonetwork/core-geonetwork/zipball/master
 
-However, it is recommended that if you want to contribute back to Geonetwork you create a Github account, fork the Geonetwork repository and work on your fork.  This is a huge benefit because you can push your changes to your repository as much as you want and when a feature is complete you can make a 'Pull Request'.  Pull requests are the recommended method of contributing back to Geonetwork because Github has code review tools and merges are much easier than trying to apply a patch attached to a ticket.
+However, it is recommended that if you want to contribute back to GeoNetwork you create a Github account, fork the GeoNetwork repository and work on your fork.  This is a huge benefit because you can push your changes to your repository as much as you want and when a feature is complete you can make a 'Pull Request'.  Pull requests are the recommended method of contributing back to GeoNetwork because Github has code review tools and merges are much easier than trying to apply a patch attached to a ticket.
 
-The Geonetwork Repository is at: https://github.com/geonetwork/core-geonetwork.
+The GeoNetwork Repository is at: https://github.com/geonetwork/core-geonetwork.
 
 Follow the instructions on the Github website to get started (make accounts, how to fork etc...) http://help.github.com/
 
@@ -256,7 +256,7 @@ The Assembly Plugin configuration is in the release module (See bin.xml and zip-
 Eclipse setup
 -------------
 
-The easiest way to develop geoNetwork within eclipse is with the `m2e plugin <http://eclipse.org/m2e/>`_, 
+The easiest way to develop GeoNetwork within eclipse is with the `m2e plugin <http://eclipse.org/m2e/>`_, 
 which comes by default on many eclipse installations.
     
 Import source code

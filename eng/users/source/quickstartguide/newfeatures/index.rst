@@ -23,7 +23,7 @@ Administration
 - **New Harvesters:** OGC Harvesting: Sensor Observation Service, Z3950 harvesting, Web Accessible Folder (WAF), GeoPortal 9.3.x via REST API See :ref:`harvesting`.
 - **Harvest History and Scheduling:** Harvesting events are now recorded in the database for review at any time. See :ref:`harvest_history`. Harvester scheduling is now much more flexible, you can start a harvest at any time of the day and at almost any interval (weekly etc).
 - **Extended Metadata Exchange Format (MEF):** More than one metadata file can be present in a MEF Zip archive. This is MEF version 2. See :ref:`export`.
-- **System Monitoring:** Automatically monitoring the health of a Geonetwork web application. See :ref:`monitoring`.
+- **System Monitoring:** Automatically monitoring the health of a GeoNetwork web application. See :ref:`monitoring`.
 
 Metadata
 --------

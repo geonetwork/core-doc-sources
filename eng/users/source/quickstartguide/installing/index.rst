@@ -58,8 +58,8 @@ If you use Windows, the following steps will guide you to complete the installat
 1. Double click on **geonetwork-install-2.10.x.exe** to start the GeoNetwork opensource desktop installer
 2. Follow the instructions on screen. You can choose to install the embedded map server (based on `GeoServer <http://www.geoserver.org>`_, GAST and the European Union Inspire Directive configuration pack. Developers may be interested in installing the source code and installer building tools. Full source code can be found in the GeoNetwork github code repository at http://github.com/geonetwork.
 3. After completion of the installation process, a 'GeoNetwork desktop' menu will be added to your Windows Start menu under 'Programs'
-4. Click Start\>Programs\>GeoNetwork desktop\>Start server to start the Geonetwork opensource Web server. The first time you do this, the system will require about 1 minute to complete startup.
-5. Click Start\>Programs\>Geonetwork desktop\>Open GeoNetwork opensource to start using GeoNetwork opensource, or connect your Web browser to `http://localhost:8080/geonetwork/ <http://localhost:8080/geonetwork/>`_
+4. Click Start\>Programs\>GeoNetwork desktop\>Start server to start the GeoNetwork opensource Web server. The first time you do this, the system will require about 1 minute to complete startup.
+5. Click Start\>Programs\>GeoNetwork desktop\>Open GeoNetwork opensource to start using GeoNetwork opensource, or connect your Web browser to `http://localhost:8080/geonetwork/ <http://localhost:8080/geonetwork/>`_
 
 .. figure:: installer.png
 
@@ -103,7 +103,7 @@ If you downloaded the platform independent installer (a .jar file), you can perf
 
 To run the installation from the commandline, issue the following command in a terminal window and hit enter to start::
 
-    java -jar geonetwork-install-2.8.0.jar install.xml
+    java -jar geonetwork-install-2.10.0.jar install.xml
     [ Starting automated installation ]
     Read pack list from xml definition.
     Try to add to selection [Name: Core and Index: 0]
@@ -126,7 +126,7 @@ To run the installation from the commandline, issue the following command in a t
 
 You can also run the installation with lots of debug output. To do so run the installer with the flag *-DTRACE=true*::
 
-  java -DTRACE=true -jar geonetwork-install-2.8.0.jar
+  java -DTRACE=true -jar geonetwork-install-2.10.0.jar
 
 .. [#all_os] All = Windows, Linux and Mac OS X
 
@@ -137,7 +137,7 @@ User interface configuration
 As mentioned above, GeoNetwork now provides two user interfaces: 
 
 - **Default** user interface is the old user interface from 2.6.x and earlier
-- **Javascript Widgets** user interface is the new user interface for searching, editing and viewing metadata records in 2.8.x
+- **Javascript Widgets** user interface is the new user interface for searching, editing and viewing metadata records in 2.10.x
 
 The catalog administrator can configure which interface to use in `WEB-INF/config-gui.xml` as follows. 
 
@@ -296,6 +296,6 @@ If you run into problems when you start GeoNetwork with a particular database, y
 Upgrading to a new Version
 ==========================
 
-The upgrade process from one version to another is typically a fairly simple process.  Following the normal setup instructions, should result in Geonetwork successfully upgrading the internal datastructures from the old version to the new version.  The exceptions to this rule are:
+The upgrade process from one version to another is typically a fairly simple process.  Following the normal setup instructions, should result in GeoNetwork successfully upgrading the internal datastructures from the old version to the new version.  The exceptions to this rule are:
 
-* Migration to Geonetwork 2.8 will reset all harvesters to run every 2 hours. This is because the underlying harvester scheduler has been changed and the old schedules are not longer supported.  In this case one must review all the harvesters and define new schedules for them.
+* Migration to GeoNetwork 2.10 will reset all harvesters to run every 2 hours. This is because the underlying harvester scheduler has been changed and the old schedules are not longer supported.  In this case one must review all the harvesters and define new schedules for them.
